@@ -4,7 +4,14 @@ namespace Acr.WindowsForms.Controls.Class
 {
     public class LabelHelper
     {
-        public static void CreateLabel(Control ctr, string text, MessageType messageType = MessageType.Error, Color color = default)
+        public static void CreateLabel(
+            Control ctr,
+            string text,
+            MessageType messageType = MessageType.Error,
+            Color fcolor = default,
+            Color bColor = default,
+            string location = "bottom"
+        )
         {
             var lbl = new Label
             {
@@ -12,10 +19,22 @@ namespace Acr.WindowsForms.Controls.Class
                 Text = text,
                 AutoSize = true,
                 Font = new Font("Arial", 7, FontStyle.Bold),
-                BackColor = Color.Transparent,
-                Location = new Point(ctr.Location.X, ctr.Location.Y + ctr.Height)
+                BackColor = Color.Transparent,                
             };
 
+
+            var existingLabel = ctr.Parent.Controls["lbl_" + ctr.Name];
+            if (existingLabel != null) ctr.Parent.Controls.Remove(existingLabel);
+
+
+            lbl.CreateControl();
+            lbl.Location = location switch
+            {
+                "top" => new Point(ctr.Location.X, ctr.Location.Y - lbl.Height + 5),
+                _ => new Point(ctr.Location.X, ctr.Location.Y + ctr.Height),
+            };
+
+            
             switch (messageType)
             {
                 case MessageType.Error:
@@ -27,18 +46,25 @@ namespace Acr.WindowsForms.Controls.Class
                 case MessageType.Information:
                     lbl.ForeColor = Color.Blue;
                     break;
+                case MessageType.Title:
+                    lbl.ForeColor = Color.Black;
+                    lbl.Font = new Font("Arial", 8, FontStyle.Bold);
+                    break;
             }
 
-            if (color != default)
-            {
-                lbl.ForeColor = color;
-            }
+            if (fcolor != default) lbl.ForeColor = fcolor;
+
+            if (bColor != default) lbl.BackColor = bColor;
+            else lbl.BackColor = Color.Transparent;
+
             ctr.Parent.Controls.Add(lbl);
         }
 
         public static void RemoveLabel(Control ctr)
         {
-            ctr.Parent.Controls.Remove(ctr.Parent.Controls["lbl_" + ctr.Name]);
+            var lbl = ctr.Parent.Controls["lbl_" + ctr.Name];
+            if (lbl != null)
+                ctr.Parent.Controls.Remove(lbl);
         }
 
     }
