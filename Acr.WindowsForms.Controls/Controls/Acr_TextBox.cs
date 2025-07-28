@@ -13,6 +13,7 @@ public class Acr_TextBox : TextBox
     
     private bool _tabOnEnter = true;
     private bool _validateAsDate = false;
+    private bool _selectAllTextOnEnter = false;
 
     private string _warningMessageDate = "Invalid date format.";
 
@@ -75,18 +76,36 @@ public class Acr_TextBox : TextBox
     }
 
 
+    [Category("Acr Custom")]
+    [Description("If true, all text will be selected when the control receives focus.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public bool SelectAllTextOnEnter
+    {
+        get => _selectAllTextOnEnter;
+        set => _selectAllTextOnEnter = value;
+    }
+
+
 
     protected override void OnEnter(EventArgs e)
     {
         base.OnEnter(e);
         BackColor = _onEnterBackColor;
+
+        if (_selectAllTextOnEnter)
+        {
+            SelectionStart = 0;
+            SelectionLength = Text.Length;
+        }
+
     }
 
     protected override void OnLeave(EventArgs e)
     {
         base.OnLeave(e);
         BackColor = _onLeaveBackColor;
-        if (_validateAsDate) HelperLabel.RemoveLabel(this);        
+        if (_validateAsDate) LabelHelper.RemoveLabel(this);        
     }
 
     protected override void OnKeyDown(KeyEventArgs e)
@@ -113,7 +132,7 @@ public class Acr_TextBox : TextBox
             catch (Exception)
             {
                 e.Cancel = true;
-                HelperLabel.CreateLabel(this, _warningMessageDate, MessageType.Error);
+                LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
                 
             }
         }
@@ -124,13 +143,13 @@ public class Acr_TextBox : TextBox
         base.OnTextChanged(e);
         if (_validateAsDate)
         {
-            HelperLabel.RemoveLabel(this);
+            LabelHelper.RemoveLabel(this);
             string[] parts = Text.Split('/');
 
             if (parts.Length >= 1 && int.TryParse(parts[0], out int day) && day > 31)
-                HelperLabel.CreateLabel(this, _warningMessageDate, MessageType.Error);
+                LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
             else if (parts.Length >= 2 && int.TryParse(parts[1], out int month) && month > 12)
-                HelperLabel.CreateLabel(this, _warningMessageDate, MessageType.Error);
+                LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
         }
     }
 
@@ -142,7 +161,7 @@ public class Acr_TextBox : TextBox
 
         if (_validateAsDate)
         {
-            HelperLabel.RemoveLabel(this);
+            LabelHelper.RemoveLabel(this);
             int l = Text.Length;
 
             if (e.KeyChar == (char)Keys.Back) return;

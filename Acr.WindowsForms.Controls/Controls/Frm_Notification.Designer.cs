@@ -82,6 +82,7 @@
             Name = "Frm_Notification";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            Load += Frm_Notification_Load;
             ((System.ComponentModel.ISupportInitialize)picB_Icon).EndInit();
             ResumeLayout(false);
         }

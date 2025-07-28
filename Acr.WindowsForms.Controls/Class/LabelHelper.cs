@@ -2,7 +2,7 @@
 
 namespace Acr.WindowsForms.Controls.Class
 {
-    public class HelperLabel
+    public class LabelHelper
     {
         public static void CreateLabel(Control ctr, string text, MessageType messageType = MessageType.Error, Color color = default)
         {

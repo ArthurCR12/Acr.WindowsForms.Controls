@@ -112,7 +112,7 @@ namespace Acr.WindowsForms.Controls.Controls
             {
                 var assembly = Assembly.GetExecutingAssembly();
                 if (type == NotificationType.Error)
-                {                    
+                {
                     using Stream? stream = assembly.GetManifestResourceStream("Acr.WindowsForms.Controls.Resources.error.wav");
                     if (stream != null)
                     {
@@ -124,17 +124,22 @@ namespace Acr.WindowsForms.Controls.Controls
                 {
                     using Stream? stream = assembly.GetManifestResourceStream("Acr.WindowsForms.Controls.Resources.pop.wav");
                     if (stream != null)
-                    {                        
+                    {
                         using var soundPlayer = new System.Media.SoundPlayer(stream);
                         soundPlayer.Play();
                     }
-                    
+
                 }
-                
+
             }
             catch (Exception)
             {
             }
+        }
+
+        private void Frm_Notification_Load(object sender, EventArgs e)
+        {
+            lbl_Message.Focus();
         }
     }
 }

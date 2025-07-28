@@ -7,7 +7,7 @@
     <!-- Configurações do pacote NuGet -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>AcrControls</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Arthur Cabral</Authors>
     <Company>ACR Software</Company>
     <Description>ACR Windows Forms Controls. Custom reusable controls for .NET WinForms applications.</Description>

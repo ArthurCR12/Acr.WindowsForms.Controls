@@ -2,20 +2,32 @@
 
 **AcrControls** is a lightweight library of customizable Windows Forms controls built for modern .NET applications.
 
-Developed by **Arthur Cabral**, this package aims to improve user experience and developer productivity by providing enhanced versions of native controls like `TextBox`, `ComboBox`, and more.
+Developed by **Arthur Cabral**, this package aims to improve user experience and developer productivity
 
-Currently, only the custom `TextBox` is available — but more controls will be added soon.
+## Features
 
-## ✨ Features
 
-- Custom styling for controls (e.g., focus/blur color effects)
-- Clean tab navigation (Enter to Tab)
-- Easy integration into any .NET WinForms project
-- Extensible design — more controls to come
+    Customizable `TextBox` ->
+    - Enter / Leave events change the color of background
+    - Easy tab navigation with Enter key 
+    - Select all text on focus
+    - Validate as date dd/MM/yyyy
 
-## 📦 Installation
+    Label Helper ->
+    - Allows you to add a label that can be used as a helper text for other controls 
+    - The label is positioned below the control
+    - Can be used with any control
+    - Is used like this: LabelHelper.CreateLabel(control, "Required field", MessageType.Warning)
 
-Via NuGet Package Manager:
+    Notification Helper ->
+    - Is a notification message that can be used to display messages to the user
+    - Shows on the bottom right corner of the screen
+    - Can be used to display success, error, warning or information messages
+    - Is used like this: NotificationHelper.Show("Message", NotificationType.Success)
 
-```sh
-Install-Package AcrControls
+	
+    
+	
+
+
+
