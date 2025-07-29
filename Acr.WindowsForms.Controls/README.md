@@ -12,10 +12,11 @@ Developed by **Arthur Cabral**, this package aims to improve user experience and
     - Easy tab navigation with Enter key 
     - Select all text on focus
     - Validate as date dd/MM/yyyy
+    - Label title on top    
 
     Label Helper ->
     - Allows you to add a label that can be used as a helper text for other controls 
-    - The label is positioned below the control
+    - The label can be positioned below or on top of the control
     - Can be used with any control
     - Is used like this: LabelHelper.CreateLabel(control, "Required field", MessageType.Warning)
 

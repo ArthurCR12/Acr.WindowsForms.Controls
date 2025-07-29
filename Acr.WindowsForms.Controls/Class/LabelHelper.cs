@@ -4,7 +4,7 @@ namespace Acr.WindowsForms.Controls.Class
 {
     public class LabelHelper
     {
-        public static void CreateLabel(
+        public static Label CreateLabel(
             Control ctr,
             string text,
             MessageType messageType = MessageType.Error,
@@ -58,6 +58,7 @@ namespace Acr.WindowsForms.Controls.Class
             else lbl.BackColor = Color.Transparent;
 
             ctr.Parent.Controls.Add(lbl);
+            return lbl;
         }
 
         public static void RemoveLabel(Control ctr)

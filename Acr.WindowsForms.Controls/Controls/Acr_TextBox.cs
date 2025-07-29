@@ -10,21 +10,16 @@ public class Acr_TextBox : TextBox
 {
     private Color _onEnterBackColor = Color.AliceBlue;
     private Color _onLeaveBackColor = Color.White;
-    
     private bool _tabOnEnter = true;
     private bool _validateAsDate = false;
     private bool _selectAllTextOnEnter = false;
+    private bool _labelTitle = false;
+
+    private Label? _titleLabel;
 
     private string _warningMessageDate = "Invalid date format.";
-
-
-    protected override void OnCreateControl()
-    {
-        base.OnCreateControl();
-        ForeColor = Color.FromArgb(50, 50, 50);
-    }
-
-
+    private string _labelTitleText = string.Empty;
+   
     [Category("Acr Custom")]
     [Description("Background color when the control is focused.")]
     [Browsable(true)]
@@ -86,7 +81,40 @@ public class Acr_TextBox : TextBox
         set => _selectAllTextOnEnter = value;
     }
 
+    [Category("Acr Custom")]
+    [Description("If true, a title label will be created on top of control.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public bool LabelTitle
+    {
+        get => _labelTitle;
+        set
+        {
+            _labelTitle = value;
+            UpdateTitleLabel();
+        }
+    }
 
+    [Category("Acr Custom")]
+    [Description("Text for the title label.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public string LabelTitleText
+    {
+        get => _labelTitleText;
+        set
+        {
+            _labelTitleText = value;
+            UpdateTitleLabel();
+        }
+    }
+
+    protected override void OnCreateControl()
+    {
+        base.OnCreateControl();
+        ForeColor = Color.FromArgb(50, 50, 50);   
+        UpdateTitleLabel();
+    }
 
     protected override void OnEnter(EventArgs e)
     {
@@ -203,5 +231,30 @@ public class Acr_TextBox : TextBox
         }
 
     }
+    
+    private void UpdateTitleLabel()
+    {
+        if (!IsHandleCreated || !this.Visible) return;
+
+        if (_labelTitle)
+        {
+            if (_titleLabel == null) _titleLabel = LabelHelper.CreateLabel(this, _labelTitleText, MessageType.Title, location: "top");
+            else
+            {
+                _titleLabel.Text = _labelTitleText;
+                _titleLabel.Visible = true;
+            }
+        }
+        else
+        {
+            if (_titleLabel != null)
+            {
+                _titleLabel.Visible = false;
+            }
+        }
+        
+    }
+
+
 
 }
