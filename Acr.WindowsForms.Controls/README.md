@@ -1,30 +1,36 @@
 ﻿# AcrControls - Custom WinForms Controls
 
+
 **AcrControls** is a lightweight library of customizable Windows Forms controls built for modern .NET applications.
 
 Developed by **Arthur Cabral**, this package aims to improve user experience and developer productivity
 
 ## Features
 
+### Customizable TextBox
+- **Dynamic Styling**: Changes background color on `Enter` and `Leave` events for better user interaction.
+- **Enhanced Navigation**: Pressing the `Enter` key moves focus to the next control, improving form usability.
+- **Text Selection**: Automatically selects all text when the control gains focus.
+- **Date Validation**: Supports validation for dates in `dd/MM/yyyy` format.
+- **Label Integration**: Displays a customizable label title above the control.
 
-    Customizable `TextBox` ->
-    - Enter / Leave events change the color of background
-    - Easy tab navigation with Enter key 
-    - Select all text on focus
-    - Validate as date dd/MM/yyyy
-    - Label title on top    
+### Label Helper
+- **Flexible Positioning**: Adds a helper label above or below any control to provide context or instructions.
+- **Versatile Usage**: Compatible with any Windows Forms control.
+- **Customizable Messages**: Supports different message types (e.g., Warning, Info).
+- **Usage Example**:
+  ```csharp
+  LabelHelper.CreateLabel(myTextBox, "Required field", MessageType.Warning);
 
-    Label Helper ->
-    - Allows you to add a label that can be used as a helper text for other controls 
-    - The label can be positioned below or on top of the control
-    - Can be used with any control
-    - Is used like this: LabelHelper.CreateLabel(control, "Required field", MessageType.Warning)
+### Notification Helper ->
+- User Notifications: Displays messages in the bottom-right corner of the screen.
+- Message Types: Supports Success, Error, Warning, and Information notifications.
+- **Usage Example**:
+  ```csharp
+  NotificationHelper.Show("Operation completed successfully", NotificationType.Success);
+  ```
 
-    Notification Helper ->
-    - Is a notification message that can be used to display messages to the user
-    - Shows on the bottom right corner of the screen
-    - Can be used to display success, error, warning or information messages
-    - Is used like this: NotificationHelper.Show("Message", NotificationType.Success)
+
 
 	
     
