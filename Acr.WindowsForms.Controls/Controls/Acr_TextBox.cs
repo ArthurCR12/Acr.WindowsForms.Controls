@@ -1,6 +1,7 @@
 ﻿using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.Versioning;
 
 namespace Acr.WindowsForms.Controls.Controls;
@@ -17,9 +18,11 @@ public class Acr_TextBox : TextBox
 
     private Label? _titleLabel;
 
+    private TextboxtInputType _inputType = TextboxtInputType.All;
+
     private string _warningMessageDate = "Invalid date format.";
     private string _labelTitleText = string.Empty;
-   
+
     [Category("Acr Custom")]
     [Description("Background color when the control is focused.")]
     [Browsable(true)]
@@ -109,10 +112,20 @@ public class Acr_TextBox : TextBox
         }
     }
 
+    [Category("Acr Custom")]
+    [Description("Define the allowed input type.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public TextboxtInputType InputType
+    {
+        get => _inputType;
+        set => _inputType = value;
+    }
+
     protected override void OnCreateControl()
     {
         base.OnCreateControl();
-        ForeColor = Color.FromArgb(50, 50, 50);   
+        ForeColor = Color.FromArgb(50, 50, 50);
         UpdateTitleLabel();
     }
 
@@ -133,7 +146,7 @@ public class Acr_TextBox : TextBox
     {
         base.OnLeave(e);
         BackColor = _onLeaveBackColor;
-        if (_validateAsDate) LabelHelper.RemoveLabel(this);        
+        if (_validateAsDate) LabelHelper.RemoveLabel(this, MessageType.Error);
     }
 
     protected override void OnKeyDown(KeyEventArgs e)
@@ -155,13 +168,13 @@ public class Acr_TextBox : TextBox
 
             try
             {
-                Text = Convert.ToDateTime(Text).ToShortDateString();                
+                Text = Convert.ToDateTime(Text).ToShortDateString();
             }
             catch (Exception)
             {
                 e.Cancel = true;
                 LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
-                
+
             }
         }
     }
@@ -171,7 +184,7 @@ public class Acr_TextBox : TextBox
         base.OnTextChanged(e);
         if (_validateAsDate)
         {
-            LabelHelper.RemoveLabel(this);
+            LabelHelper.RemoveLabel(this, MessageType.Error);
             string[] parts = Text.Split('/');
 
             if (parts.Length >= 1 && int.TryParse(parts[0], out int day) && day > 31)
@@ -182,56 +195,95 @@ public class Acr_TextBox : TextBox
     }
 
     protected override void OnKeyPress(KeyPressEventArgs e)
-    {
-        base.OnKeyPress(e);
-        if (_validateAsDate && !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '/')
-            e.Handled = true;
-
-        if (_validateAsDate)
+    {        
+        if (!IsKeyValidForInputType(e.KeyChar))
         {
-            LabelHelper.RemoveLabel(this);
+            e.Handled = true;
+            return;
+        }
+
+        DateValidator(_validateAsDate, e);
+        base.OnKeyPress(e);
+    }
+
+    private bool IsKeyValidForInputType(char c)
+    {
+        if (_inputType == TextboxtInputType.All) return true;
+        if (_validateAsDate) return true;
+
+        bool isControl = char.IsControl(c);
+        bool isDigit = char.IsDigit(c);
+        bool isLetter = char.IsLetter(c);
+        bool isWhiteSpace = char.IsWhiteSpace(c);
+
+        char decimalSeparator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+
+        switch (_inputType)
+        {
+            case TextboxtInputType.Integer:
+                return isControl || isDigit;
+
+            case TextboxtInputType.Decimal:
+                if (isControl || isDigit) return true;
+                if (c == decimalSeparator && !Text.Contains(decimalSeparator)) return true;
+
+                return false;
+
+            case TextboxtInputType.Letter:
+                return isControl || isLetter || isWhiteSpace;
+
+            case TextboxtInputType.Alphanumeric:
+                return isControl || isLetter || isDigit || isWhiteSpace;
+
+            default:
+                return true;
+        }
+
+
+    }
+
+    private void DateValidator(bool valid, KeyPressEventArgs e)
+    {
+        if (!valid) return;        
+
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '/')
+        {
+            e.Handled = true;
+            return;
+        }
+
+        if (e.KeyChar == (char)Keys.Back) return;
+
+        if (Text.Length == 10)
+        {            
+            e.Handled = true;
+            return;
+        }
+
+        if (Text.Length == 2 || Text.Length == 5)
+        {
+            Text += "/";
+            SelectionStart = Text.Length;
+        }
+
+        if (e.KeyChar == '/')
+        {
+            string[] parts = Text.Split('/');
             int l = Text.Length;
 
-            if (e.KeyChar == (char)Keys.Back) return;
-
-            string[] parts = Text.Split('/');
-
-            if (Text.Length == 10)
+            if (Text == "0") e.Handled = true;                            
+            else if (l == 1) Text = "0" + Text;
+            else if (l == 4) Text = $"{parts[0]}/0{parts[1]}";
+            else
             {
-                if (e.KeyChar == (char)Keys.Back) return;
                 e.Handled = true;
                 return;
             }
 
-            if (Text.Length == 2 || Text.Length == 5)
-            {
-                Text += "/";
-                SelectionStart = Text.Length;
-            }
-
-            if (e.KeyChar == '/')
-            {
-                if (Text == "0")
-                {
-                    e.Handled = true;
-                    return;
-                }
-                else if (l == 1)
-                    Text = "0" + Text;
-                else if (l == 4)
-                    Text = $"{parts[0]}/0{parts[1]}";                
-                else
-                {
-                    e.Handled = true;
-                    return;
-                }
-
-                SelectionStart = Text.Length;
-            }            
+            SelectionStart = Text.Length;
         }
-
     }
-    
+
     private void UpdateTitleLabel()
     {
         if (!IsHandleCreated || !this.Visible) return;
@@ -252,9 +304,6 @@ public class Acr_TextBox : TextBox
                 _titleLabel.Visible = false;
             }
         }
-        
+
     }
-
-
-
 }

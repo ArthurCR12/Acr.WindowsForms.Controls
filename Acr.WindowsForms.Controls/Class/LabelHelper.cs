@@ -15,7 +15,7 @@ namespace Acr.WindowsForms.Controls.Class
         {
             var lbl = new Label
             {
-                Name = "lbl_" + ctr.Name,
+                Name = $"lbl_{ctr.Name}_{messageType}",
                 Text = text,
                 AutoSize = true,
                 Font = new Font("Arial", 7, FontStyle.Bold),
@@ -61,9 +61,9 @@ namespace Acr.WindowsForms.Controls.Class
             return lbl;
         }
 
-        public static void RemoveLabel(Control ctr)
+        public static void RemoveLabel(Control ctr, MessageType messageType = MessageType.Error)
         {
-            var lbl = ctr.Parent.Controls["lbl_" + ctr.Name];
+            var lbl = ctr.Parent.Controls[$"lbl_{ctr.Name}_{messageType}"];
             if (lbl != null)
                 ctr.Parent.Controls.Remove(lbl);
         }
