@@ -43,7 +43,7 @@
             lbl_Message.Location = new Point(101, 9);
             lbl_Message.Name = "lbl_Message";
             lbl_Message.Size = new Size(247, 92);
-            lbl_Message.TabIndex = 0;
+            lbl_Message.TabIndex = 1;
             lbl_Message.Text = "label1";
             // 
             // timer1
@@ -67,19 +67,22 @@
             btn_Close.Location = new Point(354, 34);
             btn_Close.Name = "btn_Close";
             btn_Close.Size = new Size(37, 43);
-            btn_Close.TabIndex = 1;
+            btn_Close.TabIndex = 0;
             btn_Close.UseVisualStyleBackColor = true;
             btn_Close.Click += btn_Close_Click;
             // 
             // Frm_Notification
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(403, 110);
             Controls.Add(picB_Icon);
             Controls.Add(btn_Close);
             Controls.Add(lbl_Message);
             FormBorderStyle = FormBorderStyle.None;
+            MinimizeBox = false;
             Name = "Frm_Notification";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             Load += Frm_Notification_Load;
