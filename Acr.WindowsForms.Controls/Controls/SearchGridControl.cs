@@ -3,6 +3,10 @@ using System.Runtime.Versioning;
 
 namespace Acr.WindowsForms.Controls.Controls;
 
+/// <summary>
+/// Component for searching and selecting item in a DataGridView.
+/// Permits filtering items based on search input with debounce functionality.
+/// </summary>
 [SupportedOSPlatform("windows")]
 public partial class SearchGridControl : UserControl
 {
@@ -65,14 +69,10 @@ public partial class SearchGridControl : UserControl
         }
     }
 
-    // Controla quando o Designer deve gravar código para a propriedade
-    public bool ShouldSerializeDebounceInterval() => _debounceInterval != 300;
-
-    // Permite "Reset" no Properties do VS
-    public void ResetDebounceInterval() => DebounceInterval = 300;
-
-
-    // Expor DataSource
+    /// <summary>
+    /// Data source for the DataGridView.
+    /// When set, it will trigger the event <see cref="OnFormatGrid"/> to customize the grid view.
+    /// </summary>
     [Browsable(false)]
     [DefaultValue(null)]
     public object DataSource
@@ -85,22 +85,23 @@ public partial class SearchGridControl : UserControl
         }
     }
 
-
+    /// <summary>
+    /// Triggered when the DataGridView is formatted.
+    /// </summary>
     // This event will NOT be visible in the Properties window
     [Browsable(false)]
     public event Action<DataGridView>? OnFormatGrid;
 
-    // Evento para disparar busca
+    /// <summary>
+    /// Triggered when the user types in the search box. After the interval defined in <see cref="DebounceInterval"/>.
+    /// </summary>    
     public event EventHandler<string>? OnSearch;
 
-    // Evento para quando seleciona item
+    /// <summary>
+    /// Triggered when the user selects an item from the DataGridView.
+    /// Cold be triggered by double-clicking an item or pressing Enter when an item is selected.
+    /// </summary>
     public event EventHandler<object>? OnItemSelected;
-
-    private event Action<DataGridView?> OnCellPaiting;
-
-
-
-
 
     private void txt_Search_KeyDown(object sender, KeyEventArgs e)
     {
@@ -138,7 +139,6 @@ public partial class SearchGridControl : UserControl
             txt_Search.SelectionStart = txt_Search.Text.Length;
         }
     }
-
     private void dgv_Itens_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
     {
         if (e.RowIndex >= 0 && e.ColumnIndex == -1 && dgv_Itens.Rows[e.RowIndex].Selected)
@@ -156,5 +156,6 @@ public partial class SearchGridControl : UserControl
             }
             e.Handled = true;
         }
+
     }
 }
