@@ -8,6 +8,7 @@ Developed by **Arthur Cabral**, this package aims to improve user experience and
 ## Features
 
 ### Customizable TextBox
+- **Input Type**: Like All, Integer, Decimal, Letter, Alphanumeric
 - **Dynamic Styling**: Changes background color on `Enter` and `Leave` events for better user interaction.
 - **Enhanced Navigation**: Pressing the `Enter` key moves focus to the next control, improving form usability.
 - **Text Selection**: Automatically selects all text when the control gains focus.
