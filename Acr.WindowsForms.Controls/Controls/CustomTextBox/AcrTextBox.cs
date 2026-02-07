@@ -1,27 +1,30 @@
 ﻿using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
+using Acr.WindowsForms.Controls.Helpers;
+using Acr.WindowsForms.Controls.Interfaces;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.Versioning;
 
-namespace Acr.WindowsForms.Controls.Controls;
+namespace Acr.WindowsForms.Controls.Controls.CustomTextBox;
 
 [SupportedOSPlatform("windows")]
-public class Acr_TextBox : TextBox
+public partial class AcrTextBox : TextBox, IAcrValidatableControl
 {
     private Color _onEnterBackColor = Color.AliceBlue;
     private Color _onLeaveBackColor = Color.White;
+    private Label? _titleLabel;
+    private TextboxtInputType _inputType = TextboxtInputType.All;
+
     private bool _tabOnEnter = true;
     private bool _validateAsDate = false;
     private bool _selectAllTextOnEnter = false;
     private bool _labelTitle = false;
 
-    private Label? _titleLabel;
-
-    private TextboxtInputType _inputType = TextboxtInputType.All;
-
     private string _warningMessageDate = "Invalid date format.";
     private string _labelTitleText = string.Empty;
+
+    
 
     [Category("Acr Custom")]
     [Description("Background color when the control is focused.")]
@@ -140,13 +143,15 @@ public class Acr_TextBox : TextBox
             SelectionLength = Text.Length;
         }
 
+        ClearError();
     }
 
     protected override void OnLeave(EventArgs e)
     {
         base.OnLeave(e);
         BackColor = _onLeaveBackColor;
-        if (_validateAsDate) LabelHelper.RemoveLabel(this, MessageType.Error);
+        AcrValidationHelper.ValidateRequired(this, _blockLeave);
+        if (_validateAsDate) ClearError();
     }
 
     protected override void OnKeyDown(KeyEventArgs e)
@@ -162,19 +167,24 @@ public class Acr_TextBox : TextBox
     protected override void OnValidating(CancelEventArgs e)
     {
         base.OnValidating(e);
-        if (_validateAsDate)
+
+        // Validação de campo obrigatório
+        AcrValidationHelper.ValidateRequired(this, _blockLeave, e);
+
+        // Validação de data (se ativada)
+        if (_validateAsDate && !e.Cancel)
         {
-            if (Text == string.Empty) return;
+            if (string.IsNullOrWhiteSpace(Text))
+                return;
 
             try
             {
                 Text = Convert.ToDateTime(Text).ToShortDateString();
             }
-            catch (Exception)
+            catch
             {
                 e.Cancel = true;
                 LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
-
             }
         }
     }
@@ -195,7 +205,7 @@ public class Acr_TextBox : TextBox
     }
 
     protected override void OnKeyPress(KeyPressEventArgs e)
-    {        
+    {
         if (!IsKeyValidForInputType(e.KeyChar))
         {
             e.Handled = true;
@@ -244,7 +254,7 @@ public class Acr_TextBox : TextBox
 
     private void DateValidator(bool valid, KeyPressEventArgs e)
     {
-        if (!valid) return;        
+        if (!valid) return;
 
         if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '/')
         {
@@ -255,7 +265,7 @@ public class Acr_TextBox : TextBox
         if (e.KeyChar == (char)Keys.Back) return;
 
         if (Text.Length == 10)
-        {            
+        {
             e.Handled = true;
             return;
         }
@@ -271,7 +281,7 @@ public class Acr_TextBox : TextBox
             string[] parts = Text.Split('/');
             int l = Text.Length;
 
-            if (Text == "0") e.Handled = true;                            
+            if (Text == "0") e.Handled = true;
             else if (l == 1) Text = "0" + Text;
             else if (l == 4) Text = $"{parts[0]}/0{parts[1]}";
             else
@@ -306,4 +316,7 @@ public class Acr_TextBox : TextBox
         }
 
     }
+
+   
 }
+

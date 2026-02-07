@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Acr.WindowsForms.Controls": {
+      "commandName": "Project"
+    },
+    "WinForms": {
+      "commandName": "Executable",
+      "executablePath": "C:\\dev\\Acr.WindowsForms.Controls\\AcrFormsTest\\bin\\Debug\\net10.0-windows\\AcrFormsTest.exe"
+    }
+  }
+}

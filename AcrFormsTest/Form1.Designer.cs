@@ -1,4 +1,6 @@
-﻿namespace AcrFormsTest
+﻿
+
+namespace AcrFormsTest
 {
     partial class Form1
     {
@@ -28,28 +30,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            acr_TextBox1 = new Acr.WindowsForms.Controls.Controls.Acr_TextBox();
             button1 = new Button();
+            acrTextBox1 = new Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox();
+            acrTextBox2 = new Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox();
             SuspendLayout();
-            // 
-            // acr_TextBox1
-            // 
-            acr_TextBox1.ForeColor = Color.FromArgb(50, 50, 50);
-            acr_TextBox1.InputType = Acr.WindowsForms.Controls.Enums.TextboxtInputType.All;
-            acr_TextBox1.LabelTitle = false;
-            acr_TextBox1.LabelTitleText = "";
-            acr_TextBox1.Location = new Point(12, 55);
-            acr_TextBox1.Name = "acr_TextBox1";
-            acr_TextBox1.OnEnterBackColor = Color.AliceBlue;
-            acr_TextBox1.OnLeaveBackColor = Color.White;
-            acr_TextBox1.RequiredField = true;
-            acr_TextBox1.SelectAllTextOnEnter = false;
-            acr_TextBox1.Size = new Size(100, 23);
-            acr_TextBox1.TabIndex = 0;
-            acr_TextBox1.TabOnEnter = true;
-            acr_TextBox1.ValidateAsDate = false;
-            acr_TextBox1.WarningMessageDate = "Invalid date format.";
-            acr_TextBox1.WarningMessageRequiredField = "This field is required.";
             // 
             // button1
             // 
@@ -61,13 +45,52 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // acrTextBox1
+            // 
+            acrTextBox1.ForeColor = Color.FromArgb(50, 50, 50);
+            acrTextBox1.InputType = Acr.WindowsForms.Controls.Enums.TextboxtInputType.All;
+            acrTextBox1.LabelTitle = false;
+            acrTextBox1.LabelTitleText = "";
+            acrTextBox1.Location = new Point(40, 107);
+            acrTextBox1.Name = "acrTextBox1";
+            acrTextBox1.OnEnterBackColor = Color.AliceBlue;
+            acrTextBox1.OnLeaveBackColor = Color.White;
+            acrTextBox1.RequiredField = true;
+            acrTextBox1.SelectAllTextOnEnter = false;
+            acrTextBox1.Size = new Size(206, 23);
+            acrTextBox1.TabIndex = 2;
+            acrTextBox1.TabOnEnter = true;
+            acrTextBox1.ValidateAsDate = false;
+            acrTextBox1.WarningMessageDate = "Invalid date format.";
+            acrTextBox1.WarningMessageRequiredField = "Id Produto";
+            // 
+            // acrTextBox2
+            // 
+            acrTextBox2.ForeColor = Color.FromArgb(50, 50, 50);
+            acrTextBox2.InputType = Acr.WindowsForms.Controls.Enums.TextboxtInputType.All;
+            acrTextBox2.LabelTitle = false;
+            acrTextBox2.LabelTitleText = "";
+            acrTextBox2.Location = new Point(40, 146);
+            acrTextBox2.Name = "acrTextBox2";
+            acrTextBox2.OnEnterBackColor = Color.AliceBlue;
+            acrTextBox2.OnLeaveBackColor = Color.White;
+            acrTextBox2.RequiredField = true;
+            acrTextBox2.SelectAllTextOnEnter = false;
+            acrTextBox2.Size = new Size(206, 23);
+            acrTextBox2.TabIndex = 2;
+            acrTextBox2.TabOnEnter = true;
+            acrTextBox2.ValidateAsDate = false;
+            acrTextBox2.WarningMessageDate = "Invalid date format.";
+            acrTextBox2.WarningMessageRequiredField = "Descrição";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(acrTextBox2);
+            Controls.Add(acrTextBox1);
             Controls.Add(button1);
-            Controls.Add(acr_TextBox1);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
@@ -76,7 +99,8 @@
 
         #endregion
 
-        private Acr.WindowsForms.Controls.Controls.Acr_TextBox acr_TextBox1;
         private Button button1;
+        private Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox acrTextBox1;
+        private Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox acrTextBox2;
     }
 }

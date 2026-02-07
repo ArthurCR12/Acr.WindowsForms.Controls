@@ -1,4 +1,6 @@
-﻿namespace Acr.WindowsForms.Controls.Controls
+﻿using Acr.WindowsForms.Controls.Controls.CustomTextBox;
+
+namespace Acr.WindowsForms.Controls.Controls
 {
     partial class SearchGridControl
     {
@@ -29,7 +31,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txt_Search = new Acr_TextBox();
+            txt_Search = new AcrTextBox();
             dgv_Itens = new DataGridView();
             panel3 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dgv_Itens).BeginInit();
@@ -97,7 +99,7 @@
 
         #endregion
         public DataGridView dgv_Itens;
-        public Acr_TextBox txt_Search;
+        public AcrTextBox txt_Search;
         private Panel panel3;
     }
 }
