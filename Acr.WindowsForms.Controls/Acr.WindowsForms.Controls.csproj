@@ -41,6 +41,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\CustomTextBox\AcrTextBox.DateValidation.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\CustomTextBox\AcrTextBox.Visual.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
