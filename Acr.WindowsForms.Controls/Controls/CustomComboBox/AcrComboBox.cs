@@ -5,11 +5,12 @@ using System.ComponentModel;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomComboBox;
 
-public class AcrComboBox : ComboBox, IAcrValidatableControl
+public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl
 {
     private bool _requiredField = false;
     private bool _blockLeave = false;
     private string _warningMessageRequiredField = "This field is required!";
+    
 
     public bool IsControlEmpty => SelectedIndex == -1;
 
@@ -43,7 +44,36 @@ public class AcrComboBox : ComboBox, IAcrValidatableControl
         get => _blockLeave;
         set => _blockLeave = value;
     }
-    
+
+    private EControlState _controlState = EControlState.Normal;
+    [Category("Acr Custom")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public EControlState ControlState
+    {
+        get => _controlState;
+        set
+        {
+            if (_controlState == value) return;
+            _controlState = value;
+            ApplyState();
+        }
+    }
+
+    public void ApplyState()
+    {
+        switch (_controlState)
+        {
+            case EControlState.Normal:
+                Enabled = true; break;
+            case EControlState.Disabled:
+                Enabled = false; break;
+            case EControlState.ReadOnly:
+                Enabled = false; break;
+            case EControlState.Edit:
+                Enabled = true; break;
+        }
+    }
 
     public void ClearError()
     {
