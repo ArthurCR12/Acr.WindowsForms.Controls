@@ -12,7 +12,9 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
     private Color _onLeaveBackColor = Color.White;
 
     private Label? _titleLabel;
+
     private TextboxtInputType _inputType = TextboxtInputType.All;
+    private EControlState _controlState = EControlState.Normal;
 
     private bool _labelTitle = false;
     private string _labelTitleText = string.Empty;
@@ -75,6 +77,20 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         }
     }
 
+    [Category("Acr Custom")]    
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public EControlState ControlState
+    {
+        get => _controlState;
+        set 
+        { 
+            if (_controlState == value) return;
+            _controlState = value;
+            ApplyState();
+        }
+    }
+
 
     protected override void OnEnter(EventArgs e)
     {
@@ -121,4 +137,22 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
 
     }
 
+    public void ApplyState()
+    {
+        switch (_controlState)
+        {
+            case EControlState.Normal:
+                ReadOnly = false; break;
+            case EControlState.Disabled:
+                Enabled = false; break;
+            case EControlState.ReadOnly:
+                ReadOnly = true; break;
+            case EControlState.Edit:
+                ReadOnly = false;
+                Enabled = true;
+                break;
+        }
+    }
+
+    
 }

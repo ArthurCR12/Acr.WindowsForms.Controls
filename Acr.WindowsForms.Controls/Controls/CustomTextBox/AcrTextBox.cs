@@ -1,6 +1,5 @@
 ﻿using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
-using Acr.WindowsForms.Controls.Helpers;
 using Acr.WindowsForms.Controls.Interfaces;
 using System.ComponentModel;
 using System.Globalization;
@@ -9,7 +8,7 @@ using System.Runtime.Versioning;
 namespace Acr.WindowsForms.Controls.Controls.CustomTextBox;
 
 [SupportedOSPlatform("windows")]
-public partial class AcrTextBox : TextBox, IAcrValidatableControl
+public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseControl 
 {
     private bool _tabOnEnter = true;    
     private bool _selectAllTextOnEnter = false;
@@ -32,7 +31,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
     {
         get => _selectAllTextOnEnter;
         set => _selectAllTextOnEnter = value;
-    }
+    }    
 
     protected override void OnCreateControl()
     {
