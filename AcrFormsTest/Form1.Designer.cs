@@ -102,6 +102,14 @@ namespace AcrFormsTest
             badgeInfo = new Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge();
             badgeNeutral = new Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge();
 
+            tabPageCheckBox = new TabPage();
+            lblCheckBoxHeader = new Label();
+            chkNormal = new Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox();
+            chkCheckedByDefault = new Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox();
+            chkAccent = new Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox();
+            chkDisabled = new Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox();
+            chkDisabledChecked = new Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -110,6 +118,7 @@ namespace AcrFormsTest
             tabPageSearch.SuspendLayout();
             tabPageNotifications.SuspendLayout();
             tabPageBadges.SuspendLayout();
+            tabPageCheckBox.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -120,6 +129,7 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageSearch);
             tabControl1.Controls.Add(tabPageNotifications);
             tabControl1.Controls.Add(tabPageBadges);
+            tabControl1.Controls.Add(tabPageCheckBox);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -905,6 +915,77 @@ namespace AcrFormsTest
             badgeNeutral.Text = "Neutral";
             badgeNeutral.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Neutral;
             //
+            // tabPageCheckBox
+            //
+            tabPageCheckBox.Controls.Add(lblCheckBoxHeader);
+            tabPageCheckBox.Controls.Add(chkNormal);
+            tabPageCheckBox.Controls.Add(chkCheckedByDefault);
+            tabPageCheckBox.Controls.Add(chkAccent);
+            tabPageCheckBox.Controls.Add(chkDisabled);
+            tabPageCheckBox.Controls.Add(chkDisabledChecked);
+            tabPageCheckBox.Location = new Point(4, 24);
+            tabPageCheckBox.Name = "tabPageCheckBox";
+            tabPageCheckBox.Padding = new Padding(3);
+            tabPageCheckBox.Size = new Size(792, 622);
+            tabPageCheckBox.TabIndex = 6;
+            tabPageCheckBox.Text = "AcrCheckBox";
+            tabPageCheckBox.UseVisualStyleBackColor = true;
+            //
+            // lblCheckBoxHeader
+            //
+            lblCheckBoxHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblCheckBoxHeader.Location = new Point(24, 15);
+            lblCheckBoxHeader.Name = "lblCheckBoxHeader";
+            lblCheckBoxHeader.Size = new Size(700, 20);
+            lblCheckBoxHeader.TabIndex = 0;
+            lblCheckBoxHeader.Text = "AcrCheckBox — normal, marcado, cor customizada e desabilitado";
+            //
+            // chkNormal
+            //
+            chkNormal.AutoSize = true;
+            chkNormal.Location = new Point(30, 60);
+            chkNormal.Name = "chkNormal";
+            chkNormal.TabIndex = 1;
+            chkNormal.Text = "Opção padrão (desmarcada)";
+            //
+            // chkCheckedByDefault
+            //
+            chkCheckedByDefault.AutoSize = true;
+            chkCheckedByDefault.Checked = true;
+            chkCheckedByDefault.Location = new Point(30, 95);
+            chkCheckedByDefault.Name = "chkCheckedByDefault";
+            chkCheckedByDefault.TabIndex = 2;
+            chkCheckedByDefault.Text = "Opção já marcada";
+            //
+            // chkAccent
+            //
+            chkAccent.AccentColor = Color.FromArgb(32, 148, 87);
+            chkAccent.AutoSize = true;
+            chkAccent.Checked = true;
+            chkAccent.Location = new Point(30, 130);
+            chkAccent.Name = "chkAccent";
+            chkAccent.TabIndex = 3;
+            chkAccent.Text = "Marcada com AccentColor customizada (verde)";
+            //
+            // chkDisabled
+            //
+            chkDisabled.AutoSize = true;
+            chkDisabled.Enabled = false;
+            chkDisabled.Location = new Point(30, 165);
+            chkDisabled.Name = "chkDisabled";
+            chkDisabled.TabIndex = 4;
+            chkDisabled.Text = "Desabilitada (desmarcada)";
+            //
+            // chkDisabledChecked
+            //
+            chkDisabledChecked.AutoSize = true;
+            chkDisabledChecked.Checked = true;
+            chkDisabledChecked.Enabled = false;
+            chkDisabledChecked.Location = new Point(30, 200);
+            chkDisabledChecked.Name = "chkDisabledChecked";
+            chkDisabledChecked.TabIndex = 5;
+            chkDisabledChecked.Text = "Desabilitada (marcada)";
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -925,6 +1006,8 @@ namespace AcrFormsTest
             tabPageSearch.PerformLayout();
             tabPageNotifications.ResumeLayout(false);
             tabPageBadges.ResumeLayout(false);
+            tabPageCheckBox.ResumeLayout(false);
+            tabPageCheckBox.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1001,5 +1084,13 @@ namespace AcrFormsTest
         private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgeError;
         private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgeInfo;
         private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgeNeutral;
+
+        private TabPage tabPageCheckBox;
+        private Label lblCheckBoxHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox chkNormal;
+        private Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox chkCheckedByDefault;
+        private Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox chkAccent;
+        private Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox chkDisabled;
+        private Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox chkDisabledChecked;
     }
 }
