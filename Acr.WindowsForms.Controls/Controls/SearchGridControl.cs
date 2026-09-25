@@ -30,6 +30,7 @@ public partial class SearchGridControl : UserControl
         {
             _debounceTimer.Stop();
             _debounceTimer.Start();
+            UpdateEmptyState();
         };
 
         dgv_Itens.CellDoubleClick += (s, e) =>
@@ -41,16 +42,7 @@ public partial class SearchGridControl : UserControl
             }
         };
 
-        txt_Search.KeyDown += (s, e) =>
-        {
-            if (e.KeyCode == Keys.Enter && dgv_Itens.CurrentRow != null)
-            {
-                var item = dgv_Itens.CurrentRow.DataBoundItem;
-                OnItemSelected?.Invoke(this, item);
-                e.Handled = true;
-            }
-        };
-
+        txt_Search.ShowClearButton = true;
     }
 
     [Browsable(true)]
@@ -82,7 +74,28 @@ public partial class SearchGridControl : UserControl
         {
             dgv_Itens.DataSource = value;
             OnFormatGrid?.Invoke(dgv_Itens);
+            UpdateEmptyState();
         }
+    }
+
+    private void UpdateEmptyState()
+    {
+        bool showEmpty = dgv_Itens.Rows.Count == 0 && !string.IsNullOrWhiteSpace(txt_Search.Text);
+        lbl_NoResults.Visible = showEmpty;
+        if (showEmpty) lbl_NoResults.BringToFront();
+    }
+
+    /// <summary>
+    /// Message shown over the grid when a search returns no results.
+    /// </summary>
+    [Browsable(true)]
+    [Category("Acr Custom")]
+    [Description("Message shown over the grid when a search returns no results.")]
+    [DefaultValue("Nenhum resultado encontrado.")]
+    public string EmptySearchMessage
+    {
+        get => lbl_NoResults.Text;
+        set => lbl_NoResults.Text = value;
     }
 
     /// <summary>
@@ -139,21 +152,19 @@ public partial class SearchGridControl : UserControl
             txt_Search.SelectionStart = txt_Search.Text.Length;
         }
     }
+    private static readonly Font RowIndicatorFont = new("Arial", 8, FontStyle.Bold);
+
     private void dgv_Itens_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
     {
         if (e.RowIndex >= 0 && e.ColumnIndex == -1 && dgv_Itens.Rows[e.RowIndex].Selected)
         {
             e.PaintBackground(e.ClipBounds, true);
             string arrow = "►";
-            //string number = ($"A{e.RowIndex + 1}").ToString();
-            using (Font font = new Font("Arial", 8, FontStyle.Bold))
-            {
-                SizeF textSize = e.Graphics.MeasureString(arrow, font);
-                PointF location = new PointF(
-                    e.CellBounds.Left + (e.CellBounds.Width - textSize.Width) / 2,
-                    e.CellBounds.Top + (e.CellBounds.Height - textSize.Height) / 2);
-                e.Graphics.DrawString(arrow, font, Brushes.Black, location);
-            }
+            SizeF textSize = e.Graphics.MeasureString(arrow, RowIndicatorFont);
+            PointF location = new PointF(
+                e.CellBounds.Left + (e.CellBounds.Width - textSize.Width) / 2,
+                e.CellBounds.Top + (e.CellBounds.Height - textSize.Height) / 2);
+            e.Graphics.DrawString(arrow, RowIndicatorFont, Brushes.Black, location);
             e.Handled = true;
         }
 
