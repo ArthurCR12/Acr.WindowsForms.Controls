@@ -228,6 +228,23 @@ namespace AcrFormsTest
             breadcrumb1 = new Acr.WindowsForms.Controls.Controls.CustomBreadcrumb.AcrBreadcrumb();
             lblBreadcrumbResult = new Label();
 
+            tabPageStepper = new TabPage();
+            lblStepperHeader = new Label();
+            stepper1 = new Acr.WindowsForms.Controls.Controls.CustomStepper.AcrStepper();
+            btnStepperPrev = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
+            btnStepperNext = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
+
+            tabPageSegmented = new TabPage();
+            lblSegmentedHeader = new Label();
+            segmented1 = new Acr.WindowsForms.Controls.Controls.CustomSegmentedControl.AcrSegmentedControl();
+            lblSegmentedResult = new Label();
+            segmentedAccent = new Acr.WindowsForms.Controls.Controls.CustomSegmentedControl.AcrSegmentedControl();
+
+            tabPageDropzone = new TabPage();
+            lblDropzoneHeader = new Label();
+            dropzone1 = new Acr.WindowsForms.Controls.Controls.CustomDropzone.AcrDropzone();
+            lblDropzoneResult = new Label();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -254,6 +271,9 @@ namespace AcrFormsTest
             tabPageSlider.SuspendLayout();
             tabPageAccordion.SuspendLayout();
             tabPageBreadcrumb.SuspendLayout();
+            tabPageStepper.SuspendLayout();
+            tabPageSegmented.SuspendLayout();
+            tabPageDropzone.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -282,6 +302,9 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageSlider);
             tabControl1.Controls.Add(tabPageAccordion);
             tabControl1.Controls.Add(tabPageBreadcrumb);
+            tabControl1.Controls.Add(tabPageStepper);
+            tabControl1.Controls.Add(tabPageSegmented);
+            tabControl1.Controls.Add(tabPageDropzone);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -2133,6 +2156,144 @@ namespace AcrFormsTest
             lblBreadcrumbResult.TabIndex = 2;
             lblBreadcrumbResult.Text = "";
             //
+            // tabPageStepper
+            //
+            tabPageStepper.Controls.Add(lblStepperHeader);
+            tabPageStepper.Controls.Add(stepper1);
+            tabPageStepper.Controls.Add(btnStepperPrev);
+            tabPageStepper.Controls.Add(btnStepperNext);
+            tabPageStepper.Location = new Point(4, 24);
+            tabPageStepper.Name = "tabPageStepper";
+            tabPageStepper.Padding = new Padding(3);
+            tabPageStepper.Size = new Size(792, 622);
+            tabPageStepper.TabIndex = 24;
+            tabPageStepper.Text = "AcrStepper";
+            tabPageStepper.UseVisualStyleBackColor = true;
+            //
+            // lblStepperHeader
+            //
+            lblStepperHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblStepperHeader.Location = new Point(24, 15);
+            lblStepperHeader.Name = "lblStepperHeader";
+            lblStepperHeader.Size = new Size(700, 20);
+            lblStepperHeader.TabIndex = 0;
+            lblStepperHeader.Text = "AcrStepper — use os botões para avançar/voltar";
+            //
+            // stepper1
+            //
+            stepper1.Location = new Point(30, 60);
+            stepper1.Name = "stepper1";
+            stepper1.Size = new Size(500, 60);
+            stepper1.TabIndex = 1;
+            //
+            // btnStepperPrev
+            //
+            btnStepperPrev.AccentColor = Color.FromArgb(240, 240, 240);
+            btnStepperPrev.ForeColor = Color.FromArgb(50, 50, 50);
+            btnStepperPrev.Location = new Point(30, 140);
+            btnStepperPrev.Name = "btnStepperPrev";
+            btnStepperPrev.Size = new Size(110, 32);
+            btnStepperPrev.TabIndex = 2;
+            btnStepperPrev.Text = "Voltar";
+            btnStepperPrev.Click += btnStepperPrev_Click;
+            //
+            // btnStepperNext
+            //
+            btnStepperNext.Location = new Point(150, 140);
+            btnStepperNext.Name = "btnStepperNext";
+            btnStepperNext.Size = new Size(110, 32);
+            btnStepperNext.TabIndex = 3;
+            btnStepperNext.Text = "Avançar";
+            btnStepperNext.Click += btnStepperNext_Click;
+            //
+            // tabPageSegmented
+            //
+            tabPageSegmented.Controls.Add(lblSegmentedHeader);
+            tabPageSegmented.Controls.Add(segmented1);
+            tabPageSegmented.Controls.Add(lblSegmentedResult);
+            tabPageSegmented.Controls.Add(segmentedAccent);
+            tabPageSegmented.Location = new Point(4, 24);
+            tabPageSegmented.Name = "tabPageSegmented";
+            tabPageSegmented.Padding = new Padding(3);
+            tabPageSegmented.Size = new Size(792, 622);
+            tabPageSegmented.TabIndex = 25;
+            tabPageSegmented.Text = "AcrSegmentedControl";
+            tabPageSegmented.UseVisualStyleBackColor = true;
+            //
+            // lblSegmentedHeader
+            //
+            lblSegmentedHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSegmentedHeader.Location = new Point(24, 15);
+            lblSegmentedHeader.Name = "lblSegmentedHeader";
+            lblSegmentedHeader.Size = new Size(700, 20);
+            lblSegmentedHeader.TabIndex = 0;
+            lblSegmentedHeader.Text = "AcrSegmentedControl — alternativa ao grupo de RadioButton";
+            //
+            // segmented1
+            //
+            segmented1.Location = new Point(30, 60);
+            segmented1.Name = "segmented1";
+            segmented1.Size = new Size(300, 32);
+            segmented1.TabIndex = 1;
+            segmented1.SelectedIndexChanged += segmented1_SelectedIndexChanged;
+            //
+            // lblSegmentedResult
+            //
+            lblSegmentedResult.AutoSize = true;
+            lblSegmentedResult.Location = new Point(340, 68);
+            lblSegmentedResult.Name = "lblSegmentedResult";
+            lblSegmentedResult.Size = new Size(150, 15);
+            lblSegmentedResult.TabIndex = 2;
+            lblSegmentedResult.Text = "";
+            //
+            // segmentedAccent
+            //
+            segmentedAccent.AccentColor = Color.FromArgb(32, 148, 87);
+            segmentedAccent.Location = new Point(30, 110);
+            segmentedAccent.Name = "segmentedAccent";
+            segmentedAccent.Size = new Size(300, 32);
+            segmentedAccent.TabIndex = 3;
+            //
+            // tabPageDropzone
+            //
+            tabPageDropzone.Controls.Add(lblDropzoneHeader);
+            tabPageDropzone.Controls.Add(dropzone1);
+            tabPageDropzone.Controls.Add(lblDropzoneResult);
+            tabPageDropzone.Location = new Point(4, 24);
+            tabPageDropzone.Name = "tabPageDropzone";
+            tabPageDropzone.Padding = new Padding(3);
+            tabPageDropzone.Size = new Size(792, 622);
+            tabPageDropzone.TabIndex = 26;
+            tabPageDropzone.Text = "AcrDropzone";
+            tabPageDropzone.UseVisualStyleBackColor = true;
+            //
+            // lblDropzoneHeader
+            //
+            lblDropzoneHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblDropzoneHeader.Location = new Point(24, 15);
+            lblDropzoneHeader.Name = "lblDropzoneHeader";
+            lblDropzoneHeader.Size = new Size(700, 20);
+            lblDropzoneHeader.TabIndex = 0;
+            lblDropzoneHeader.Text = "AcrDropzone — arraste um arquivo ou clique para selecionar";
+            //
+            // dropzone1
+            //
+            dropzone1.AllowedExtensions = "";
+            dropzone1.Location = new Point(30, 60);
+            dropzone1.Name = "dropzone1";
+            dropzone1.Size = new Size(360, 140);
+            dropzone1.TabIndex = 1;
+            dropzone1.FilesDropped += dropzone1_FilesDropped;
+            //
+            // lblDropzoneResult
+            //
+            lblDropzoneResult.AutoSize = true;
+            lblDropzoneResult.Location = new Point(30, 215);
+            lblDropzoneResult.Name = "lblDropzoneResult";
+            lblDropzoneResult.Size = new Size(400, 15);
+            lblDropzoneResult.TabIndex = 2;
+            lblDropzoneResult.Text = "";
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2184,6 +2345,12 @@ namespace AcrFormsTest
             tabPageAccordion.ResumeLayout(false);
             tabPageBreadcrumb.ResumeLayout(false);
             tabPageBreadcrumb.PerformLayout();
+            tabPageStepper.ResumeLayout(false);
+            tabPageStepper.PerformLayout();
+            tabPageSegmented.ResumeLayout(false);
+            tabPageSegmented.PerformLayout();
+            tabPageDropzone.ResumeLayout(false);
+            tabPageDropzone.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -2386,5 +2553,22 @@ namespace AcrFormsTest
         private Label lblBreadcrumbHeader;
         private Acr.WindowsForms.Controls.Controls.CustomBreadcrumb.AcrBreadcrumb breadcrumb1;
         private Label lblBreadcrumbResult;
+
+        private TabPage tabPageStepper;
+        private Label lblStepperHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomStepper.AcrStepper stepper1;
+        private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnStepperPrev;
+        private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnStepperNext;
+
+        private TabPage tabPageSegmented;
+        private Label lblSegmentedHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomSegmentedControl.AcrSegmentedControl segmented1;
+        private Label lblSegmentedResult;
+        private Acr.WindowsForms.Controls.Controls.CustomSegmentedControl.AcrSegmentedControl segmentedAccent;
+
+        private TabPage tabPageDropzone;
+        private Label lblDropzoneHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomDropzone.AcrDropzone dropzone1;
+        private Label lblDropzoneResult;
     }
 }

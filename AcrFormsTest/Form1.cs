@@ -39,6 +39,11 @@ namespace AcrFormsTest
             searchGridControl1.DataSource = GetSampleProdutos();
 
             breadcrumb1.SetPath("Início", "Produtos", "Periféricos", "Teclado Mecânico");
+
+            stepper1.SetSteps("Carrinho", "Entrega", "Pagamento", "Confirmação");
+
+            segmented1.SetItems("Dia", "Semana", "Mês");
+            segmentedAccent.SetItems("Lista", "Grade");
         }
 
         private static List<Produto> GetSampleProdutos() =>
@@ -194,5 +199,15 @@ namespace AcrFormsTest
 
         private void breadcrumb1_ItemClicked(object? sender, Acr.WindowsForms.Controls.Controls.CustomBreadcrumb.AcrBreadcrumbItemEventArgs e) =>
             lblBreadcrumbResult.Text = $"Navegou para: {e.Text}";
+
+        private void btnStepperPrev_Click(object sender, EventArgs e) => stepper1.Previous();
+
+        private void btnStepperNext_Click(object sender, EventArgs e) => stepper1.Next();
+
+        private void segmented1_SelectedIndexChanged(object? sender, int index) =>
+            lblSegmentedResult.Text = $"Selecionado: {segmented1.SelectedItem}";
+
+        private void dropzone1_FilesDropped(object? sender, Acr.WindowsForms.Controls.Controls.CustomDropzone.AcrDropzoneFilesEventArgs e) =>
+            lblDropzoneResult.Text = $"{e.Files.Length} arquivo(s): {string.Join(", ", e.Files.Select(Path.GetFileName))}";
     }
 }
