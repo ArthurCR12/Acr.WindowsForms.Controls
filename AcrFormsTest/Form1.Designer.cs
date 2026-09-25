@@ -137,6 +137,29 @@ namespace AcrFormsTest
             acrPagination1 = new Acr.WindowsForms.Controls.Controls.CustomPagination.AcrPagination();
             lblPaginationResult = new Label();
 
+            tabPageToggle = new TabPage();
+            lblToggleHeader = new Label();
+            toggleOff = new Acr.WindowsForms.Controls.Controls.CustomToggleSwitch.AcrToggleSwitch();
+            toggleOn = new Acr.WindowsForms.Controls.Controls.CustomToggleSwitch.AcrToggleSwitch();
+            toggleAccent = new Acr.WindowsForms.Controls.Controls.CustomToggleSwitch.AcrToggleSwitch();
+            toggleDisabled = new Acr.WindowsForms.Controls.Controls.CustomToggleSwitch.AcrToggleSwitch();
+
+            tabPageProgressBar = new TabPage();
+            lblProgressHeader = new Label();
+            progress25 = new Acr.WindowsForms.Controls.Controls.CustomProgressBar.AcrProgressBar();
+            lblProgress25 = new Label();
+            progress60 = new Acr.WindowsForms.Controls.Controls.CustomProgressBar.AcrProgressBar();
+            lblProgress60 = new Label();
+            progress100 = new Acr.WindowsForms.Controls.Controls.CustomProgressBar.AcrProgressBar();
+            lblProgress100 = new Label();
+
+            tabPageAlert = new TabPage();
+            lblAlertHeader = new Label();
+            alertInfo = new Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert();
+            alertSuccess = new Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert();
+            alertWarning = new Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert();
+            alertError = new Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -150,6 +173,9 @@ namespace AcrFormsTest
             tabPageCard.SuspendLayout();
             tabPageLoader.SuspendLayout();
             tabPagePagination.SuspendLayout();
+            tabPageToggle.SuspendLayout();
+            tabPageProgressBar.SuspendLayout();
+            tabPageAlert.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -165,6 +191,9 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageCard);
             tabControl1.Controls.Add(tabPageLoader);
             tabControl1.Controls.Add(tabPagePagination);
+            tabControl1.Controls.Add(tabPageToggle);
+            tabControl1.Controls.Add(tabPageProgressBar);
+            tabControl1.Controls.Add(tabPageAlert);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -1242,6 +1271,205 @@ namespace AcrFormsTest
             lblPaginationResult.TabIndex = 2;
             lblPaginationResult.Text = "Página atual: 1 / 12";
             //
+            // tabPageToggle
+            //
+            tabPageToggle.Controls.Add(lblToggleHeader);
+            tabPageToggle.Controls.Add(toggleOff);
+            tabPageToggle.Controls.Add(toggleOn);
+            tabPageToggle.Controls.Add(toggleAccent);
+            tabPageToggle.Controls.Add(toggleDisabled);
+            tabPageToggle.Location = new Point(4, 24);
+            tabPageToggle.Name = "tabPageToggle";
+            tabPageToggle.Padding = new Padding(3);
+            tabPageToggle.Size = new Size(792, 622);
+            tabPageToggle.TabIndex = 11;
+            tabPageToggle.Text = "AcrToggleSwitch";
+            tabPageToggle.UseVisualStyleBackColor = true;
+            //
+            // lblToggleHeader
+            //
+            lblToggleHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblToggleHeader.Location = new Point(24, 15);
+            lblToggleHeader.Name = "lblToggleHeader";
+            lblToggleHeader.Size = new Size(700, 20);
+            lblToggleHeader.TabIndex = 0;
+            lblToggleHeader.Text = "AcrToggleSwitch — clique para alternar (com animação)";
+            //
+            // toggleOff
+            //
+            toggleOff.AutoSize = true;
+            toggleOff.Location = new Point(30, 60);
+            toggleOff.Name = "toggleOff";
+            toggleOff.TabIndex = 1;
+            toggleOff.Text = "Desligado";
+            //
+            // toggleOn
+            //
+            toggleOn.AutoSize = true;
+            toggleOn.Checked = true;
+            toggleOn.Location = new Point(30, 105);
+            toggleOn.Name = "toggleOn";
+            toggleOn.TabIndex = 2;
+            toggleOn.Text = "Ligado";
+            //
+            // toggleAccent
+            //
+            toggleAccent.AutoSize = true;
+            toggleAccent.Checked = true;
+            toggleAccent.Location = new Point(30, 150);
+            toggleAccent.Name = "toggleAccent";
+            toggleAccent.OnColor = Color.FromArgb(32, 148, 87);
+            toggleAccent.TabIndex = 3;
+            toggleAccent.Text = "OnColor customizada (verde)";
+            //
+            // toggleDisabled
+            //
+            toggleDisabled.AutoSize = true;
+            toggleDisabled.Enabled = false;
+            toggleDisabled.Location = new Point(30, 195);
+            toggleDisabled.Name = "toggleDisabled";
+            toggleDisabled.TabIndex = 4;
+            toggleDisabled.Text = "Desabilitado";
+            //
+            // tabPageProgressBar
+            //
+            tabPageProgressBar.Controls.Add(lblProgressHeader);
+            tabPageProgressBar.Controls.Add(progress25);
+            tabPageProgressBar.Controls.Add(lblProgress25);
+            tabPageProgressBar.Controls.Add(progress60);
+            tabPageProgressBar.Controls.Add(lblProgress60);
+            tabPageProgressBar.Controls.Add(progress100);
+            tabPageProgressBar.Controls.Add(lblProgress100);
+            tabPageProgressBar.Location = new Point(4, 24);
+            tabPageProgressBar.Name = "tabPageProgressBar";
+            tabPageProgressBar.Padding = new Padding(3);
+            tabPageProgressBar.Size = new Size(792, 622);
+            tabPageProgressBar.TabIndex = 12;
+            tabPageProgressBar.Text = "AcrProgressBar";
+            tabPageProgressBar.UseVisualStyleBackColor = true;
+            //
+            // lblProgressHeader
+            //
+            lblProgressHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblProgressHeader.Location = new Point(24, 15);
+            lblProgressHeader.Name = "lblProgressHeader";
+            lblProgressHeader.Size = new Size(700, 20);
+            lblProgressHeader.TabIndex = 0;
+            lblProgressHeader.Text = "AcrProgressBar — barra flat com cantos arredondados";
+            //
+            // progress25
+            //
+            progress25.Location = new Point(30, 65);
+            progress25.Name = "progress25";
+            progress25.Size = new Size(300, 18);
+            progress25.TabIndex = 1;
+            progress25.Value = 25;
+            //
+            // lblProgress25
+            //
+            lblProgress25.AutoSize = true;
+            lblProgress25.Location = new Point(340, 65);
+            lblProgress25.Name = "lblProgress25";
+            lblProgress25.Size = new Size(60, 15);
+            lblProgress25.TabIndex = 2;
+            lblProgress25.Text = "25%";
+            //
+            // progress60
+            //
+            progress60.FillColor = Color.FromArgb(32, 148, 87);
+            progress60.Location = new Point(30, 100);
+            progress60.Name = "progress60";
+            progress60.Size = new Size(300, 18);
+            progress60.TabIndex = 3;
+            progress60.Value = 60;
+            //
+            // lblProgress60
+            //
+            lblProgress60.AutoSize = true;
+            lblProgress60.Location = new Point(340, 100);
+            lblProgress60.Name = "lblProgress60";
+            lblProgress60.Size = new Size(150, 15);
+            lblProgress60.TabIndex = 4;
+            lblProgress60.Text = "60% — FillColor verde";
+            //
+            // progress100
+            //
+            progress100.FillColor = Color.FromArgb(212, 140, 15);
+            progress100.Location = new Point(30, 135);
+            progress100.Name = "progress100";
+            progress100.Size = new Size(300, 18);
+            progress100.TabIndex = 5;
+            progress100.Value = 100;
+            //
+            // lblProgress100
+            //
+            lblProgress100.AutoSize = true;
+            lblProgress100.Location = new Point(340, 135);
+            lblProgress100.Name = "lblProgress100";
+            lblProgress100.Size = new Size(150, 15);
+            lblProgress100.TabIndex = 6;
+            lblProgress100.Text = "100% — completo";
+            //
+            // tabPageAlert
+            //
+            tabPageAlert.Controls.Add(lblAlertHeader);
+            tabPageAlert.Controls.Add(alertInfo);
+            tabPageAlert.Controls.Add(alertSuccess);
+            tabPageAlert.Controls.Add(alertWarning);
+            tabPageAlert.Controls.Add(alertError);
+            tabPageAlert.Location = new Point(4, 24);
+            tabPageAlert.Name = "tabPageAlert";
+            tabPageAlert.Padding = new Padding(3);
+            tabPageAlert.Size = new Size(792, 622);
+            tabPageAlert.TabIndex = 13;
+            tabPageAlert.Text = "AcrAlert";
+            tabPageAlert.UseVisualStyleBackColor = true;
+            //
+            // lblAlertHeader
+            //
+            lblAlertHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblAlertHeader.Location = new Point(24, 15);
+            lblAlertHeader.Name = "lblAlertHeader";
+            lblAlertHeader.Size = new Size(700, 20);
+            lblAlertHeader.TabIndex = 0;
+            lblAlertHeader.Text = "AcrAlert — banner inline, clique no × para fechar";
+            //
+            // alertInfo
+            //
+            alertInfo.Location = new Point(30, 60);
+            alertInfo.Name = "alertInfo";
+            alertInfo.Size = new Size(500, 48);
+            alertInfo.TabIndex = 1;
+            alertInfo.Text = "Informação: esta é uma mensagem informativa.";
+            alertInfo.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Info;
+            //
+            // alertSuccess
+            //
+            alertSuccess.Location = new Point(30, 120);
+            alertSuccess.Name = "alertSuccess";
+            alertSuccess.Size = new Size(500, 48);
+            alertSuccess.TabIndex = 2;
+            alertSuccess.Text = "Sucesso: operação concluída com êxito.";
+            alertSuccess.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Success;
+            //
+            // alertWarning
+            //
+            alertWarning.Location = new Point(30, 180);
+            alertWarning.Name = "alertWarning";
+            alertWarning.Size = new Size(500, 48);
+            alertWarning.TabIndex = 3;
+            alertWarning.Text = "Aviso: verifique os dados antes de continuar.";
+            alertWarning.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Warning;
+            //
+            // alertError
+            //
+            alertError.Location = new Point(30, 240);
+            alertError.Name = "alertError";
+            alertError.Size = new Size(500, 48);
+            alertError.TabIndex = 4;
+            alertError.Text = "Erro: não foi possível concluir a operação.";
+            alertError.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Error;
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1271,6 +1499,11 @@ namespace AcrFormsTest
             tabPageLoader.PerformLayout();
             tabPagePagination.ResumeLayout(false);
             tabPagePagination.PerformLayout();
+            tabPageToggle.ResumeLayout(false);
+            tabPageToggle.PerformLayout();
+            tabPageProgressBar.ResumeLayout(false);
+            tabPageProgressBar.PerformLayout();
+            tabPageAlert.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1382,5 +1615,28 @@ namespace AcrFormsTest
         private Label lblPaginationHeader;
         private Acr.WindowsForms.Controls.Controls.CustomPagination.AcrPagination acrPagination1;
         private Label lblPaginationResult;
+
+        private TabPage tabPageToggle;
+        private Label lblToggleHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomToggleSwitch.AcrToggleSwitch toggleOff;
+        private Acr.WindowsForms.Controls.Controls.CustomToggleSwitch.AcrToggleSwitch toggleOn;
+        private Acr.WindowsForms.Controls.Controls.CustomToggleSwitch.AcrToggleSwitch toggleAccent;
+        private Acr.WindowsForms.Controls.Controls.CustomToggleSwitch.AcrToggleSwitch toggleDisabled;
+
+        private TabPage tabPageProgressBar;
+        private Label lblProgressHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomProgressBar.AcrProgressBar progress25;
+        private Label lblProgress25;
+        private Acr.WindowsForms.Controls.Controls.CustomProgressBar.AcrProgressBar progress60;
+        private Label lblProgress60;
+        private Acr.WindowsForms.Controls.Controls.CustomProgressBar.AcrProgressBar progress100;
+        private Label lblProgress100;
+
+        private TabPage tabPageAlert;
+        private Label lblAlertHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert alertInfo;
+        private Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert alertSuccess;
+        private Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert alertWarning;
+        private Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert alertError;
     }
 }
