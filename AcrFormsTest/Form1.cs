@@ -106,5 +106,8 @@ namespace AcrFormsTest
 
         private void btnNotifInfo_Click(object sender, EventArgs e) =>
             NotificationHelper.Show("Esta é uma notificação informativa.", NotificationType.Info);
+
+        private void acrPagination1_PageChanged(object? sender, int page) =>
+            lblPaginationResult.Text = $"Página atual: {page} / {acrPagination1.PageCount}";
     }
 }

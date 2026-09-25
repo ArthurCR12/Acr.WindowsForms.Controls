@@ -110,6 +110,33 @@ namespace AcrFormsTest
             chkDisabled = new Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox();
             chkDisabledChecked = new Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox();
 
+            tabPageRadioButton = new TabPage();
+            lblRadioHeader = new Label();
+            radOptionA = new Acr.WindowsForms.Controls.Controls.CustomRadioButton.AcrRadioButton();
+            radOptionB = new Acr.WindowsForms.Controls.Controls.CustomRadioButton.AcrRadioButton();
+            radOptionAccent = new Acr.WindowsForms.Controls.Controls.CustomRadioButton.AcrRadioButton();
+            radDisabled = new Acr.WindowsForms.Controls.Controls.CustomRadioButton.AcrRadioButton();
+
+            tabPageCard = new TabPage();
+            cardSimple = new Acr.WindowsForms.Controls.Controls.CustomCard.AcrCard();
+            lblCardSimpleContent = new Label();
+            cardTitled = new Acr.WindowsForms.Controls.Controls.CustomCard.AcrCard();
+            lblCardTitledContent = new Label();
+
+            tabPageLoader = new TabPage();
+            lblLoaderHeader = new Label();
+            loaderDefault = new Acr.WindowsForms.Controls.Controls.CustomLoader.AcrLoader();
+            lblLoaderDefault = new Label();
+            loaderSuccess = new Acr.WindowsForms.Controls.Controls.CustomLoader.AcrLoader();
+            lblLoaderSuccess = new Label();
+            loaderThick = new Acr.WindowsForms.Controls.Controls.CustomLoader.AcrLoader();
+            lblLoaderThick = new Label();
+
+            tabPagePagination = new TabPage();
+            lblPaginationHeader = new Label();
+            acrPagination1 = new Acr.WindowsForms.Controls.Controls.CustomPagination.AcrPagination();
+            lblPaginationResult = new Label();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -119,6 +146,10 @@ namespace AcrFormsTest
             tabPageNotifications.SuspendLayout();
             tabPageBadges.SuspendLayout();
             tabPageCheckBox.SuspendLayout();
+            tabPageRadioButton.SuspendLayout();
+            tabPageCard.SuspendLayout();
+            tabPageLoader.SuspendLayout();
+            tabPagePagination.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -130,6 +161,10 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageNotifications);
             tabControl1.Controls.Add(tabPageBadges);
             tabControl1.Controls.Add(tabPageCheckBox);
+            tabControl1.Controls.Add(tabPageRadioButton);
+            tabControl1.Controls.Add(tabPageCard);
+            tabControl1.Controls.Add(tabPageLoader);
+            tabControl1.Controls.Add(tabPagePagination);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -986,6 +1021,227 @@ namespace AcrFormsTest
             chkDisabledChecked.TabIndex = 5;
             chkDisabledChecked.Text = "Desabilitada (marcada)";
             //
+            // tabPageRadioButton
+            //
+            tabPageRadioButton.Controls.Add(lblRadioHeader);
+            tabPageRadioButton.Controls.Add(radOptionA);
+            tabPageRadioButton.Controls.Add(radOptionB);
+            tabPageRadioButton.Controls.Add(radOptionAccent);
+            tabPageRadioButton.Controls.Add(radDisabled);
+            tabPageRadioButton.Location = new Point(4, 24);
+            tabPageRadioButton.Name = "tabPageRadioButton";
+            tabPageRadioButton.Padding = new Padding(3);
+            tabPageRadioButton.Size = new Size(792, 622);
+            tabPageRadioButton.TabIndex = 7;
+            tabPageRadioButton.Text = "AcrRadioButton";
+            tabPageRadioButton.UseVisualStyleBackColor = true;
+            //
+            // lblRadioHeader
+            //
+            lblRadioHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblRadioHeader.Location = new Point(24, 15);
+            lblRadioHeader.Name = "lblRadioHeader";
+            lblRadioHeader.Size = new Size(700, 20);
+            lblRadioHeader.TabIndex = 0;
+            lblRadioHeader.Text = "AcrRadioButton — grupo de opções exclusivas";
+            //
+            // radOptionA
+            //
+            radOptionA.AutoSize = true;
+            radOptionA.Checked = true;
+            radOptionA.Location = new Point(30, 60);
+            radOptionA.Name = "radOptionA";
+            radOptionA.TabIndex = 1;
+            radOptionA.TabStop = true;
+            radOptionA.Text = "Opção A (selecionada por padrão)";
+            //
+            // radOptionB
+            //
+            radOptionB.AutoSize = true;
+            radOptionB.Location = new Point(30, 95);
+            radOptionB.Name = "radOptionB";
+            radOptionB.TabIndex = 2;
+            radOptionB.Text = "Opção B";
+            //
+            // radOptionAccent
+            //
+            radOptionAccent.AccentColor = Color.FromArgb(32, 148, 87);
+            radOptionAccent.AutoSize = true;
+            radOptionAccent.Location = new Point(30, 130);
+            radOptionAccent.Name = "radOptionAccent";
+            radOptionAccent.TabIndex = 3;
+            radOptionAccent.Text = "Opção C (AccentColor verde)";
+            //
+            // radDisabled
+            //
+            radDisabled.AutoSize = true;
+            radDisabled.Enabled = false;
+            radDisabled.Location = new Point(30, 165);
+            radDisabled.Name = "radDisabled";
+            radDisabled.TabIndex = 4;
+            radDisabled.Text = "Opção desabilitada";
+            //
+            // tabPageCard
+            //
+            tabPageCard.Controls.Add(cardSimple);
+            tabPageCard.Controls.Add(cardTitled);
+            tabPageCard.Location = new Point(4, 24);
+            tabPageCard.Name = "tabPageCard";
+            tabPageCard.Padding = new Padding(3);
+            tabPageCard.Size = new Size(792, 622);
+            tabPageCard.TabIndex = 8;
+            tabPageCard.Text = "AcrCard";
+            tabPageCard.UseVisualStyleBackColor = true;
+            //
+            // cardSimple
+            //
+            cardSimple.Controls.Add(lblCardSimpleContent);
+            cardSimple.Location = new Point(30, 30);
+            cardSimple.Name = "cardSimple";
+            cardSimple.Size = new Size(320, 160);
+            cardSimple.TabIndex = 0;
+            //
+            // lblCardSimpleContent
+            //
+            lblCardSimpleContent.AutoSize = true;
+            lblCardSimpleContent.Dock = DockStyle.Fill;
+            lblCardSimpleContent.Name = "lblCardSimpleContent";
+            lblCardSimpleContent.Text = "Card simples, sem título — apenas conteúdo com cantos arredondados e borda sutil.";
+            //
+            // cardTitled
+            //
+            cardTitled.Controls.Add(lblCardTitledContent);
+            cardTitled.Location = new Point(380, 30);
+            cardTitled.Name = "cardTitled";
+            cardTitled.Size = new Size(320, 160);
+            cardTitled.TabIndex = 1;
+            cardTitled.Title = "Resumo do Pedido";
+            //
+            // lblCardTitledContent
+            //
+            lblCardTitledContent.AutoSize = true;
+            lblCardTitledContent.Dock = DockStyle.Fill;
+            lblCardTitledContent.Name = "lblCardTitledContent";
+            lblCardTitledContent.Text = "Card com título — separador desenhado abaixo do cabeçalho.";
+            //
+            // tabPageLoader
+            //
+            tabPageLoader.Controls.Add(lblLoaderHeader);
+            tabPageLoader.Controls.Add(loaderDefault);
+            tabPageLoader.Controls.Add(lblLoaderDefault);
+            tabPageLoader.Controls.Add(loaderSuccess);
+            tabPageLoader.Controls.Add(lblLoaderSuccess);
+            tabPageLoader.Controls.Add(loaderThick);
+            tabPageLoader.Controls.Add(lblLoaderThick);
+            tabPageLoader.Location = new Point(4, 24);
+            tabPageLoader.Name = "tabPageLoader";
+            tabPageLoader.Padding = new Padding(3);
+            tabPageLoader.Size = new Size(792, 622);
+            tabPageLoader.TabIndex = 9;
+            tabPageLoader.Text = "AcrLoader";
+            tabPageLoader.UseVisualStyleBackColor = true;
+            //
+            // lblLoaderHeader
+            //
+            lblLoaderHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblLoaderHeader.Location = new Point(24, 15);
+            lblLoaderHeader.Name = "lblLoaderHeader";
+            lblLoaderHeader.Size = new Size(700, 20);
+            lblLoaderHeader.TabIndex = 0;
+            lblLoaderHeader.Text = "AcrLoader — spinner animado";
+            //
+            // loaderDefault
+            //
+            loaderDefault.Location = new Point(30, 70);
+            loaderDefault.Name = "loaderDefault";
+            loaderDefault.Size = new Size(32, 32);
+            loaderDefault.TabIndex = 1;
+            //
+            // lblLoaderDefault
+            //
+            lblLoaderDefault.AutoSize = true;
+            lblLoaderDefault.Location = new Point(75, 78);
+            lblLoaderDefault.Name = "lblLoaderDefault";
+            lblLoaderDefault.Size = new Size(100, 15);
+            lblLoaderDefault.TabIndex = 2;
+            lblLoaderDefault.Text = "Padrão (azul)";
+            //
+            // loaderSuccess
+            //
+            loaderSuccess.Location = new Point(30, 120);
+            loaderSuccess.Name = "loaderSuccess";
+            loaderSuccess.Size = new Size(32, 32);
+            loaderSuccess.SpinnerColor = Color.FromArgb(32, 148, 87);
+            loaderSuccess.TabIndex = 3;
+            //
+            // lblLoaderSuccess
+            //
+            lblLoaderSuccess.AutoSize = true;
+            lblLoaderSuccess.Location = new Point(75, 128);
+            lblLoaderSuccess.Name = "lblLoaderSuccess";
+            lblLoaderSuccess.Size = new Size(150, 15);
+            lblLoaderSuccess.TabIndex = 4;
+            lblLoaderSuccess.Text = "SpinnerColor customizada (verde)";
+            //
+            // loaderThick
+            //
+            loaderThick.LineWeight = 6;
+            loaderThick.Location = new Point(30, 170);
+            loaderThick.Name = "loaderThick";
+            loaderThick.Size = new Size(48, 48);
+            loaderThick.TabIndex = 5;
+            //
+            // lblLoaderThick
+            //
+            lblLoaderThick.AutoSize = true;
+            lblLoaderThick.Location = new Point(90, 190);
+            lblLoaderThick.Name = "lblLoaderThick";
+            lblLoaderThick.Size = new Size(200, 15);
+            lblLoaderThick.TabIndex = 6;
+            lblLoaderThick.Text = "Maior, com LineWeight = 6";
+            //
+            // tabPagePagination
+            //
+            tabPagePagination.Controls.Add(lblPaginationHeader);
+            tabPagePagination.Controls.Add(acrPagination1);
+            tabPagePagination.Controls.Add(lblPaginationResult);
+            tabPagePagination.Location = new Point(4, 24);
+            tabPagePagination.Name = "tabPagePagination";
+            tabPagePagination.Padding = new Padding(3);
+            tabPagePagination.Size = new Size(792, 622);
+            tabPagePagination.TabIndex = 10;
+            tabPagePagination.Text = "AcrPagination";
+            tabPagePagination.UseVisualStyleBackColor = true;
+            //
+            // lblPaginationHeader
+            //
+            lblPaginationHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPaginationHeader.Location = new Point(24, 15);
+            lblPaginationHeader.Name = "lblPaginationHeader";
+            lblPaginationHeader.Size = new Size(700, 20);
+            lblPaginationHeader.TabIndex = 0;
+            lblPaginationHeader.Text = "AcrPagination — clique em uma página, ou use ‹ ›";
+            //
+            // acrPagination1
+            //
+            acrPagination1.CurrentPage = 1;
+            acrPagination1.Location = new Point(30, 60);
+            acrPagination1.Name = "acrPagination1";
+            acrPagination1.PageCount = 12;
+            acrPagination1.Size = new Size(400, 28);
+            acrPagination1.TabIndex = 1;
+            acrPagination1.PageChanged += acrPagination1_PageChanged;
+            //
+            // lblPaginationResult
+            //
+            lblPaginationResult.AutoSize = true;
+            lblPaginationResult.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPaginationResult.Location = new Point(30, 105);
+            lblPaginationResult.Name = "lblPaginationResult";
+            lblPaginationResult.Size = new Size(200, 15);
+            lblPaginationResult.TabIndex = 2;
+            lblPaginationResult.Text = "Página atual: 1 / 12";
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1008,6 +1264,13 @@ namespace AcrFormsTest
             tabPageBadges.ResumeLayout(false);
             tabPageCheckBox.ResumeLayout(false);
             tabPageCheckBox.PerformLayout();
+            tabPageRadioButton.ResumeLayout(false);
+            tabPageRadioButton.PerformLayout();
+            tabPageCard.ResumeLayout(false);
+            tabPageLoader.ResumeLayout(false);
+            tabPageLoader.PerformLayout();
+            tabPagePagination.ResumeLayout(false);
+            tabPagePagination.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1092,5 +1355,32 @@ namespace AcrFormsTest
         private Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox chkAccent;
         private Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox chkDisabled;
         private Acr.WindowsForms.Controls.Controls.CustomCheckBox.AcrCheckBox chkDisabledChecked;
+
+        private TabPage tabPageRadioButton;
+        private Label lblRadioHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomRadioButton.AcrRadioButton radOptionA;
+        private Acr.WindowsForms.Controls.Controls.CustomRadioButton.AcrRadioButton radOptionB;
+        private Acr.WindowsForms.Controls.Controls.CustomRadioButton.AcrRadioButton radOptionAccent;
+        private Acr.WindowsForms.Controls.Controls.CustomRadioButton.AcrRadioButton radDisabled;
+
+        private TabPage tabPageCard;
+        private Acr.WindowsForms.Controls.Controls.CustomCard.AcrCard cardSimple;
+        private Label lblCardSimpleContent;
+        private Acr.WindowsForms.Controls.Controls.CustomCard.AcrCard cardTitled;
+        private Label lblCardTitledContent;
+
+        private TabPage tabPageLoader;
+        private Label lblLoaderHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomLoader.AcrLoader loaderDefault;
+        private Label lblLoaderDefault;
+        private Acr.WindowsForms.Controls.Controls.CustomLoader.AcrLoader loaderSuccess;
+        private Label lblLoaderSuccess;
+        private Acr.WindowsForms.Controls.Controls.CustomLoader.AcrLoader loaderThick;
+        private Label lblLoaderThick;
+
+        private TabPage tabPagePagination;
+        private Label lblPaginationHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomPagination.AcrPagination acrPagination1;
+        private Label lblPaginationResult;
     }
 }
