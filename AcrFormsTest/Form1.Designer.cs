@@ -50,6 +50,12 @@ namespace AcrFormsTest
             lblCustom = new Label();
             acrTextBoxCustom = new Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox();
             hintCustom = new Label();
+            lblSenha = new Label();
+            acrTextBoxSenha = new Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox();
+            hintSenha = new Label();
+            lblValor = new Label();
+            acrTextBoxValor = new Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox();
+            hintValor = new Label();
             btnValidarForm = new Button();
             lblResult = new Label();
             SuspendLayout();
@@ -114,6 +120,7 @@ namespace AcrFormsTest
             acrTextBox2.OnLeaveBackColor = Color.White;
             acrTextBox2.RequiredField = true;
             acrTextBox2.SelectAllTextOnEnter = false;
+            acrTextBox2.ShowClearButton = true;
             acrTextBox2.Size = new Size(250, 23);
             acrTextBox2.TabIndex = 4;
             acrTextBox2.TabOnEnter = true;
@@ -175,6 +182,7 @@ namespace AcrFormsTest
             // acrTextBoxCpf
             //
             acrTextBoxCpf.ForeColor = Color.FromArgb(50, 50, 50);
+            acrTextBoxCpf.InputMask = "000.000.000-00";
             acrTextBoxCpf.InputType = Acr.WindowsForms.Controls.Enums.TextboxtInputType.All;
             acrTextBoxCpf.LabelTitle = false;
             acrTextBoxCpf.LabelTitleText = "";
@@ -201,7 +209,7 @@ namespace AcrFormsTest
             hintCpf.Name = "hintCpf";
             hintCpf.Size = new Size(360, 15);
             hintCpf.TabIndex = 10;
-            hintCpf.Text = "Ex. válido: 123.456.789-09 (dígito verificador real)";
+            hintCpf.Text = "Máscara automática + dígito verificador real. Ex.: 12345678909";
             //
             // lblCnpj
             //
@@ -215,6 +223,7 @@ namespace AcrFormsTest
             // acrTextBoxCnpj
             //
             acrTextBoxCnpj.ForeColor = Color.FromArgb(50, 50, 50);
+            acrTextBoxCnpj.InputMask = "00.000.000/0000-00";
             acrTextBoxCnpj.InputType = Acr.WindowsForms.Controls.Enums.TextboxtInputType.All;
             acrTextBoxCnpj.LabelTitle = false;
             acrTextBoxCnpj.LabelTitleText = "";
@@ -241,7 +250,7 @@ namespace AcrFormsTest
             hintCnpj.Name = "hintCnpj";
             hintCnpj.Size = new Size(360, 15);
             hintCnpj.TabIndex = 13;
-            hintCnpj.Text = "Ex. válido: 11.222.333/0001-81";
+            hintCnpj.Text = "Máscara automática. Ex.: 11222333000181";
             //
             // lblPhone
             //
@@ -255,6 +264,7 @@ namespace AcrFormsTest
             // acrTextBoxPhone
             //
             acrTextBoxPhone.ForeColor = Color.FromArgb(50, 50, 50);
+            acrTextBoxPhone.InputMask = "(00) 00000-0000";
             acrTextBoxPhone.InputType = Acr.WindowsForms.Controls.Enums.TextboxtInputType.All;
             acrTextBoxPhone.LabelTitle = false;
             acrTextBoxPhone.LabelTitleText = "";
@@ -281,7 +291,7 @@ namespace AcrFormsTest
             hintPhone.Name = "hintPhone";
             hintPhone.Size = new Size(360, 15);
             hintPhone.TabIndex = 16;
-            hintPhone.Text = "Ex. válido: (11) 91234-5678 (10 ou 11 dígitos)";
+            hintPhone.Text = "Máscara automática. Ex.: 11912345678";
             //
             // lblCustom
             //
@@ -324,12 +334,95 @@ namespace AcrFormsTest
             hintCustom.TabIndex = 19;
             hintCustom.Text = "Regex: ^[A-Z]{3}-\\d{4}$  —  ex.: ABC-1234";
             //
+            // lblSenha
+            //
+            lblSenha.AutoSize = true;
+            lblSenha.Location = new Point(30, 422);
+            lblSenha.Name = "lblSenha";
+            lblSenha.Size = new Size(200, 15);
+            lblSenha.TabIndex = 20;
+            lblSenha.Text = "Senha (modo password)";
+            //
+            // acrTextBoxSenha
+            //
+            acrTextBoxSenha.ForeColor = Color.FromArgb(50, 50, 50);
+            acrTextBoxSenha.InputType = Acr.WindowsForms.Controls.Enums.TextboxtInputType.All;
+            acrTextBoxSenha.IsPasswordField = true;
+            acrTextBoxSenha.LabelTitle = false;
+            acrTextBoxSenha.LabelTitleText = "";
+            acrTextBoxSenha.Location = new Point(30, 440);
+            acrTextBoxSenha.Name = "acrTextBoxSenha";
+            acrTextBoxSenha.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxSenha.OnLeaveBackColor = Color.White;
+            acrTextBoxSenha.RequiredField = false;
+            acrTextBoxSenha.SelectAllTextOnEnter = false;
+            acrTextBoxSenha.Size = new Size(250, 23);
+            acrTextBoxSenha.TabIndex = 21;
+            acrTextBoxSenha.TabOnEnter = true;
+            acrTextBoxSenha.ValidateAsDate = false;
+            acrTextBoxSenha.ValidationType = Acr.WindowsForms.Controls.Enums.TextValidationType.None;
+            acrTextBoxSenha.WarningMessageDate = "Invalid date format.";
+            acrTextBoxSenha.WarningMessagePattern = "Invalid value.";
+            //
+            // hintSenha
+            //
+            hintSenha.AutoSize = true;
+            hintSenha.ForeColor = Color.Gray;
+            hintSenha.Font = new Font("Segoe UI", 8F, FontStyle.Italic);
+            hintSenha.Location = new Point(300, 444);
+            hintSenha.Name = "hintSenha";
+            hintSenha.Size = new Size(360, 15);
+            hintSenha.TabIndex = 22;
+            hintSenha.Text = "Clique no ● à direita para mostrar/ocultar a senha";
+            //
+            // lblValor
+            //
+            lblValor.AutoSize = true;
+            lblValor.Location = new Point(30, 473);
+            lblValor.Name = "lblValor";
+            lblValor.Size = new Size(200, 15);
+            lblValor.TabIndex = 23;
+            lblValor.Text = "Valor (formatação decimal)";
+            //
+            // acrTextBoxValor
+            //
+            acrTextBoxValor.DecimalPlaces = 2;
+            acrTextBoxValor.ForeColor = Color.FromArgb(50, 50, 50);
+            acrTextBoxValor.InputType = Acr.WindowsForms.Controls.Enums.TextboxtInputType.Decimal;
+            acrTextBoxValor.LabelTitle = false;
+            acrTextBoxValor.LabelTitleText = "";
+            acrTextBoxValor.Location = new Point(30, 491);
+            acrTextBoxValor.Name = "acrTextBoxValor";
+            acrTextBoxValor.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxValor.OnLeaveBackColor = Color.White;
+            acrTextBoxValor.RequiredField = false;
+            acrTextBoxValor.SelectAllTextOnEnter = false;
+            acrTextBoxValor.Size = new Size(250, 23);
+            acrTextBoxValor.TabIndex = 24;
+            acrTextBoxValor.TabOnEnter = true;
+            acrTextBoxValor.UseThousandsSeparator = true;
+            acrTextBoxValor.ValidateAsDate = false;
+            acrTextBoxValor.ValidationType = Acr.WindowsForms.Controls.Enums.TextValidationType.None;
+            acrTextBoxValor.WarningMessageDate = "Invalid date format.";
+            acrTextBoxValor.WarningMessagePattern = "Invalid value.";
+            //
+            // hintValor
+            //
+            hintValor.AutoSize = true;
+            hintValor.ForeColor = Color.Gray;
+            hintValor.Font = new Font("Segoe UI", 8F, FontStyle.Italic);
+            hintValor.Location = new Point(300, 495);
+            hintValor.Name = "hintValor";
+            hintValor.Size = new Size(360, 15);
+            hintValor.TabIndex = 25;
+            hintValor.Text = "Digite 1234.5 e saia do campo → vira 1.234,50";
+            //
             // btnValidarForm
             //
-            btnValidarForm.Location = new Point(30, 430);
+            btnValidarForm.Location = new Point(30, 530);
             btnValidarForm.Name = "btnValidarForm";
             btnValidarForm.Size = new Size(180, 30);
-            btnValidarForm.TabIndex = 20;
+            btnValidarForm.TabIndex = 26;
             btnValidarForm.Text = "Validar Formulário";
             btnValidarForm.UseVisualStyleBackColor = true;
             btnValidarForm.Click += btnValidarForm_Click;
@@ -338,17 +431,17 @@ namespace AcrFormsTest
             //
             lblResult.AutoSize = true;
             lblResult.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblResult.Location = new Point(230, 437);
+            lblResult.Location = new Point(230, 537);
             lblResult.Name = "lblResult";
             lblResult.Size = new Size(400, 15);
-            lblResult.TabIndex = 21;
+            lblResult.TabIndex = 27;
             lblResult.Text = "";
             //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(760, 490);
+            ClientSize = new Size(760, 590);
             Controls.Add(lblHeader);
             Controls.Add(lblIdProduto);
             Controls.Add(acrTextBox1);
@@ -369,6 +462,12 @@ namespace AcrFormsTest
             Controls.Add(lblCustom);
             Controls.Add(acrTextBoxCustom);
             Controls.Add(hintCustom);
+            Controls.Add(lblSenha);
+            Controls.Add(acrTextBoxSenha);
+            Controls.Add(hintSenha);
+            Controls.Add(lblValor);
+            Controls.Add(acrTextBoxValor);
+            Controls.Add(hintValor);
             Controls.Add(btnValidarForm);
             Controls.Add(lblResult);
             Name = "Form1";
@@ -399,6 +498,12 @@ namespace AcrFormsTest
         private Label lblCustom;
         private Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox acrTextBoxCustom;
         private Label hintCustom;
+        private Label lblSenha;
+        private Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox acrTextBoxSenha;
+        private Label hintSenha;
+        private Label lblValor;
+        private Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox acrTextBoxValor;
+        private Label hintValor;
         private Button btnValidarForm;
         private Label lblResult;
     }

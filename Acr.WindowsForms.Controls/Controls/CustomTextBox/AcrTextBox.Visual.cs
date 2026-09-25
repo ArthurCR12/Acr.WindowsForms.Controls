@@ -92,6 +92,9 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
     }
 
 
+    partial void UnformatNumeric();
+    partial void FormatNumeric();
+
     protected override void OnEnter(EventArgs e)
     {
         base.OnEnter(e);
@@ -104,6 +107,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         }
 
         ClearError();
+        UnformatNumeric();
     }
 
     protected override void OnLeave(EventArgs e)
@@ -112,6 +116,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         BackColor = _onLeaveBackColor;
         AcrValidationHelper.ValidateRequired(this, _blockLeave);
         if (_validateAsDate) ClearError();
+        FormatNumeric();
     }
 
     private void UpdateTitleLabel()
