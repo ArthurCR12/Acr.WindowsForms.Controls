@@ -1,3 +1,5 @@
+using Acr.WindowsForms.Controls.Helpers;
+
 namespace AcrFormsTest
 {
     public partial class Form1 : Form
@@ -7,9 +9,14 @@ namespace AcrFormsTest
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnValidarForm_Click(object sender, EventArgs e)
         {
-            
+            bool isValid = AcrValidationHelper.ValidateForm(this, blockLeave: true);
+
+            lblResult.Text = isValid
+                ? "✔ Formulário válido!"
+                : "✘ Existem campos obrigatórios pendentes.";
+            lblResult.ForeColor = isValid ? Color.Green : Color.Red;
         }
     }
 }
