@@ -28,11 +28,13 @@ namespace AcrFormsTest
             var page = new TabPage("✨ Novidades")
             {
                 AutoScroll = true,
-                BackColor = Color.FromArgb(247, 248, 250),
+                BackColor = AcrColors.Background,
                 Padding = new Padding(0, 0, 0, 16),
             };
 
             int y = 16;
+            y = AddSection(page, y, BuildThemeSection());
+            y = AddSection(page, y, BuildNewComponentsSection());
             y = AddSection(page, y, BuildModalSection());
             y = AddSection(page, y, BuildButtonSection());
             y = AddSection(page, y, BuildNotificationSection());

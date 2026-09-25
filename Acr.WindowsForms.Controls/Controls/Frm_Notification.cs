@@ -1,4 +1,4 @@
-using Acr.WindowsForms.Controls.Class;
+﻿using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -64,8 +64,18 @@ namespace Acr.WindowsForms.Controls.Controls
         public void ShowNotification(string msg, NotificationType nType = NotificationType.Info) =>
             ShowNotification(msg, nType, null, 5000, true);
 
-        public void ShowNotification(string msg, NotificationType nType, string? title, int durationMs, bool playSound)
+        public void ShowNotification(string msg, NotificationType nType, string? title, int durationMs, bool playSound) =>
+            ShowNotification(msg, nType, title, durationMs, playSound, null, null);
+
+        /// <summary>
+        /// Exibe a notificação. Se <paramref name="actionText"/> for informado, mostra um botão
+        /// (ex.: "Desfazer") que executa <paramref name="onAction"/> e fecha a notificação.
+        /// </summary>
+        public void ShowNotification(string msg, NotificationType nType, string? title, int durationMs, bool playSound, string? actionText, Action? onAction)
         {
+            if (!string.IsNullOrWhiteSpace(actionText) && onAction != null)
+                AddActionButton(actionText, onAction);
+
             _duration = Math.Max(1000, durationMs);
             _title = string.IsNullOrWhiteSpace(title) ? null : title;
             this.Opacity = 0.0;
@@ -170,6 +180,30 @@ namespace Acr.WindowsForms.Controls.Controls
                     }
                     break;
             }
+        }
+
+        private void AddActionButton(string text, Action onAction)
+        {
+            var button = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton
+            {
+                Text = text,
+                Variant = AcrButtonVariant.Ghost,
+                AutoSize = false,
+                Height = LogicalToDeviceUnits(26),
+                Width = TextRenderer.MeasureText(text, AcrFonts.Get(9F, FontStyle.Bold)).Width + LogicalToDeviceUnits(20),
+                Font = AcrFonts.Get(9F, FontStyle.Bold),
+            };
+            button.Location = new Point(lbl_Message.Left - LogicalToDeviceUnits(6), Height - button.Height - LogicalToDeviceUnits(10));
+            lbl_Message.Height = button.Top - lbl_Message.Top;
+            button.Click += (_, _) =>
+            {
+                try { onAction(); }
+                finally { btn_Close_Click(this, EventArgs.Empty); }
+            };
+            button.MouseEnter += (_, _) => PauseIfHovered();
+            button.MouseLeave += (_, _) => ResumeIfNotHovered();
+            Controls.Add(button);
+            button.BringToFront();
         }
 
         private int Elapsed => _paused ? _elapsedBeforePause : _elapsedBeforePause + (int)(DateTime.Now - _waitStarted).TotalMilliseconds;

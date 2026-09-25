@@ -20,6 +20,17 @@ public static class NotificationHelper
         f.ShowNotification(message, type, title, durationMs > 0 ? durationMs : DefaultDuration, PlaySound);
     }
 
+    /// <summary>
+    /// Notificação com um botão de ação (ex.: "Desfazer"). O botão executa <paramref name="onAction"/>
+    /// e fecha a notificação.
+    /// </summary>
+    public static void ShowWithAction(string message, string actionText, Action onAction,
+        NotificationType type = NotificationType.Info, string? title = null, int durationMs = 0)
+    {
+        Frm_Notification f = new();
+        f.ShowNotification(message, type, title, durationMs > 0 ? durationMs : DefaultDuration, PlaySound, actionText, onAction);
+    }
+
     public static void Success(string message, string? title = null) => Show(message, NotificationType.Success, title);
     public static void Error(string message, string? title = null) => Show(message, NotificationType.Error, title);
     public static void Warning(string message, string? title = null) => Show(message, NotificationType.Warning, title);

@@ -31,6 +31,21 @@ Developed by **Arthur Cabral**, this package aims to improve user experience and
   NotificationHelper.Show("Operation completed successfully", NotificationType.Success);
   ```
 
+### Theme (light / dark)
+```csharp
+AcrTheme.Current = AcrTheme.Dark;                                   // every open window updates
+AcrTheme.Current = AcrTheme.Light with { Primary = Color.Purple };  // your brand color
+```
+
+### New components
+- **AcrDatePicker** — date field with a themed calendar popup (`Value` is `DateTime?`).
+- **AcrNumericUpDown** — numeric field with −/+ buttons, mouse wheel and ↑/↓.
+- **AcrTabControl** — flat tabs with an underline on the active tab.
+- **AcrToolTip** — rounded tooltip with optional title.
+- **Toast with action** — `NotificationHelper.ShowWithAction("Item deleted", "Undo", () => Restore());`
+
+See [CHANGELOG.md](CHANGELOG.md) for everything in 1.5.0.
+
 ### Modal (AcrModal)
 - **Background dimming**: `DimBackground` (default `true`, global via `AcrModal.DefaultDimBackground`) darkens the owner window while the modal is open. Adjust with `OverlayOpacity` / `OverlayColor`.
 - `Esc` closes the modal, `Enter` triggers the primary button.
