@@ -147,14 +147,20 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         switch (_controlState)
         {
             case EControlState.Normal:
-                ReadOnly = false; break;
-            case EControlState.Disabled:
-                Enabled = false; break;
-            case EControlState.ReadOnly:
-                ReadOnly = true; break;
-            case EControlState.Edit:
-                ReadOnly = false;
                 Enabled = true;
+                ReadOnly = false;
+                break;
+            case EControlState.Disabled:
+                Enabled = false;
+                ReadOnly = false;
+                break;
+            case EControlState.ReadOnly:
+                Enabled = true;
+                ReadOnly = true;
+                break;
+            case EControlState.Edit:
+                Enabled = true;
+                ReadOnly = false;
                 break;
         }
     }

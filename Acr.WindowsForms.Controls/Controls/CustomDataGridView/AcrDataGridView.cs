@@ -26,15 +26,21 @@ public class AcrDataGridView : DataGridView, IAcrBaseControl
         switch (_controlState)
         {
             case EControlState.Normal:
+                Enabled = true;
                 ReadOnly = false;
-                Enabled = true; break;
+                break;
             case EControlState.Disabled:
-                Enabled = false; break;
-            case EControlState.ReadOnly:
-                ReadOnly = true; break;
-            case EControlState.Edit:
+                Enabled = false;
                 ReadOnly = false;
-                Enabled = true; break;
+                break;
+            case EControlState.ReadOnly:
+                Enabled = true;
+                ReadOnly = true;
+                break;
+            case EControlState.Edit:
+                Enabled = true;
+                ReadOnly = false;
+                break;
         }
     }
 }

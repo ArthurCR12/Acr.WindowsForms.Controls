@@ -57,6 +57,7 @@ namespace AcrFormsTest
             acrTextBoxValor = new Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox();
             hintValor = new Label();
             btnValidarForm = new Button();
+            btnToggleLock = new Button();
             lblResult = new Label();
             SuspendLayout();
             //
@@ -427,21 +428,31 @@ namespace AcrFormsTest
             btnValidarForm.UseVisualStyleBackColor = true;
             btnValidarForm.Click += btnValidarForm_Click;
             //
+            // btnToggleLock
+            //
+            btnToggleLock.Location = new Point(230, 530);
+            btnToggleLock.Name = "btnToggleLock";
+            btnToggleLock.Size = new Size(220, 30);
+            btnToggleLock.TabIndex = 27;
+            btnToggleLock.Text = "Bloquear Formulário";
+            btnToggleLock.UseVisualStyleBackColor = true;
+            btnToggleLock.Click += btnToggleLock_Click;
+            //
             // lblResult
             //
             lblResult.AutoSize = true;
             lblResult.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblResult.Location = new Point(230, 537);
+            lblResult.Location = new Point(30, 572);
             lblResult.Name = "lblResult";
             lblResult.Size = new Size(400, 15);
-            lblResult.TabIndex = 27;
+            lblResult.TabIndex = 28;
             lblResult.Text = "";
             //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(760, 590);
+            ClientSize = new Size(760, 610);
             Controls.Add(lblHeader);
             Controls.Add(lblIdProduto);
             Controls.Add(acrTextBox1);
@@ -469,6 +480,7 @@ namespace AcrFormsTest
             Controls.Add(acrTextBoxValor);
             Controls.Add(hintValor);
             Controls.Add(btnValidarForm);
+            Controls.Add(btnToggleLock);
             Controls.Add(lblResult);
             Name = "Form1";
             Text = "AcrControls - Teste de Validação";
@@ -505,6 +517,7 @@ namespace AcrFormsTest
         private Acr.WindowsForms.Controls.Controls.CustomTextBox.AcrTextBox acrTextBoxValor;
         private Label hintValor;
         private Button btnValidarForm;
+        private Button btnToggleLock;
         private Label lblResult;
     }
 }
