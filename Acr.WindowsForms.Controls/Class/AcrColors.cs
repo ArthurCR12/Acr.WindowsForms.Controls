@@ -20,5 +20,13 @@ namespace Acr.WindowsForms.Controls.Class
         public static readonly Color GridSelectionBack = Color.FromArgb(224, 238, 253);
         public static readonly Color GridSelectionFore = Color.FromArgb(30, 30, 30);
         public static readonly Color GridAltRow = Color.FromArgb(250, 250, 251);
+
+        public static readonly Color Success = Color.FromArgb(32, 148, 87);
+        public static readonly Color Warning = Color.FromArgb(212, 140, 15);
+        public static readonly Color Error = Color.FromArgb(197, 48, 48);
+        public static readonly Color Info = Primary;
+
+        public static readonly Color IconGlyph = Color.FromArgb(140, 140, 140);
+        public static readonly Color IconGlyphHover = Color.FromArgb(70, 70, 70);
     }
 }

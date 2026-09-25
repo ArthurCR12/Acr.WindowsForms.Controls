@@ -1,3 +1,4 @@
+using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Interfaces;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -128,9 +129,11 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
             TextAlign = ContentAlignment.MiddleCenter,
             Cursor = Cursors.Hand,
             BackColor = Color.Transparent,
-            ForeColor = Color.Gray,
+            ForeColor = AcrColors.IconGlyph,
             Font = new Font("Segoe UI Symbol", 8f)
         };
+        icon.MouseEnter += (_, _) => icon.ForeColor = AcrColors.IconGlyphHover;
+        icon.MouseLeave += (_, _) => icon.ForeColor = AcrColors.IconGlyph;
         icon.CreateControl();
         Parent!.Controls.Add(icon);
         icon.BringToFront();

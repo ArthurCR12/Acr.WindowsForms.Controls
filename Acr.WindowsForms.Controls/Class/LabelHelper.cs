@@ -18,8 +18,8 @@ namespace Acr.WindowsForms.Controls.Class
                 Name = $"lbl_{ctr.Name}_{messageType}",
                 Text = text,
                 AutoSize = true,
-                Font = new Font("Arial", 7, FontStyle.Bold),
-                BackColor = Color.Transparent,                
+                Font = new Font("Segoe UI", 7.5F, FontStyle.Bold),
+                BackColor = Color.Transparent,
             };
 
 
@@ -38,17 +38,17 @@ namespace Acr.WindowsForms.Controls.Class
             switch (messageType)
             {
                 case MessageType.Error:
-                    lbl.ForeColor = Color.Red;
+                    lbl.ForeColor = AcrColors.Error;
                     break;
                 case MessageType.Warning:
-                    lbl.ForeColor = Color.Orange;
+                    lbl.ForeColor = AcrColors.Warning;
                     break;
                 case MessageType.Information:
-                    lbl.ForeColor = Color.Blue;
+                    lbl.ForeColor = AcrColors.Info;
                     break;
                 case MessageType.Title:
-                    lbl.ForeColor = Color.Black;
-                    lbl.Font = new Font("Arial", 8, FontStyle.Bold);
+                    lbl.ForeColor = AcrColors.Text;
+                    lbl.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
                     break;
             }
 
