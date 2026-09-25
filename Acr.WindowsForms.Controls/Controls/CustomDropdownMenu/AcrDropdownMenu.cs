@@ -12,6 +12,12 @@ public class AcrDropdownMenu : Component
 
     public Font MenuFont { get; set; } = new Font("Segoe UI", 9F);
 
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) MenuFont.Dispose();
+        base.Dispose(disposing);
+    }
+
     public void ShowFor(Control anchor)
     {
         var location = anchor.PointToScreen(new Point(0, anchor.Height));

@@ -149,7 +149,10 @@ public class AcrSlider : Control
 
     private void UpdateValueFromMouse(int x)
     {
-        double fraction = Math.Clamp((x - ThumbDiameter / 2.0) / (Width - ThumbDiameter), 0, 1);
+        int span = Width - ThumbDiameter;
+        if (span <= 0) return;
+
+        double fraction = Math.Clamp((x - ThumbDiameter / 2.0) / span, 0, 1);
         Value = _minimum + (int)Math.Round(fraction * (_maximum - _minimum));
     }
 

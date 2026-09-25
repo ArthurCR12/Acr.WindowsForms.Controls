@@ -138,6 +138,15 @@ namespace AcrFormsTest
             }
         }
 
+        private void chip_Click(object? sender, EventArgs e)
+        {
+            if (sender is Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip chip)
+            {
+                chip.Selected = !chip.Selected;
+                lblChipResult.Text = chip.Selected ? $"Selecionado: {chip.Text}" : $"Desmarcado: {chip.Text}";
+            }
+        }
+
         private void emptyState1_ActionClick(object? sender, EventArgs e) =>
             MessageBox.Show("Filtros limpos!", "AcrEmptyState", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

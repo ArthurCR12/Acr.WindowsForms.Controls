@@ -1674,6 +1674,7 @@ namespace AcrFormsTest
             chipDefault.Text = "Periféricos";
             chipDefault.TabIndex = 1;
             chipDefault.Removed += chip_Removed;
+            chipDefault.ChipClick += chip_Click;
             //
             // chipSelected
             //
@@ -1683,6 +1684,7 @@ namespace AcrFormsTest
             chipSelected.Text = "Monitores (selecionado)";
             chipSelected.TabIndex = 2;
             chipSelected.Removed += chip_Removed;
+            chipSelected.ChipClick += chip_Click;
             //
             // chipSuccess
             //
@@ -1692,6 +1694,7 @@ namespace AcrFormsTest
             chipSuccess.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Success;
             chipSuccess.TabIndex = 3;
             chipSuccess.Removed += chip_Removed;
+            chipSuccess.ChipClick += chip_Click;
             //
             // chipNotRemovable
             //
@@ -1701,6 +1704,7 @@ namespace AcrFormsTest
             chipNotRemovable.Text = "Somente leitura";
             chipNotRemovable.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Neutral;
             chipNotRemovable.TabIndex = 4;
+            chipNotRemovable.ChipClick += chip_Click;
             //
             // lblChipResult
             //

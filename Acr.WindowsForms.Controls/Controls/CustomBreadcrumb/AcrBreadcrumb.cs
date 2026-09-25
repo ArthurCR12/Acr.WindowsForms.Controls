@@ -98,6 +98,7 @@ public class AcrBreadcrumb : Control
     protected override void OnMouseLeave(EventArgs e)
     {
         base.OnMouseLeave(e);
+        Cursor = Cursors.Default;
         if (_hoveredIndex != -1)
         {
             _hoveredIndex = -1;
