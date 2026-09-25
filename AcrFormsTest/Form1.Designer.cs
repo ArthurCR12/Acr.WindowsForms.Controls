@@ -203,6 +203,31 @@ namespace AcrFormsTest
             btnModalCustom = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
             lblModalResult = new Label();
 
+            tabPageRating = new TabPage();
+            lblRatingHeader = new Label();
+            ratingDefault = new Acr.WindowsForms.Controls.Controls.CustomRating.AcrRating();
+            lblRatingResult = new Label();
+            ratingReadOnly = new Acr.WindowsForms.Controls.Controls.CustomRating.AcrRating();
+            lblRatingReadOnly = new Label();
+
+            tabPageSlider = new TabPage();
+            lblSliderHeader = new Label();
+            sliderDefault = new Acr.WindowsForms.Controls.Controls.CustomSlider.AcrSlider();
+            sliderAccent = new Acr.WindowsForms.Controls.Controls.CustomSlider.AcrSlider();
+            lblSliderAccent = new Label();
+
+            tabPageAccordion = new TabPage();
+            lblAccordionHeader = new Label();
+            accordion1 = new Acr.WindowsForms.Controls.Controls.CustomAccordion.AcrAccordion();
+            lblAccordionContent = new Label();
+            accordion2 = new Acr.WindowsForms.Controls.Controls.CustomAccordion.AcrAccordion();
+            lblAccordionContent2 = new Label();
+
+            tabPageBreadcrumb = new TabPage();
+            lblBreadcrumbHeader = new Label();
+            breadcrumb1 = new Acr.WindowsForms.Controls.Controls.CustomBreadcrumb.AcrBreadcrumb();
+            lblBreadcrumbResult = new Label();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -225,6 +250,10 @@ namespace AcrFormsTest
             tabPageEmptyState.SuspendLayout();
             tabPageDropdownMenu.SuspendLayout();
             tabPageModal.SuspendLayout();
+            tabPageRating.SuspendLayout();
+            tabPageSlider.SuspendLayout();
+            tabPageAccordion.SuspendLayout();
+            tabPageBreadcrumb.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -249,6 +278,10 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageEmptyState);
             tabControl1.Controls.Add(tabPageDropdownMenu);
             tabControl1.Controls.Add(tabPageModal);
+            tabControl1.Controls.Add(tabPageRating);
+            tabControl1.Controls.Add(tabPageSlider);
+            tabControl1.Controls.Add(tabPageAccordion);
+            tabControl1.Controls.Add(tabPageBreadcrumb);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -1895,6 +1928,211 @@ namespace AcrFormsTest
             lblModalResult.TabIndex = 6;
             lblModalResult.Text = "";
             //
+            // tabPageRating
+            //
+            tabPageRating.Controls.Add(lblRatingHeader);
+            tabPageRating.Controls.Add(ratingDefault);
+            tabPageRating.Controls.Add(lblRatingResult);
+            tabPageRating.Controls.Add(ratingReadOnly);
+            tabPageRating.Controls.Add(lblRatingReadOnly);
+            tabPageRating.Location = new Point(4, 24);
+            tabPageRating.Name = "tabPageRating";
+            tabPageRating.Padding = new Padding(3);
+            tabPageRating.Size = new Size(792, 622);
+            tabPageRating.TabIndex = 20;
+            tabPageRating.Text = "AcrRating";
+            tabPageRating.UseVisualStyleBackColor = true;
+            //
+            // lblRatingHeader
+            //
+            lblRatingHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblRatingHeader.Location = new Point(24, 15);
+            lblRatingHeader.Name = "lblRatingHeader";
+            lblRatingHeader.Size = new Size(700, 20);
+            lblRatingHeader.TabIndex = 0;
+            lblRatingHeader.Text = "AcrRating — clique nas estrelas para avaliar";
+            //
+            // ratingDefault
+            //
+            ratingDefault.Location = new Point(30, 60);
+            ratingDefault.Name = "ratingDefault";
+            ratingDefault.TabIndex = 1;
+            ratingDefault.Value = 3;
+            ratingDefault.ValueChanged += ratingDefault_ValueChanged;
+            //
+            // lblRatingResult
+            //
+            lblRatingResult.AutoSize = true;
+            lblRatingResult.Location = new Point(180, 65);
+            lblRatingResult.Name = "lblRatingResult";
+            lblRatingResult.Size = new Size(100, 15);
+            lblRatingResult.TabIndex = 2;
+            lblRatingResult.Text = "Nota: 3 / 5";
+            //
+            // ratingReadOnly
+            //
+            ratingReadOnly.Location = new Point(30, 105);
+            ratingReadOnly.Name = "ratingReadOnly";
+            ratingReadOnly.ReadOnly = true;
+            ratingReadOnly.TabIndex = 3;
+            ratingReadOnly.Value = 4;
+            //
+            // lblRatingReadOnly
+            //
+            lblRatingReadOnly.AutoSize = true;
+            lblRatingReadOnly.Location = new Point(180, 110);
+            lblRatingReadOnly.Name = "lblRatingReadOnly";
+            lblRatingReadOnly.Size = new Size(150, 15);
+            lblRatingReadOnly.TabIndex = 4;
+            lblRatingReadOnly.Text = "Somente leitura (ReadOnly)";
+            //
+            // tabPageSlider
+            //
+            tabPageSlider.Controls.Add(lblSliderHeader);
+            tabPageSlider.Controls.Add(sliderDefault);
+            tabPageSlider.Controls.Add(sliderAccent);
+            tabPageSlider.Controls.Add(lblSliderAccent);
+            tabPageSlider.Location = new Point(4, 24);
+            tabPageSlider.Name = "tabPageSlider";
+            tabPageSlider.Padding = new Padding(3);
+            tabPageSlider.Size = new Size(792, 622);
+            tabPageSlider.TabIndex = 21;
+            tabPageSlider.Text = "AcrSlider";
+            tabPageSlider.UseVisualStyleBackColor = true;
+            //
+            // lblSliderHeader
+            //
+            lblSliderHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSliderHeader.Location = new Point(24, 15);
+            lblSliderHeader.Name = "lblSliderHeader";
+            lblSliderHeader.Size = new Size(700, 20);
+            lblSliderHeader.TabIndex = 0;
+            lblSliderHeader.Text = "AcrSlider — arraste a bolinha";
+            //
+            // sliderDefault
+            //
+            sliderDefault.Location = new Point(30, 70);
+            sliderDefault.Name = "sliderDefault";
+            sliderDefault.Size = new Size(300, 32);
+            sliderDefault.TabIndex = 1;
+            sliderDefault.Value = 50;
+            //
+            // sliderAccent
+            //
+            sliderAccent.AccentColor = Color.FromArgb(32, 148, 87);
+            sliderAccent.Location = new Point(30, 130);
+            sliderAccent.Name = "sliderAccent";
+            sliderAccent.Size = new Size(300, 32);
+            sliderAccent.TabIndex = 2;
+            sliderAccent.Value = 80;
+            //
+            // lblSliderAccent
+            //
+            lblSliderAccent.AutoSize = true;
+            lblSliderAccent.Location = new Point(340, 138);
+            lblSliderAccent.Name = "lblSliderAccent";
+            lblSliderAccent.Size = new Size(200, 15);
+            lblSliderAccent.TabIndex = 3;
+            lblSliderAccent.Text = "AccentColor customizada (verde)";
+            //
+            // tabPageAccordion
+            //
+            tabPageAccordion.Controls.Add(lblAccordionHeader);
+            tabPageAccordion.Controls.Add(accordion1);
+            tabPageAccordion.Controls.Add(accordion2);
+            tabPageAccordion.Location = new Point(4, 24);
+            tabPageAccordion.Name = "tabPageAccordion";
+            tabPageAccordion.Padding = new Padding(3);
+            tabPageAccordion.Size = new Size(792, 622);
+            tabPageAccordion.TabIndex = 22;
+            tabPageAccordion.Text = "AcrAccordion";
+            tabPageAccordion.UseVisualStyleBackColor = true;
+            //
+            // lblAccordionHeader
+            //
+            lblAccordionHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblAccordionHeader.Location = new Point(24, 15);
+            lblAccordionHeader.Name = "lblAccordionHeader";
+            lblAccordionHeader.Size = new Size(700, 20);
+            lblAccordionHeader.TabIndex = 0;
+            lblAccordionHeader.Text = "AcrAccordion — clique no cabeçalho para expandir/recolher";
+            //
+            // accordion1
+            //
+            accordion1.Controls.Add(lblAccordionContent);
+            accordion1.HeaderText = "Informações de entrega";
+            accordion1.Location = new Point(30, 60);
+            accordion1.Name = "accordion1";
+            accordion1.Size = new Size(400, 156);
+            accordion1.TabIndex = 1;
+            //
+            // lblAccordionContent
+            //
+            lblAccordionContent.AutoSize = true;
+            lblAccordionContent.Location = new Point(12, 8);
+            lblAccordionContent.Name = "lblAccordionContent";
+            lblAccordionContent.Size = new Size(300, 45);
+            lblAccordionContent.TabIndex = 0;
+            lblAccordionContent.Text = "Prazo estimado: 5 a 7 dias úteis.\nFrete grátis para compras acima de R$ 200.";
+            //
+            // accordion2
+            //
+            accordion2.Controls.Add(lblAccordionContent2);
+            accordion2.Expanded = false;
+            accordion2.HeaderText = "Política de devolução (recolhido)";
+            accordion2.Location = new Point(30, 226);
+            accordion2.Name = "accordion2";
+            accordion2.Size = new Size(400, 36);
+            accordion2.TabIndex = 2;
+            //
+            // lblAccordionContent2
+            //
+            lblAccordionContent2.AutoSize = true;
+            lblAccordionContent2.Location = new Point(12, 8);
+            lblAccordionContent2.Name = "lblAccordionContent2";
+            lblAccordionContent2.Size = new Size(300, 15);
+            lblAccordionContent2.TabIndex = 0;
+            lblAccordionContent2.Text = "Até 30 dias para devolução gratuita.";
+            //
+            // tabPageBreadcrumb
+            //
+            tabPageBreadcrumb.Controls.Add(lblBreadcrumbHeader);
+            tabPageBreadcrumb.Controls.Add(breadcrumb1);
+            tabPageBreadcrumb.Controls.Add(lblBreadcrumbResult);
+            tabPageBreadcrumb.Location = new Point(4, 24);
+            tabPageBreadcrumb.Name = "tabPageBreadcrumb";
+            tabPageBreadcrumb.Padding = new Padding(3);
+            tabPageBreadcrumb.Size = new Size(792, 622);
+            tabPageBreadcrumb.TabIndex = 23;
+            tabPageBreadcrumb.Text = "AcrBreadcrumb";
+            tabPageBreadcrumb.UseVisualStyleBackColor = true;
+            //
+            // lblBreadcrumbHeader
+            //
+            lblBreadcrumbHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblBreadcrumbHeader.Location = new Point(24, 15);
+            lblBreadcrumbHeader.Name = "lblBreadcrumbHeader";
+            lblBreadcrumbHeader.Size = new Size(700, 20);
+            lblBreadcrumbHeader.TabIndex = 0;
+            lblBreadcrumbHeader.Text = "AcrBreadcrumb — clique em um item do caminho (exceto o último)";
+            //
+            // breadcrumb1
+            //
+            breadcrumb1.Location = new Point(30, 60);
+            breadcrumb1.Name = "breadcrumb1";
+            breadcrumb1.Size = new Size(500, 24);
+            breadcrumb1.TabIndex = 1;
+            breadcrumb1.ItemClicked += breadcrumb1_ItemClicked;
+            //
+            // lblBreadcrumbResult
+            //
+            lblBreadcrumbResult.AutoSize = true;
+            lblBreadcrumbResult.Location = new Point(30, 95);
+            lblBreadcrumbResult.Name = "lblBreadcrumbResult";
+            lblBreadcrumbResult.Size = new Size(300, 15);
+            lblBreadcrumbResult.TabIndex = 2;
+            lblBreadcrumbResult.Text = "";
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1939,6 +2177,13 @@ namespace AcrFormsTest
             tabPageDropdownMenu.PerformLayout();
             tabPageModal.ResumeLayout(false);
             tabPageModal.PerformLayout();
+            tabPageRating.ResumeLayout(false);
+            tabPageRating.PerformLayout();
+            tabPageSlider.ResumeLayout(false);
+            tabPageSlider.PerformLayout();
+            tabPageAccordion.ResumeLayout(false);
+            tabPageBreadcrumb.ResumeLayout(false);
+            tabPageBreadcrumb.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -2116,5 +2361,30 @@ namespace AcrFormsTest
         private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnModalConfirm;
         private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnModalCustom;
         private Label lblModalResult;
+
+        private TabPage tabPageRating;
+        private Label lblRatingHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomRating.AcrRating ratingDefault;
+        private Label lblRatingResult;
+        private Acr.WindowsForms.Controls.Controls.CustomRating.AcrRating ratingReadOnly;
+        private Label lblRatingReadOnly;
+
+        private TabPage tabPageSlider;
+        private Label lblSliderHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomSlider.AcrSlider sliderDefault;
+        private Acr.WindowsForms.Controls.Controls.CustomSlider.AcrSlider sliderAccent;
+        private Label lblSliderAccent;
+
+        private TabPage tabPageAccordion;
+        private Label lblAccordionHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomAccordion.AcrAccordion accordion1;
+        private Label lblAccordionContent;
+        private Acr.WindowsForms.Controls.Controls.CustomAccordion.AcrAccordion accordion2;
+        private Label lblAccordionContent2;
+
+        private TabPage tabPageBreadcrumb;
+        private Label lblBreadcrumbHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomBreadcrumb.AcrBreadcrumb breadcrumb1;
+        private Label lblBreadcrumbResult;
     }
 }

@@ -37,6 +37,8 @@ namespace AcrFormsTest
                     lblSelectedItem.Text = $"Selecionado: {p.Nome} ({p.Categoria}) — {p.Preco:C2}";
             };
             searchGridControl1.DataSource = GetSampleProdutos();
+
+            breadcrumb1.SetPath("Início", "Produtos", "Periféricos", "Teclado Mecânico");
         }
 
         private static List<Produto> GetSampleProdutos() =>
@@ -186,5 +188,11 @@ namespace AcrFormsTest
                 ? $"Categoria salva: {combo.SelectedItem}"
                 : "Cancelado.";
         }
+
+        private void ratingDefault_ValueChanged(object? sender, int value) =>
+            lblRatingResult.Text = $"Nota: {value} / {ratingDefault.StarCount}";
+
+        private void breadcrumb1_ItemClicked(object? sender, Acr.WindowsForms.Controls.Controls.CustomBreadcrumb.AcrBreadcrumbItemEventArgs e) =>
+            lblBreadcrumbResult.Text = $"Navegou para: {e.Text}";
     }
 }
