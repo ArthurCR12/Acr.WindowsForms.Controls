@@ -27,7 +27,6 @@ public class AcrEmptyState : Control
             true);
 
         Font = new Font("Segoe UI", 9F);
-        Size = new Size(320, 220);
 
         _actionButton = new AcrButton
         {
@@ -37,6 +36,8 @@ public class AcrEmptyState : Control
         };
         _actionButton.Click += (s, e) => ActionClick?.Invoke(this, e);
         Controls.Add(_actionButton);
+
+        Size = new Size(320, 220);
 
         UpdateActionButton();
     }
