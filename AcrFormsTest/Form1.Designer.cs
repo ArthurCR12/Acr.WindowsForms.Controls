@@ -93,6 +93,15 @@ namespace AcrFormsTest
             btnNotifWarning = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
             btnNotifInfo = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
 
+            tabPageBadges = new TabPage();
+            lblBadgesHeader = new Label();
+            badgePrimary = new Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge();
+            badgeSuccess = new Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge();
+            badgeWarning = new Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge();
+            badgeError = new Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge();
+            badgeInfo = new Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge();
+            badgeNeutral = new Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -100,6 +109,7 @@ namespace AcrFormsTest
             ((System.ComponentModel.ISupportInitialize)acrDataGridViewDemo).BeginInit();
             tabPageSearch.SuspendLayout();
             tabPageNotifications.SuspendLayout();
+            tabPageBadges.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -109,6 +119,7 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageGrid);
             tabControl1.Controls.Add(tabPageSearch);
             tabControl1.Controls.Add(tabPageNotifications);
+            tabControl1.Controls.Add(tabPageBadges);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -820,6 +831,80 @@ namespace AcrFormsTest
             btnNotifInfo.UseVisualStyleBackColor = true;
             btnNotifInfo.Click += btnNotifInfo_Click;
             //
+            // tabPageBadges
+            //
+            tabPageBadges.Controls.Add(lblBadgesHeader);
+            tabPageBadges.Controls.Add(badgePrimary);
+            tabPageBadges.Controls.Add(badgeSuccess);
+            tabPageBadges.Controls.Add(badgeWarning);
+            tabPageBadges.Controls.Add(badgeError);
+            tabPageBadges.Controls.Add(badgeInfo);
+            tabPageBadges.Controls.Add(badgeNeutral);
+            tabPageBadges.Location = new Point(4, 24);
+            tabPageBadges.Name = "tabPageBadges";
+            tabPageBadges.Padding = new Padding(3);
+            tabPageBadges.Size = new Size(792, 622);
+            tabPageBadges.TabIndex = 5;
+            tabPageBadges.Text = "AcrBadge";
+            tabPageBadges.UseVisualStyleBackColor = true;
+            //
+            // lblBadgesHeader
+            //
+            lblBadgesHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblBadgesHeader.Location = new Point(24, 15);
+            lblBadgesHeader.Name = "lblBadgesHeader";
+            lblBadgesHeader.Size = new Size(700, 20);
+            lblBadgesHeader.TabIndex = 0;
+            lblBadgesHeader.Text = "AcrBadge — variantes de cor";
+            //
+            // badgePrimary
+            //
+            badgePrimary.Location = new Point(30, 60);
+            badgePrimary.Name = "badgePrimary";
+            badgePrimary.TabIndex = 1;
+            badgePrimary.Text = "Primary";
+            badgePrimary.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Primary;
+            //
+            // badgeSuccess
+            //
+            badgeSuccess.Location = new Point(130, 60);
+            badgeSuccess.Name = "badgeSuccess";
+            badgeSuccess.TabIndex = 2;
+            badgeSuccess.Text = "Success";
+            badgeSuccess.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Success;
+            //
+            // badgeWarning
+            //
+            badgeWarning.Location = new Point(230, 60);
+            badgeWarning.Name = "badgeWarning";
+            badgeWarning.TabIndex = 3;
+            badgeWarning.Text = "Warning";
+            badgeWarning.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Warning;
+            //
+            // badgeError
+            //
+            badgeError.Location = new Point(330, 60);
+            badgeError.Name = "badgeError";
+            badgeError.TabIndex = 4;
+            badgeError.Text = "Error";
+            badgeError.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Error;
+            //
+            // badgeInfo
+            //
+            badgeInfo.Location = new Point(430, 60);
+            badgeInfo.Name = "badgeInfo";
+            badgeInfo.TabIndex = 5;
+            badgeInfo.Text = "Info";
+            badgeInfo.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Info;
+            //
+            // badgeNeutral
+            //
+            badgeNeutral.Location = new Point(530, 60);
+            badgeNeutral.Name = "badgeNeutral";
+            badgeNeutral.TabIndex = 6;
+            badgeNeutral.Text = "Neutral";
+            badgeNeutral.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Neutral;
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -839,6 +924,7 @@ namespace AcrFormsTest
             tabPageSearch.ResumeLayout(false);
             tabPageSearch.PerformLayout();
             tabPageNotifications.ResumeLayout(false);
+            tabPageBadges.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -906,5 +992,14 @@ namespace AcrFormsTest
         private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnNotifError;
         private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnNotifWarning;
         private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnNotifInfo;
+
+        private TabPage tabPageBadges;
+        private Label lblBadgesHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgePrimary;
+        private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgeSuccess;
+        private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgeWarning;
+        private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgeError;
+        private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgeInfo;
+        private Acr.WindowsForms.Controls.Controls.CustomBadge.AcrBadge badgeNeutral;
     }
 }
