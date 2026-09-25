@@ -31,6 +31,8 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         set => _warningMessageDate = value;
     }
 
+    partial void ValidatePattern(CancelEventArgs e);
+
     protected override void OnValidating(CancelEventArgs e)
     {
         base.OnValidating(e);
@@ -54,6 +56,10 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
                 LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
             }
         }
+
+        // Validação de padrão (Email, CPF, CNPJ, Telefone, Custom)
+        if (!e.Cancel)
+            ValidatePattern(e);
     }
     private void DateValidator(bool valid, KeyPressEventArgs e)
     {

@@ -52,6 +52,10 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseContr
         }
     }
 
+    partial void ValidateMask(KeyPressEventArgs e);
+    partial void AutoInsertMaskLiterals();
+    partial void UpdateClearButtonVisibility();
+
     protected override void OnTextChanged(EventArgs e)
     {
         base.OnTextChanged(e);
@@ -65,10 +69,21 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseContr
             else if (parts.Length >= 2 && int.TryParse(parts[1], out int month) && month > 12)
                 LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
         }
+
+        AutoInsertMaskLiterals();
+        UpdateClearButtonVisibility();
     }
 
     protected override void OnKeyPress(KeyPressEventArgs e)
     {
+        if (!string.IsNullOrEmpty(_inputMask))
+        {
+            ValidateMask(e);
+            if (e.Handled) return;
+            base.OnKeyPress(e);
+            return;
+        }
+
         if (!IsKeyValidForInputType(e.KeyChar))
         {
             e.Handled = true;

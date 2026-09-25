@@ -47,6 +47,18 @@
     <Compile Update="Controls\CustomTextBox\AcrTextBox.Visual.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Controls\CustomTextBox\AcrTextBox.PatternValidation.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\CustomTextBox\AcrTextBox.InputMask.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\CustomTextBox\AcrTextBox.Icons.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\CustomTextBox\AcrTextBox.NumericFormat.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

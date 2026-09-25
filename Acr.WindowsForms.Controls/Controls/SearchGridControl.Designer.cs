@@ -33,6 +33,7 @@ namespace Acr.WindowsForms.Controls.Controls
         {
             txt_Search = new AcrTextBox();
             dgv_Itens = new DataGridView();
+            lbl_NoResults = new Label();
             panel3 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dgv_Itens).BeginInit();
             panel3.SuspendLayout();
@@ -73,9 +74,23 @@ namespace Acr.WindowsForms.Controls.Controls
             dgv_Itens.TabIndex = 2;
             dgv_Itens.CellPainting += dgv_Itens_CellPainting;
             dgv_Itens.KeyPress += dgv_Itens_KeyPress;
-            // 
+            //
+            // lbl_NoResults
+            //
+            lbl_NoResults.BackColor = Color.White;
+            lbl_NoResults.Dock = DockStyle.Fill;
+            lbl_NoResults.ForeColor = Color.Gray;
+            lbl_NoResults.Location = new Point(0, 27);
+            lbl_NoResults.Name = "lbl_NoResults";
+            lbl_NoResults.Size = new Size(350, 86);
+            lbl_NoResults.TabIndex = 3;
+            lbl_NoResults.Text = "Nenhum resultado encontrado.";
+            lbl_NoResults.TextAlign = ContentAlignment.MiddleCenter;
+            lbl_NoResults.Visible = false;
+            //
             // panel3
-            // 
+            //
+            panel3.Controls.Add(lbl_NoResults);
             panel3.Controls.Add(dgv_Itens);
             panel3.Controls.Add(txt_Search);
             panel3.Dock = DockStyle.Fill;
@@ -100,6 +115,7 @@ namespace Acr.WindowsForms.Controls.Controls
         #endregion
         public DataGridView dgv_Itens;
         public AcrTextBox txt_Search;
+        private Label lbl_NoResults;
         private Panel panel3;
     }
 }

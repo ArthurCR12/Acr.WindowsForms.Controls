@@ -110,6 +110,9 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         }
     }
 
+    partial void UnformatNumeric();
+    partial void FormatNumeric();
+
     protected override void OnEnter(EventArgs e)
     {
         base.OnEnter(e);
@@ -123,6 +126,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
 
         ClearError();
         RedrawBorder();
+        UnformatNumeric();
     }
 
     protected override void OnLeave(EventArgs e)
@@ -132,6 +136,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         AcrValidationHelper.ValidateRequired(this, _blockLeave);
         if (_validateAsDate) ClearError();
         RedrawBorder();
+        FormatNumeric();
     }
 
     protected override void OnMouseEnter(EventArgs e)
@@ -225,14 +230,20 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         switch (_controlState)
         {
             case EControlState.Normal:
-                ReadOnly = false; break;
-            case EControlState.Disabled:
-                Enabled = false; break;
-            case EControlState.ReadOnly:
-                ReadOnly = true; break;
-            case EControlState.Edit:
-                ReadOnly = false;
                 Enabled = true;
+                ReadOnly = false;
+                break;
+            case EControlState.Disabled:
+                Enabled = false;
+                ReadOnly = false;
+                break;
+            case EControlState.ReadOnly:
+                Enabled = true;
+                ReadOnly = true;
+                break;
+            case EControlState.Edit:
+                Enabled = true;
+                ReadOnly = false;
                 break;
         }
     }
