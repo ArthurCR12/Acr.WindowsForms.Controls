@@ -215,40 +215,73 @@ namespace AcrFormsTest
         // ───────────────────────────── TextBox ─────────────────────────────
         private AcrCard BuildTextBoxSection()
         {
-            var card = NewSection("TextBox — cores de borda e borda de erro", 150);
+            var card = NewSection("TextBox — novo visual (Outlined, Underline e Classic)", 260);
 
-            var txtRequired = new AcrTextBox
-            {
-                Name = "txtNovidadesObrigatorio",
-                Location = new Point(16, ContentTop + 22),
-                Size = new Size(260, 23),
-                RequiredField = true,
-                PlaceholderText = "Campo obrigatório",
-                WarningMessageRequiredField = "Preencha este campo!",
-            };
-            var btnValidate = new AcrButton { Text = "Validar", Location = new Point(286, ContentTop + 18), Size = new Size(90, 30) };
-            var lblState = NewResultLabel(386, ContentTop + 22, 300);
+            const int colWidth = 220;
+            int[] cols = { 16, 256, 496 };
 
-            var txtCustom = new AcrTextBox
+            Label Caption(string text, int x, int y) => new()
             {
-                Name = "txtNovidadesCores",
-                Location = new Point(16, ContentTop + 72),
-                Size = new Size(260, 23),
-                PlaceholderText = "Bordas personalizadas (roxo no foco)",
-                BorderColor = Color.FromArgb(200, 190, 230),
-                BorderHoverColor = Color.FromArgb(150, 120, 210),
-                BorderFocusColor = Color.FromArgb(111, 66, 193),
-                OnEnterBackColor = Color.FromArgb(246, 242, 255),
+                Text = text,
+                AutoSize = true,
+                Location = new Point(x, y),
+                ForeColor = AcrColors.Neutral,
+                Font = new Font("Segoe UI", 8.25F, FontStyle.Bold),
             };
 
+            AcrTextBox Field(string name, int x, int y, string placeholder, AcrTextBoxStyle style = AcrTextBoxStyle.Outlined) => new()
+            {
+                Name = name,
+                Location = new Point(x, y),
+                Width = colWidth,
+                TextBoxStyle = style,
+                PlaceholderText = placeholder,
+                TabOnEnter = false,
+            };
+
+            // Linha 1: os três estilos
+            int rowA = ContentTop + 4;
+            card.Controls.Add(Caption("Outlined (padrão)", cols[0], rowA));
+            card.Controls.Add(Caption("Underline", cols[1], rowA));
+            card.Controls.Add(Caption("Classic", cols[2], rowA));
+            card.Controls.Add(Field("txtNovOutlined", cols[0], rowA + 20, "Clique para ver o anel de foco"));
+            card.Controls.Add(Field("txtNovUnderline", cols[1], rowA + 20, "Linha inferior", AcrTextBoxStyle.Underline));
+            card.Controls.Add(Field("txtNovClassic", cols[2], rowA + 20, "Visual antigo", AcrTextBoxStyle.Classic));
+
+            // Linha 2: validação, ícones e cores
+            int rowB = ContentTop + 84;
+            card.Controls.Add(Caption("Obrigatório (borda de erro)", cols[0], rowB));
+            card.Controls.Add(Caption("Senha + botão limpar", cols[1], rowB));
+            card.Controls.Add(Caption("Cores e cantos personalizados", cols[2], rowB));
+
+            var txtRequired = Field("txtNovObrigatorio", cols[0], rowB + 20, "Campo obrigatório");
+            txtRequired.RequiredField = true;
+            txtRequired.WarningMessageRequiredField = "Preencha este campo!";
+
+            var txtPassword = Field("txtNovSenha", cols[1], rowB + 20, "Digite a senha");
+            txtPassword.IsPasswordField = true;
+            txtPassword.ShowClearButton = true;
+
+            var txtCustom = Field("txtNovCores", cols[2], rowB + 20, "Roxo no foco");
+            txtCustom.BorderRadius = 16;
+            txtCustom.BorderColor = Color.FromArgb(200, 190, 230);
+            txtCustom.BorderHoverColor = Color.FromArgb(150, 120, 210);
+            txtCustom.BorderFocusColor = Color.FromArgb(111, 66, 193);
+
+            card.Controls.AddRange(new Control[] { txtRequired, txtPassword, txtCustom });
+
+            // Linha 3: ação de validar
+            int rowC = ContentTop + 166;
+            var btnValidate = new AcrButton { Text = "Validar obrigatório", Location = new Point(cols[0], rowC), Size = new Size(150, 30) };
+            var lblState = NewResultLabel(cols[0] + 160, rowC + 4, 400);
             btnValidate.Click += (_, _) =>
             {
                 if (txtRequired.IsControlEmpty) txtRequired.ShowRequiredFieldError();
                 else txtRequired.ClearError();
-                lblState.Text = txtRequired.HasError ? "HasError = true (borda vermelha)" : "HasError = false";
+                lblState.Text = txtRequired.HasError ? "HasError = true (borda e anel vermelhos)" : "HasError = false";
             };
 
-            card.Controls.AddRange(new Control[] { txtRequired, btnValidate, lblState, txtCustom });
+            card.Controls.AddRange(new Control[] { btnValidate, lblState });
             return card;
         }
 

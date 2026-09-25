@@ -54,7 +54,7 @@ Developed by **Arthur Cabral**, this package aims to improve user experience and
 - Timer pauses while the mouse is over the notification; progress bar shows remaining time; click to dismiss.
 
 ### Other improvements
-- **AcrTextBox**: `BorderColor`, `BorderHoverColor`, `BorderFocusColor`, `BorderErrorColor`; red border while a validation error is shown (`HasError`); the designer Font is no longer overwritten.
+- **AcrTextBox**: new look via `TextBoxStyle` — `Outlined` (default: rounded corners, inner padding, colored focus ring), `Underline` or `Classic` (old square border). Tune with `BorderRadius`, `HorizontalPadding`, `VerticalPadding`, `BorderColor`, `BorderHoverColor`, `BorderFocusColor`, `BorderErrorColor`; red border/ring while a validation error is shown (`HasError`); the designer Font is no longer overwritten.
 - **AcrDataGridView**: hover row highlight (`HighlightHoverRow`, `HoverRowColor`), `EmptyText` when there are no rows, double buffering, full-row selection.
 - **AcrCard**: `TitleColor`, `AccentColor` stripe, `BorderWidth`, `HoverEffect` and `CardClick` event.
 - **AcrDropdownMenu**: keyboard navigation (↑ ↓ Enter Esc), separators (`"-"`), `DisabledIndexes`, scroll with `MaxVisibleItems`, stays inside the screen, drop shadow, `Closed` event.

@@ -9,7 +9,7 @@ namespace Acr.WindowsForms.Controls.Controls.CustomTextBox;
 
 public partial class AcrTextBox : TextBox, IAcrValidatableControl
 {
-    private Color _onEnterBackColor = Color.AliceBlue;
+    private Color _onEnterBackColor = Color.White;
     private Color _onLeaveBackColor = Color.White;
 
     private Label? _titleLabel;
@@ -232,6 +232,8 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
 
     protected override void WndProc(ref Message m)
     {
+        if (HandleModernMessage(ref m)) return;
+
         base.WndProc(ref m);
 
         if (m.Msg == WM_NCPAINT || m.Msg == WM_NCCALCSIZE)
@@ -248,7 +250,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
 
     private void PaintCustomBorder()
     {
-        if (BorderStyle != BorderStyle.FixedSingle) return;
+        if (IsModernStyle || BorderStyle != BorderStyle.FixedSingle) return;
 
         var color = !Enabled
             ? AcrColors.BorderDisabled

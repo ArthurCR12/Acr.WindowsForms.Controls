@@ -385,7 +385,7 @@ namespace AcrFormsTest
             acrTextBox1.LabelTitleText = "";
             acrTextBox1.Location = new Point(30, 83);
             acrTextBox1.Name = "acrTextBox1";
-            acrTextBox1.OnEnterBackColor = Color.AliceBlue;
+            acrTextBox1.OnEnterBackColor = Color.White;
             acrTextBox1.OnLeaveBackColor = Color.White;
             acrTextBox1.RequiredField = true;
             acrTextBox1.SelectAllTextOnEnter = false;
@@ -415,7 +415,7 @@ namespace AcrFormsTest
             acrTextBox2.LabelTitleText = "";
             acrTextBox2.Location = new Point(30, 134);
             acrTextBox2.Name = "acrTextBox2";
-            acrTextBox2.OnEnterBackColor = Color.AliceBlue;
+            acrTextBox2.OnEnterBackColor = Color.White;
             acrTextBox2.OnLeaveBackColor = Color.White;
             acrTextBox2.RequiredField = true;
             acrTextBox2.SelectAllTextOnEnter = false;
@@ -446,7 +446,7 @@ namespace AcrFormsTest
             acrTextBoxEmail.LabelTitleText = "";
             acrTextBoxEmail.Location = new Point(30, 185);
             acrTextBoxEmail.Name = "acrTextBoxEmail";
-            acrTextBoxEmail.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxEmail.OnEnterBackColor = Color.White;
             acrTextBoxEmail.OnLeaveBackColor = Color.White;
             acrTextBoxEmail.RequiredField = false;
             acrTextBoxEmail.SelectAllTextOnEnter = false;
@@ -487,7 +487,7 @@ namespace AcrFormsTest
             acrTextBoxCpf.LabelTitleText = "";
             acrTextBoxCpf.Location = new Point(30, 236);
             acrTextBoxCpf.Name = "acrTextBoxCpf";
-            acrTextBoxCpf.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxCpf.OnEnterBackColor = Color.White;
             acrTextBoxCpf.OnLeaveBackColor = Color.White;
             acrTextBoxCpf.RequiredField = false;
             acrTextBoxCpf.SelectAllTextOnEnter = false;
@@ -528,7 +528,7 @@ namespace AcrFormsTest
             acrTextBoxCnpj.LabelTitleText = "";
             acrTextBoxCnpj.Location = new Point(30, 287);
             acrTextBoxCnpj.Name = "acrTextBoxCnpj";
-            acrTextBoxCnpj.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxCnpj.OnEnterBackColor = Color.White;
             acrTextBoxCnpj.OnLeaveBackColor = Color.White;
             acrTextBoxCnpj.RequiredField = false;
             acrTextBoxCnpj.SelectAllTextOnEnter = false;
@@ -569,7 +569,7 @@ namespace AcrFormsTest
             acrTextBoxPhone.LabelTitleText = "";
             acrTextBoxPhone.Location = new Point(30, 338);
             acrTextBoxPhone.Name = "acrTextBoxPhone";
-            acrTextBoxPhone.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxPhone.OnEnterBackColor = Color.White;
             acrTextBoxPhone.OnLeaveBackColor = Color.White;
             acrTextBoxPhone.RequiredField = false;
             acrTextBoxPhone.SelectAllTextOnEnter = false;
@@ -610,7 +610,7 @@ namespace AcrFormsTest
             acrTextBoxCustom.LabelTitleText = "";
             acrTextBoxCustom.Location = new Point(30, 389);
             acrTextBoxCustom.Name = "acrTextBoxCustom";
-            acrTextBoxCustom.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxCustom.OnEnterBackColor = Color.White;
             acrTextBoxCustom.OnLeaveBackColor = Color.White;
             acrTextBoxCustom.RequiredField = false;
             acrTextBoxCustom.SelectAllTextOnEnter = false;
@@ -651,7 +651,7 @@ namespace AcrFormsTest
             acrTextBoxSenha.LabelTitleText = "";
             acrTextBoxSenha.Location = new Point(30, 440);
             acrTextBoxSenha.Name = "acrTextBoxSenha";
-            acrTextBoxSenha.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxSenha.OnEnterBackColor = Color.White;
             acrTextBoxSenha.OnLeaveBackColor = Color.White;
             acrTextBoxSenha.RequiredField = false;
             acrTextBoxSenha.SelectAllTextOnEnter = false;
@@ -692,7 +692,7 @@ namespace AcrFormsTest
             acrTextBoxValor.LabelTitleText = "";
             acrTextBoxValor.Location = new Point(30, 491);
             acrTextBoxValor.Name = "acrTextBoxValor";
-            acrTextBoxValor.OnEnterBackColor = Color.AliceBlue;
+            acrTextBoxValor.OnEnterBackColor = Color.White;
             acrTextBoxValor.OnLeaveBackColor = Color.White;
             acrTextBoxValor.RequiredField = false;
             acrTextBoxValor.SelectAllTextOnEnter = false;

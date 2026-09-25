@@ -49,7 +49,7 @@ namespace Acr.WindowsForms.Controls.Controls
             txt_Search.LabelTitleText = "";
             txt_Search.Location = new Point(0, 0);
             txt_Search.Name = "txt_Search";
-            txt_Search.OnEnterBackColor = Color.AliceBlue;
+            txt_Search.OnEnterBackColor = Color.White;
             txt_Search.OnLeaveBackColor = Color.White;
             txt_Search.SelectAllTextOnEnter = false;
             txt_Search.Size = new Size(350, 27);

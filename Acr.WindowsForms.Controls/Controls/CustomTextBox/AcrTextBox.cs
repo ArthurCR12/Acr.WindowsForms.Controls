@@ -38,8 +38,11 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseContr
         // Definidos no construtor (e não em OnCreateControl) para não sobrescrever
         // a fonte/cor configuradas pelo usuário no Designer.
         BorderStyle = BorderStyle.FixedSingle;
+        // A altura é controlada pelo estilo (ver AcrTextBox.Style.cs), não pelo AutoSize nativo.
+        AutoSize = false;
         ForeColor = AcrColors.Text;
         Font = new Font("Segoe UI", 9F);
+        ApplyModernHeight();
     }
 
     protected override void OnCreateControl()

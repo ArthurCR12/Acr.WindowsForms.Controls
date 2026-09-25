@@ -1,4 +1,5 @@
 using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Interfaces;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -128,7 +129,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
             Size = new Size(IconSize, IconSize),
             TextAlign = ContentAlignment.MiddleCenter,
             Cursor = Cursors.Hand,
-            BackColor = Color.Transparent,
+            BackColor = BackColor,
             ForeColor = AcrColors.IconGlyph,
             Font = new Font("Segoe UI Symbol", 8f)
         };
@@ -144,7 +145,10 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
     {
         if (Parent == null) return;
 
-        int rightOffset = Right - IconSize - IconGap;
+        int framePadding = !IsModernStyle
+            ? IconGap
+            : _horizontalPadding + (_textBoxStyle == AcrTextBoxStyle.Outlined ? RingWidth : 0);
+        int rightOffset = Right - framePadding - IconSize;
         int centerY = Top + (Height - IconSize) / 2;
 
         if (_passwordToggleIcon != null)
