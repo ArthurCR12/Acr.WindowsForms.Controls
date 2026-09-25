@@ -76,6 +76,12 @@ public class AcrCard : Panel
         Padding = new Padding(Padding.Left, _titleHeight, Padding.Right, Padding.Bottom);
     }
 
+    protected override void OnPaintBackground(PaintEventArgs pevent)
+    {
+        var parentBack = Parent?.BackColor ?? Color.White;
+        pevent.Graphics.Clear(parentBack.A == 0 ? Color.White : parentBack);
+    }
+
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);

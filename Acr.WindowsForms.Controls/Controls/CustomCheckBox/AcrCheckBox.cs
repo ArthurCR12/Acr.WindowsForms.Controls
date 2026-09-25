@@ -102,9 +102,9 @@ public class AcrCheckBox : CheckBox, IAcrBaseControl
 
     public override Size GetPreferredSize(Size proposedSize)
     {
-        var textSize = TextRenderer.MeasureText(string.IsNullOrEmpty(Text) ? " " : Text, Font);
-        int height = Math.Max(BoxSize, textSize.Height) + 4;
-        int width = BoxSize + TextGap + textSize.Width + 2;
+        var textSize = TextRenderer.MeasureText(string.IsNullOrEmpty(Text) ? " " : Text, Font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.SingleLine);
+        int height = Math.Max(BoxSize, textSize.Height) + 8;
+        int width = BoxSize + TextGap + textSize.Width + 4;
         return new Size(width, height);
     }
 

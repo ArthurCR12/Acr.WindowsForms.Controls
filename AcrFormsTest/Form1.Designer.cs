@@ -987,7 +987,7 @@ namespace AcrFormsTest
             //
             chkCheckedByDefault.AutoSize = true;
             chkCheckedByDefault.Checked = true;
-            chkCheckedByDefault.Location = new Point(30, 95);
+            chkCheckedByDefault.Location = new Point(30, 100);
             chkCheckedByDefault.Name = "chkCheckedByDefault";
             chkCheckedByDefault.TabIndex = 2;
             chkCheckedByDefault.Text = "Opção já marcada";
@@ -997,7 +997,7 @@ namespace AcrFormsTest
             chkAccent.AccentColor = Color.FromArgb(32, 148, 87);
             chkAccent.AutoSize = true;
             chkAccent.Checked = true;
-            chkAccent.Location = new Point(30, 130);
+            chkAccent.Location = new Point(30, 140);
             chkAccent.Name = "chkAccent";
             chkAccent.TabIndex = 3;
             chkAccent.Text = "Marcada com AccentColor customizada (verde)";
@@ -1006,7 +1006,7 @@ namespace AcrFormsTest
             //
             chkDisabled.AutoSize = true;
             chkDisabled.Enabled = false;
-            chkDisabled.Location = new Point(30, 165);
+            chkDisabled.Location = new Point(30, 180);
             chkDisabled.Name = "chkDisabled";
             chkDisabled.TabIndex = 4;
             chkDisabled.Text = "Desabilitada (desmarcada)";
@@ -1016,7 +1016,7 @@ namespace AcrFormsTest
             chkDisabledChecked.AutoSize = true;
             chkDisabledChecked.Checked = true;
             chkDisabledChecked.Enabled = false;
-            chkDisabledChecked.Location = new Point(30, 200);
+            chkDisabledChecked.Location = new Point(30, 220);
             chkDisabledChecked.Name = "chkDisabledChecked";
             chkDisabledChecked.TabIndex = 5;
             chkDisabledChecked.Text = "Desabilitada (marcada)";
@@ -1058,7 +1058,7 @@ namespace AcrFormsTest
             // radOptionB
             //
             radOptionB.AutoSize = true;
-            radOptionB.Location = new Point(30, 95);
+            radOptionB.Location = new Point(30, 100);
             radOptionB.Name = "radOptionB";
             radOptionB.TabIndex = 2;
             radOptionB.Text = "Opção B";
@@ -1067,7 +1067,7 @@ namespace AcrFormsTest
             //
             radOptionAccent.AccentColor = Color.FromArgb(32, 148, 87);
             radOptionAccent.AutoSize = true;
-            radOptionAccent.Location = new Point(30, 130);
+            radOptionAccent.Location = new Point(30, 140);
             radOptionAccent.Name = "radOptionAccent";
             radOptionAccent.TabIndex = 3;
             radOptionAccent.Text = "Opção C (AccentColor verde)";
@@ -1076,7 +1076,7 @@ namespace AcrFormsTest
             //
             radDisabled.AutoSize = true;
             radDisabled.Enabled = false;
-            radDisabled.Location = new Point(30, 165);
+            radDisabled.Location = new Point(30, 180);
             radDisabled.Name = "radDisabled";
             radDisabled.TabIndex = 4;
             radDisabled.Text = "Opção desabilitada";
