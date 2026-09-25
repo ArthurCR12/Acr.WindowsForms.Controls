@@ -14,6 +14,14 @@ public class AcrAccordion : Control
     private int _expandedContentHeight = 160;
     private string _headerText = "Título da seção";
     private bool _hoveringHeader = false;
+    private bool _animate = true;
+    private bool _collapseSiblings;
+    private Color _headerBackColor = Color.White;
+    private Color _headerHoverColor = Color.FromArgb(248, 248, 248);
+    private Color _headerForeColor = AcrColors.Text;
+    private Color _expandedAccentColor = AcrColors.Primary;
+    private readonly System.Windows.Forms.Timer _animationTimer = new() { Interval = 15 };
+    private int _targetHeight;
 
     public event EventHandler? ExpandedChanged;
 
@@ -29,6 +37,9 @@ public class AcrAccordion : Control
 
         Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
         Cursor = Cursors.Hand;
+        TabStop = true;
+        SetStyle(ControlStyles.Selectable, true);
+        _animationTimer.Tick += AnimationTimer_Tick;
 
         _contentPanel = new Panel
         {
@@ -75,6 +86,72 @@ public class AcrAccordion : Control
     }
 
     [Category("Acr Custom")]
+    [Description("If true, expanding/collapsing is animated.")]
+    [Browsable(true)]
+    [DefaultValue(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public bool Animate
+    {
+        get => _animate;
+        set => _animate = value;
+    }
+
+    [Category("Acr Custom")]
+    [Description("If true, expanding this accordion collapses the sibling accordions (same parent) that also have this option enabled.")]
+    [Browsable(true)]
+    [DefaultValue(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public bool CollapseSiblings
+    {
+        get => _collapseSiblings;
+        set => _collapseSiblings = value;
+    }
+
+    [Category("Acr Custom")]
+    [Description("Background color of the header.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color HeaderBackColor
+    {
+        get => _headerBackColor;
+        set { _headerBackColor = value; Invalidate(); }
+    }
+
+    [Category("Acr Custom")]
+    [Description("Background color of the header when hovered.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color HeaderHoverColor
+    {
+        get => _headerHoverColor;
+        set { _headerHoverColor = value; Invalidate(); }
+    }
+
+    [Category("Acr Custom")]
+    [Description("Text color of the header.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color HeaderForeColor
+    {
+        get => _headerForeColor;
+        set { _headerForeColor = value; Invalidate(); }
+    }
+
+    [Category("Acr Custom")]
+    [Description("Color of the small bar drawn at the left of the header while expanded. Empty = no bar.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color ExpandedAccentColor
+    {
+        get => _expandedAccentColor;
+        set { _expandedAccentColor = value; Invalidate(); }
+    }
+
+    public void Expand() => Expanded = true;
+    public void Collapse() => Expanded = false;
+    public void Toggle() => Expanded = !Expanded;
+
+    [Category("Acr Custom")]
     [Description("If true, the content area is visible.")]
     [Browsable(true)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -85,12 +162,62 @@ public class AcrAccordion : Control
         {
             if (_expanded == value) return;
             _expanded = value;
-            _contentPanel.Visible = _expanded;
-            ApplyHeight();
+            if (_expanded && _collapseSiblings && Parent != null)
+            {
+                foreach (var sibling in Parent.Controls.OfType<AcrAccordion>())
+                    if (sibling != this && sibling._collapseSiblings) sibling.Expanded = false;
+            }
+            if (_animate && IsHandleCreated && Visible && !DesignMode)
+            {
+                _contentPanel.Visible = true;
+                _targetHeight = HeaderHeight + (_expanded ? _expandedContentHeight : 0);
+                _animationTimer.Start();
+            }
+            else
+            {
+                _contentPanel.Visible = _expanded;
+                ApplyHeight();
+            }
             Invalidate();
             ExpandedChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+
+    private void AnimationTimer_Tick(object? sender, EventArgs e)
+    {
+        int diff = _targetHeight - Height;
+        int step = Math.Sign(diff) * Math.Max(4, Math.Abs(diff) / 4);
+        if (Math.Abs(diff) <= Math.Abs(step))
+        {
+            _animationTimer.Stop();
+            _contentPanel.Visible = _expanded;
+            ApplyHeight();
+            return;
+        }
+        Height += step;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) _animationTimer.Dispose();
+        base.Dispose(disposing);
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+        if (e.KeyCode is Keys.Enter or Keys.Space)
+        {
+            Toggle();
+            e.Handled = true;
+        }
+    }
+
+    protected override bool IsInputKey(Keys keyData) =>
+        keyData is Keys.Enter or Keys.Space || base.IsInputKey(keyData);
+
+    protected override void OnGotFocus(EventArgs e) { base.OnGotFocus(e); Invalidate(); }
+    protected override void OnLostFocus(EventArgs e) { base.OnLostFocus(e); Invalidate(); }
 
     private void ApplyHeight()
     {
@@ -130,7 +257,11 @@ public class AcrAccordion : Control
     protected override void OnMouseClick(MouseEventArgs e)
     {
         base.OnMouseClick(e);
-        if (e.Y <= HeaderHeight) Expanded = !Expanded;
+        if (e.Y <= HeaderHeight)
+        {
+            Focus();
+            Toggle();
+        }
     }
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
@@ -151,13 +282,25 @@ public class AcrAccordion : Control
         }
 
         var headerRect = new Rectangle(1, 1, Width - 2, HeaderHeight - 1);
-        using (var headerBrush = new SolidBrush(_hoveringHeader ? Color.FromArgb(248, 248, 248) : Color.White))
+        using (var headerBrush = new SolidBrush(_hoveringHeader ? _headerHoverColor : _headerBackColor))
             e.Graphics.FillRectangle(headerBrush, headerRect);
 
+        if (_expanded && _expandedAccentColor != Color.Empty)
+        {
+            using var accentBrush = new SolidBrush(_expandedAccentColor);
+            e.Graphics.FillRectangle(accentBrush, 1, 8, 3, HeaderHeight - 16);
+        }
+
         var textRect = new Rectangle(14, 0, Width - 50, HeaderHeight);
-        TextRenderer.DrawText(e.Graphics, _headerText, Font, textRect, AcrColors.Text, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+        TextRenderer.DrawText(e.Graphics, _headerText, Font, textRect, Enabled ? _headerForeColor : AcrColors.TextDisabled, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
 
         DrawChevron(e.Graphics);
+
+        if (Focused && ShowFocusCues)
+        {
+            var focusRect = new Rectangle(4, 4, Width - 9, HeaderHeight - 8);
+            ControlPaint.DrawFocusRectangle(e.Graphics, focusRect);
+        }
 
         if (_expanded)
         {

@@ -1,4 +1,4 @@
-﻿namespace Acr.WindowsForms.Controls.Enums
+namespace Acr.WindowsForms.Controls.Enums
 {
     public enum NotificationType
     {
@@ -6,5 +6,6 @@
         Error,
         Warning,
         Info,
+        Success = Sucess,
     }
 }

@@ -1,4 +1,4 @@
-﻿using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -13,12 +13,18 @@ namespace Acr.WindowsForms.Controls.Controls
         private const int MaxNotifications = 10;
         private const int SlideSpeed = 3;
         private const double FadeStep = 0.1;
-        private const int WaitTime = 5000;
-        private const int TimerIntervalFast = 1;
+        private const int SlideDistance = 40;
+        private const int TimerIntervalFast = 15;
+        private const int ProgressBarHeight = 3;
         private const int CornerRadius = 10;
         private const int AccentBarWidth = 4;
 
         private Color _accentColor = AcrColors.Info;
+        private int _duration = 5000;
+        private DateTime _waitStarted;
+        private int _elapsedBeforePause;
+        private bool _paused;
+        private string? _title;
 
         public Frm_Notification()
         {
@@ -28,10 +34,40 @@ namespace Acr.WindowsForms.Controls.Controls
             lbl_Message.Font = new Font("Segoe UI", 9.5F);
             lbl_Message.ForeColor = AcrColors.Text;
             btn_Close.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
+            // Pausa o tempo de exibição enquanto o mouse estiver sobre a notificação.
+            foreach (Control c in Controls)
+            {
+                c.MouseEnter += (_, _) => PauseIfHovered();
+                c.MouseLeave += (_, _) => ResumeIfNotHovered();
+            }
+            MouseEnter += (_, _) => PauseIfHovered();
+            MouseLeave += (_, _) => ResumeIfNotHovered();
+            lbl_Message.Click += (_, _) => btn_Close_Click(this, EventArgs.Empty);
         }
 
-        public void ShowNotification(string msg, NotificationType nType = NotificationType.Info)
+        protected override bool ShowWithoutActivation => true;
+
+        protected override CreateParams CreateParams
         {
+            get
+            {
+                const int WS_EX_TOPMOST = 0x00000008;
+                const int WS_EX_TOOLWINDOW = 0x00000080;
+                var cp = base.CreateParams;
+                cp.ExStyle |= WS_EX_TOPMOST | WS_EX_TOOLWINDOW;
+                return cp;
+            }
+        }
+
+        public void ShowNotification(string msg, NotificationType nType = NotificationType.Info) =>
+            ShowNotification(msg, nType, null, 5000, true);
+
+        public void ShowNotification(string msg, NotificationType nType, string? title, int durationMs, bool playSound)
+        {
+            _duration = Math.Max(1000, durationMs);
+            _title = string.IsNullOrWhiteSpace(title) ? null : title;
             this.Opacity = 0.0;
             this.StartPosition = FormStartPosition.Manual;
 
@@ -68,17 +104,23 @@ namespace Acr.WindowsForms.Controls.Controls
                 if (existingForm == null)
                 {
                     this.Name = fName;
-                    int screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
-                    int screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
+                    var area = (Form.ActiveForm != null ? Screen.FromControl(Form.ActiveForm) : Screen.PrimaryScreen!).WorkingArea;
 
-                    this.x = screenWidth - this.Width - 10; // Distancia da parte da esquerda
-                    this.y = screenHeight - this.Height * (i + 1) - 5; // Distancia da parte inferior
-                    this.Location = new Point(x, y);
+                    this.x = area.Right - this.Width - 10; // Distancia da parte da direita
+                    this.y = area.Bottom - (this.Height + 8) * (i + 1); // Distancia da parte inferior (com espaço entre notificações)
+                    this.Location = new Point(x + SlideDistance, y); // começa deslocada e desliza para a esquerda
                     break;
                 }
             }
-            this.lbl_Message.Text = msg;
-            PlaySound(nType);
+            if (_title != null)
+            {
+                lbl_Message.Text = _title + Environment.NewLine + msg;
+            }
+            else
+            {
+                this.lbl_Message.Text = msg;
+            }
+            if (playSound) PlaySound(nType);
             this.Show();
 
             _action = NotificationAction.Start;
@@ -100,13 +142,19 @@ namespace Acr.WindowsForms.Controls.Controls
                     timer1.Interval = TimerIntervalFast;
                     this.Opacity += FadeStep;
 
-                    if (this.Left > x) this.Left += SlideSpeed;
-                    else if (this.Opacity >= 1.0) _action = NotificationAction.Waiting;
+                    if (this.Left > x) this.Left = Math.Max(x, this.Left - SlideSpeed * 2);
+                    else if (this.Opacity >= 1.0)
+                    {
+                        _action = NotificationAction.Waiting;
+                        _waitStarted = DateTime.Now;
+                        _elapsedBeforePause = 0;
+                    }
                     break;
 
                 case NotificationAction.Waiting:
-                    timer1.Interval = WaitTime;
-                    _action = NotificationAction.Close;
+                    timer1.Interval = 50;
+                    if (!_paused && Elapsed >= _duration) _action = NotificationAction.Close;
+                    Invalidate(new Rectangle(0, Height - ProgressBarHeight - 1, Width, ProgressBarHeight + 1));
                     break;
 
 
@@ -122,6 +170,23 @@ namespace Acr.WindowsForms.Controls.Controls
                     }
                     break;
             }
+        }
+
+        private int Elapsed => _paused ? _elapsedBeforePause : _elapsedBeforePause + (int)(DateTime.Now - _waitStarted).TotalMilliseconds;
+
+        private void PauseIfHovered()
+        {
+            if (_paused || _action != NotificationAction.Waiting) return;
+            _elapsedBeforePause = Elapsed;
+            _paused = true;
+        }
+
+        private void ResumeIfNotHovered()
+        {
+            if (!_paused) return;
+            if (ClientRectangle.Contains(PointToClient(Cursor.Position))) return;
+            _paused = false;
+            _waitStarted = DateTime.Now;
         }
 
         private void PlaySound(NotificationType type)
@@ -157,7 +222,6 @@ namespace Acr.WindowsForms.Controls.Controls
 
         private void Frm_Notification_Load(object sender, EventArgs e)
         {
-            lbl_Message.Focus();
             UpdateRegion();
         }
 
@@ -176,6 +240,14 @@ namespace Acr.WindowsForms.Controls.Controls
             using var accentBrush = new SolidBrush(_accentColor);
             e.Graphics.FillRectangle(accentBrush, 0, 0, AccentBarWidth, Height);
 
+            if (_action == NotificationAction.Waiting)
+            {
+                float remaining = 1f - Math.Clamp(Elapsed / (float)_duration, 0f, 1f);
+                using var trackBrush = new SolidBrush(Color.FromArgb(40, _accentColor));
+                e.Graphics.FillRectangle(trackBrush, AccentBarWidth, Height - ProgressBarHeight, Width - AccentBarWidth, ProgressBarHeight);
+                e.Graphics.FillRectangle(accentBrush, AccentBarWidth, Height - ProgressBarHeight, (Width - AccentBarWidth) * remaining, ProgressBarHeight);
+            }
+
             using var borderPen = new Pen(Color.FromArgb(225, 225, 225), 1);
             using var borderPath = AcrGraphics.CreateRoundedRectPath(new Rectangle(0, 0, Width - 1, Height - 1), CornerRadius);
             e.Graphics.DrawPath(borderPen, borderPath);
@@ -186,7 +258,9 @@ namespace Acr.WindowsForms.Controls.Controls
             if (Width <= 0 || Height <= 0) return;
 
             using var path = AcrGraphics.CreateRoundedRectPath(new Rectangle(0, 0, Width, Height), CornerRadius);
+            var old = Region;
             Region = new Region(path);
+            old?.Dispose();
         }
     }
 }

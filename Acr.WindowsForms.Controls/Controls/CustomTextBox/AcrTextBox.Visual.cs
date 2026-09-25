@@ -21,6 +21,12 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
     private string _labelTitleText = string.Empty;
 
     private bool _hovering = false;
+    private bool _hasError = false;
+
+    private Color _borderColor = AcrColors.Border;
+    private Color _borderHoverColor = AcrColors.BorderHover;
+    private Color _borderFocusColor = AcrColors.BorderFocused;
+    private Color _borderErrorColor = AcrColors.Error;
 
     private const int WM_NCPAINT = 0x0085;
     private const int WM_NCCALCSIZE = 0x0083;
@@ -56,6 +62,59 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
     {
         get => _onLeaveBackColor;
         set => _onLeaveBackColor = value;
+    }
+
+    [Category("Acr Custom")]
+    [Description("Border color in the normal state.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color BorderColor
+    {
+        get => _borderColor;
+        set { _borderColor = value; RedrawBorder(); }
+    }
+
+    [Category("Acr Custom")]
+    [Description("Border color when the mouse is over the control.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color BorderHoverColor
+    {
+        get => _borderHoverColor;
+        set { _borderHoverColor = value; RedrawBorder(); }
+    }
+
+    [Category("Acr Custom")]
+    [Description("Border color when the control is focused.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color BorderFocusColor
+    {
+        get => _borderFocusColor;
+        set { _borderFocusColor = value; RedrawBorder(); }
+    }
+
+    [Category("Acr Custom")]
+    [Description("Border color when the control has a validation error.")]
+    [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color BorderErrorColor
+    {
+        get => _borderErrorColor;
+        set { _borderErrorColor = value; RedrawBorder(); }
+    }
+
+    /// <summary>True enquanto uma mensagem de erro de validação estiver sendo exibida.</summary>
+    [Browsable(false)]
+    public bool HasError
+    {
+        get => _hasError;
+        private set
+        {
+            if (_hasError == value) return;
+            _hasError = value;
+            RedrawBorder();
+        }
     }
 
     [Category("Acr Custom")]
@@ -193,11 +252,13 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
 
         var color = !Enabled
             ? AcrColors.BorderDisabled
-            : Focused
-                ? AcrColors.BorderFocused
-                : _hovering
-                    ? AcrColors.BorderHover
-                    : AcrColors.Border;
+            : _hasError
+                ? _borderErrorColor
+                : Focused
+                    ? _borderFocusColor
+                    : _hovering
+                        ? _borderHoverColor
+                        : _borderColor;
 
         var hdc = GetWindowDC(Handle);
         if (hdc == IntPtr.Zero) return;

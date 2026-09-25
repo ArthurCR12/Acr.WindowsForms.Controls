@@ -20,7 +20,29 @@ public class AcrModal : Form
     private bool _dragging;
     private Point _dragStart;
 
+    private Button? _primaryButton;
+
     public Panel ContentPanel { get; }
+
+    /// <summary>
+    /// Valor padrão de <see cref="DimBackground"/> para novos modais (inclusive os helpers estáticos).
+    /// </summary>
+    public static bool DefaultDimBackground { get; set; } = true;
+
+    /// <summary>
+    /// Se true, escurece o restante da tela (a janela dona) enquanto o modal estiver aberto.
+    /// Use <see cref="ShowModal"/> para exibir o modal com o overlay.
+    /// </summary>
+    public bool DimBackground { get; set; } = DefaultDimBackground;
+
+    /// <summary>Opacidade do overlay escuro (0.0 a 1.0).</summary>
+    public double OverlayOpacity { get; set; } = 0.45;
+
+    /// <summary>Cor do overlay.</summary>
+    public Color OverlayColor { get; set; } = Color.Black;
+
+    /// <summary>Se true, a tecla Esc fecha o modal com DialogResult.Cancel.</summary>
+    public bool CloseOnEscape { get; set; } = true;
 
     public AcrModal(string title, string message, AcrBadgeVariant variant = AcrBadgeVariant.Info)
     {
@@ -89,6 +111,7 @@ public class AcrModal : Form
         Controls.Add(_footerPanel);
         Controls.Add(_headerPanel);
 
+        KeyPreview = true;
         Load += (_, _) => PositionCloseButton();
         Resize += (_, _) => { PositionCloseButton(); UpdateRegion(); };
 
@@ -99,6 +122,7 @@ public class AcrModal : Form
     public void SetButtons(params (string Text, DialogResult Result, bool IsPrimary)[] buttons)
     {
         _footerPanel.Controls.Clear();
+        _primaryButton = null;
 
         int x = Width - SidePadding;
         for (int i = buttons.Length - 1; i >= 0; i--)
@@ -111,19 +135,94 @@ public class AcrModal : Form
                 Size = new Size(110, 32),
             };
 
-            if (!isPrimary)
-            {
-                button.AccentColor = Color.FromArgb(240, 240, 240);
-                button.ForeColor = AcrColors.Text;
-            }
+            if (!isPrimary) button.Variant = AcrButtonVariant.Secondary;
 
             x -= button.Width;
             button.Location = new Point(x, (FooterHeight - button.Height) / 2);
             button.Click += (_, _) => { DialogResult = result; Close(); };
+            if (isPrimary) _primaryButton = button;
 
             _footerPanel.Controls.Add(button);
             x -= 10;
         }
+
+        if (_primaryButton != null) AcceptButton = _primaryButton;
+    }
+
+    /// <summary>
+    /// Exibe o modal. Se <see cref="DimBackground"/> for true, escurece a janela dona
+    /// (ou a tela inteira, se não houver dona) enquanto o modal estiver aberto.
+    /// </summary>
+    public DialogResult ShowModal(IWin32Window? owner = null)
+    {
+        var ownerForm = ResolveOwnerForm(owner);
+
+        if (!DimBackground)
+            return ownerForm != null ? ShowDialog(ownerForm) : ShowDialog();
+
+        using var overlay = new OverlayForm(OverlayColor, OverlayOpacity);
+        if (ownerForm != null && ownerForm.WindowState != FormWindowState.Minimized)
+        {
+            overlay.Bounds = ownerForm.Bounds;
+            overlay.Show(ownerForm);
+        }
+        else
+        {
+            overlay.Bounds = Screen.FromPoint(Cursor.Position).Bounds;
+            overlay.Show();
+        }
+
+        try
+        {
+            // O overlay vira o dono do modal: garante que o modal fique acima dele e centralizado.
+            return ShowDialog(overlay);
+        }
+        finally
+        {
+            overlay.Close();
+            ownerForm?.Activate();
+        }
+    }
+
+    private static Form? ResolveOwnerForm(IWin32Window? owner)
+    {
+        Form? form = owner switch
+        {
+            Form f => f,
+            Control c => c.FindForm(),
+            null => Form.ActiveForm,
+            _ => Control.FromHandle(owner.Handle)?.FindForm(),
+        };
+        // Usa a janela de nível superior para cobrir a tela toda do app (inclusive MDI).
+        while (form?.ParentForm != null) form = form.ParentForm;
+        return form;
+    }
+
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+        if (CloseOnEscape && keyData == Keys.Escape)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+            return true;
+        }
+        return base.ProcessCmdKey(ref msg, keyData);
+    }
+
+    private sealed class OverlayForm : Form
+    {
+        public OverlayForm(Color color, double opacity)
+        {
+            FormBorderStyle = FormBorderStyle.None;
+            StartPosition = FormStartPosition.Manual;
+            ShowInTaskbar = false;
+            BackColor = color;
+            Opacity = Math.Clamp(opacity, 0.0, 1.0);
+            ControlBox = false;
+            Text = string.Empty;
+        }
+
+        protected override bool ShowWithoutActivation => true;
     }
 
     private void SetAccentColor(AcrBadgeVariant variant)
@@ -162,7 +261,9 @@ public class AcrModal : Form
     {
         if (Width <= 0 || Height <= 0) return;
         using var path = AcrGraphics.CreateRoundedRectPath(new Rectangle(0, 0, Width, Height), CornerRadius);
+        var old = Region;
         Region = new Region(path);
+        old?.Dispose();
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -179,32 +280,33 @@ public class AcrModal : Form
         e.Graphics.DrawLine(separatorPen, SidePadding, Height - FooterHeight, Width - SidePadding, Height - FooterHeight);
     }
 
-    public static DialogResult ShowInfo(IWin32Window? owner, string message, string title = "Informação") =>
-        ShowSimple(owner, title, message, AcrBadgeVariant.Info);
+    public static DialogResult ShowInfo(IWin32Window? owner, string message, string title = "Informação", bool? dimBackground = null) =>
+        ShowSimple(owner, title, message, AcrBadgeVariant.Info, dimBackground);
 
-    public static DialogResult ShowSuccess(IWin32Window? owner, string message, string title = "Sucesso") =>
-        ShowSimple(owner, title, message, AcrBadgeVariant.Success);
+    public static DialogResult ShowSuccess(IWin32Window? owner, string message, string title = "Sucesso", bool? dimBackground = null) =>
+        ShowSimple(owner, title, message, AcrBadgeVariant.Success, dimBackground);
 
-    public static DialogResult ShowWarning(IWin32Window? owner, string message, string title = "Atenção") =>
-        ShowSimple(owner, title, message, AcrBadgeVariant.Warning);
+    public static DialogResult ShowWarning(IWin32Window? owner, string message, string title = "Atenção", bool? dimBackground = null) =>
+        ShowSimple(owner, title, message, AcrBadgeVariant.Warning, dimBackground);
 
-    public static DialogResult ShowError(IWin32Window? owner, string message, string title = "Erro") =>
-        ShowSimple(owner, title, message, AcrBadgeVariant.Error);
+    public static DialogResult ShowError(IWin32Window? owner, string message, string title = "Erro", bool? dimBackground = null) =>
+        ShowSimple(owner, title, message, AcrBadgeVariant.Error, dimBackground);
 
-    private static DialogResult ShowSimple(IWin32Window? owner, string title, string message, AcrBadgeVariant variant)
+    private static DialogResult ShowSimple(IWin32Window? owner, string title, string message, AcrBadgeVariant variant, bool? dimBackground)
     {
         using var modal = new AcrModal(title, message, variant);
+        if (dimBackground.HasValue) modal.DimBackground = dimBackground.Value;
         modal.SetButtons(("OK", DialogResult.OK, true));
-        return owner != null ? modal.ShowDialog(owner) : modal.ShowDialog();
+        return modal.ShowModal(owner);
     }
 
-    public static bool ShowConfirm(IWin32Window? owner, string message, string title = "Confirmação")
+    public static bool ShowConfirm(IWin32Window? owner, string message, string title = "Confirmação", bool? dimBackground = null)
     {
         using var modal = new AcrModal(title, message, AcrBadgeVariant.Warning);
+        if (dimBackground.HasValue) modal.DimBackground = dimBackground.Value;
         modal.SetButtons(
             ("Cancelar", DialogResult.Cancel, false),
             ("Confirmar", DialogResult.Yes, true));
-        var result = owner != null ? modal.ShowDialog(owner) : modal.ShowDialog();
-        return result == DialogResult.Yes;
+        return modal.ShowModal(owner) == DialogResult.Yes;
     }
 }

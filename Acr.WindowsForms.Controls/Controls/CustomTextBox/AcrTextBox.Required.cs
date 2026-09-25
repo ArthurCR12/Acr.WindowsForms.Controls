@@ -1,4 +1,4 @@
-﻿using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Interfaces;
 using System.ComponentModel;
@@ -44,10 +44,12 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
     public void ShowRequiredFieldError()
     {
         LabelHelper.CreateLabel(this, WarningMessageRequiredField, MessageType.Error);
+        HasError = true;
     }
 
     public void ClearError()
     {
         LabelHelper.RemoveLabel(this, MessageType.Error);
+        HasError = false;
     }
 }

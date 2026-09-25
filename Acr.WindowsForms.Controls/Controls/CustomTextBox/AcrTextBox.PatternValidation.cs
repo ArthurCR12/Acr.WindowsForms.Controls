@@ -52,11 +52,13 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         if (isValid)
         {
             LabelHelper.RemoveLabel(this, MessageType.Error);
+            HasError = false;
         }
         else
         {
             if (_blockLeave) e.Cancel = true;
             LabelHelper.CreateLabel(this, _warningMessagePattern, MessageType.Error);
+            HasError = true;
         }
     }
 }

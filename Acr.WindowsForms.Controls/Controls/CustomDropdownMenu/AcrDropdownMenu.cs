@@ -6,31 +6,70 @@ namespace Acr.WindowsForms.Controls.Controls.CustomDropdownMenu;
 
 public class AcrDropdownMenu : Component
 {
+    /// <summary>Texto usado em <see cref="Items"/> para desenhar uma linha separadora.</summary>
+    public const string Separator = "-";
+
+    /// <summary>Itens do menu. Use <see cref="Separator"/> ("-") para inserir um separador.</summary>
     public List<string> Items { get; } = new();
+
+    /// <summary>Índices de itens que aparecem desabilitados (não clicáveis).</summary>
+    public HashSet<int> DisabledIndexes { get; } = new();
 
     public event EventHandler<AcrDropdownMenuItemEventArgs>? ItemClicked;
 
+    /// <summary>Disparado quando o menu é fechado (com ou sem seleção).</summary>
+    public event EventHandler? Closed;
+
     public Font MenuFont { get; set; } = new Font("Segoe UI", 9F);
+
+    /// <summary>Cor de destaque do item sob o mouse / selecionado pelo teclado.</summary>
+    public Color HoverColor { get; set; } = Color.FromArgb(240, 240, 240);
+
+    /// <summary>Se true, o menu tem pelo menos a largura do controle âncora em <see cref="ShowFor"/>.</summary>
+    public bool MatchAnchorWidth { get; set; } = true;
+
+    /// <summary>Quantidade máxima de itens visíveis antes de rolar.</summary>
+    public int MaxVisibleItems { get; set; } = 12;
+
+    public bool IsOpen => _popup is { IsDisposed: false, Visible: true };
+
+    private PopupForm? _popup;
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing) MenuFont.Dispose();
+        if (disposing)
+        {
+            _popup?.Close();
+            MenuFont.Dispose();
+        }
         base.Dispose(disposing);
     }
 
     public void ShowFor(Control anchor)
     {
-        var location = anchor.PointToScreen(new Point(0, anchor.Height));
-        Show(location);
+        var bottom = anchor.PointToScreen(new Point(0, anchor.Height + 2));
+        var top = anchor.PointToScreen(Point.Empty);
+        Show(bottom, MatchAnchorWidth ? anchor.Width : 0, top.Y - 2);
     }
 
-    public void Show(Point screenLocation)
+    public void Show(Point screenLocation) => Show(screenLocation, 0, null);
+
+    public void Close() => _popup?.Close();
+
+    private void Show(Point screenLocation, int minWidth, int? flipAboveY)
     {
         if (Items.Count == 0) return;
+        _popup?.Close();
 
-        var popup = new PopupForm(Items, MenuFont, OnItemClicked);
-        popup.FormClosed += (_, _) => popup.Dispose();
-        popup.ShowPopup(screenLocation);
+        var popup = new PopupForm(this, minWidth);
+        popup.FormClosed += (_, _) =>
+        {
+            if (_popup == popup) _popup = null;
+            popup.Dispose();
+            Closed?.Invoke(this, EventArgs.Empty);
+        };
+        _popup = popup;
+        popup.ShowPopup(screenLocation, flipAboveY);
     }
 
     private void OnItemClicked(int index, string text) =>
@@ -39,46 +78,102 @@ public class AcrDropdownMenu : Component
     private sealed class PopupForm : Form
     {
         private const int ItemHeight = 28;
-        private const int Padding = 6;
+        private const int SeparatorHeight = 9;
+        private const int Pad = 6;
 
+        private readonly AcrDropdownMenu _owner;
         private readonly List<string> _items;
-        private readonly Action<int, string> _onClick;
+        private readonly int[] _tops;
+        private readonly int _contentHeight;
         private int _hoveredIndex = -1;
+        private int _scroll;
 
-        public PopupForm(List<string> items, Font font, Action<int, string> onClick)
+        public PopupForm(AcrDropdownMenu owner, int minWidth)
         {
-            _items = items;
-            _onClick = onClick;
+            _owner = owner;
+            _items = owner.Items.ToList();
 
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.Manual;
             ShowInTaskbar = false;
             TopMost = true;
+            KeyPreview = true;
             BackColor = Color.White;
-            Font = font;
+            Font = owner.MenuFont;
 
-            int textWidth = items.Select(i => TextRenderer.MeasureText(i, font).Width).DefaultIfEmpty(80).Max();
-            Size = new Size(textWidth + Padding * 2 + 20, ItemHeight * items.Count + Padding * 2);
+            _tops = new int[_items.Count];
+            int y = 0;
+            for (int i = 0; i < _items.Count; i++)
+            {
+                _tops[i] = y;
+                y += IsSeparator(i) ? SeparatorHeight : ItemHeight;
+            }
+            _contentHeight = y;
+
+            int textWidth = _items.Where(i => i != Separator).Select(i => TextRenderer.MeasureText(i, Font).Width).DefaultIfEmpty(80).Max();
+            int maxHeight = Math.Max(1, owner.MaxVisibleItems) * ItemHeight;
+            Size = new Size(Math.Max(minWidth, textWidth + Pad * 2 + 20), Math.Min(_contentHeight, maxHeight) + Pad * 2);
 
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
 
             MouseMove += OnMouseMoveHandler;
             MouseClick += OnMouseClickHandler;
+            MouseLeave += (_, _) => { _hoveredIndex = -1; Invalidate(); };
+            MouseWheel += (_, e) => ScrollBy(-Math.Sign(e.Delta) * ItemHeight * 2);
             Deactivate += (_, _) => Close();
         }
 
-        public void ShowPopup(Point screenLocation)
+        protected override CreateParams CreateParams
         {
-            Location = screenLocation;
+            get
+            {
+                const int CS_DROPSHADOW = 0x00020000;
+                var cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
+            }
+        }
+
+        private bool IsSeparator(int i) => _items[i] == Separator;
+        private bool IsSelectable(int i) => i >= 0 && i < _items.Count && !IsSeparator(i) && !_owner.DisabledIndexes.Contains(i);
+        private int ViewHeight => Height - Pad * 2;
+
+        public void ShowPopup(Point screenLocation, int? flipAboveY)
+        {
+            var area = Screen.FromPoint(screenLocation).WorkingArea;
+            int x = Math.Min(Math.Max(area.Left, screenLocation.X), area.Right - Width);
+            int y = screenLocation.Y;
+            if (y + Height > area.Bottom)
+                y = flipAboveY.HasValue ? flipAboveY.Value - Height : area.Bottom - Height;
+            Location = new Point(x, Math.Max(area.Top, y));
             Show();
             Activate();
         }
 
+        private void ScrollBy(int delta)
+        {
+            int max = Math.Max(0, _contentHeight - ViewHeight);
+            int value = Math.Clamp(_scroll + delta, 0, max);
+            if (value == _scroll) return;
+            _scroll = value;
+            Invalidate();
+        }
+
+        private void EnsureVisible(int index)
+        {
+            int top = _tops[index];
+            int bottom = top + ItemHeight;
+            if (top < _scroll) ScrollBy(top - _scroll);
+            else if (bottom > _scroll + ViewHeight) ScrollBy(bottom - (_scroll + ViewHeight));
+        }
+
         private int IndexAt(Point p)
         {
-            if (p.X < 0 || p.X > Width || p.Y < Padding || p.Y > Height - Padding) return -1;
-            int index = (p.Y - Padding) / ItemHeight;
-            return index >= 0 && index < _items.Count ? index : -1;
+            if (p.X < 0 || p.X > Width || p.Y < Pad || p.Y > Height - Pad) return -1;
+            int y = p.Y - Pad + _scroll;
+            for (int i = _items.Count - 1; i >= 0; i--)
+                if (y >= _tops[i]) return IsSelectable(i) ? i : -1;
+            return -1;
         }
 
         private void OnMouseMoveHandler(object? sender, MouseEventArgs e)
@@ -87,18 +182,49 @@ public class AcrDropdownMenu : Component
             if (index != _hoveredIndex)
             {
                 _hoveredIndex = index;
+                Cursor = index >= 0 ? Cursors.Hand : Cursors.Default;
                 Invalidate();
             }
         }
 
-        private void OnMouseClickHandler(object? sender, MouseEventArgs e)
+        private void OnMouseClickHandler(object? sender, MouseEventArgs e) => SelectItem(IndexAt(e.Location));
+
+        private void SelectItem(int index)
         {
-            int index = IndexAt(e.Location);
-            if (index >= 0)
+            if (!IsSelectable(index)) return;
+            var text = _items[index];
+            Close();
+            _owner.OnItemClicked(index, text);
+        }
+
+        private void MoveHover(int direction)
+        {
+            if (_items.Count == 0) return;
+            int i = _hoveredIndex;
+            for (int n = 0; n < _items.Count; n++)
             {
-                _onClick(index, _items[index]);
-                Close();
+                i = i < 0 ? (direction > 0 ? 0 : _items.Count - 1) : (i + direction + _items.Count) % _items.Count;
+                if (IsSelectable(i))
+                {
+                    _hoveredIndex = i;
+                    EnsureVisible(i);
+                    Invalidate();
+                    return;
+                }
             }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Down: MoveHover(1); return true;
+                case Keys.Up: MoveHover(-1); return true;
+                case Keys.Enter:
+                case Keys.Space: SelectItem(_hoveredIndex); return true;
+                case Keys.Escape: Close(); return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -115,19 +241,43 @@ public class AcrDropdownMenu : Component
                 e.Graphics.DrawPath(borderPen, path);
             }
 
+            e.Graphics.SetClip(new Rectangle(1, Pad, Width - 2, ViewHeight));
+
             for (int i = 0; i < _items.Count; i++)
             {
-                var itemRect = new Rectangle(Padding, Padding + i * ItemHeight, Width - Padding * 2, ItemHeight);
+                int top = Pad + _tops[i] - _scroll;
+
+                if (IsSeparator(i))
+                {
+                    using var sepPen = new Pen(Color.FromArgb(232, 232, 232), 1);
+                    int sy = top + SeparatorHeight / 2;
+                    e.Graphics.DrawLine(sepPen, Pad + 4, sy, Width - Pad - 4, sy);
+                    continue;
+                }
+
+                var itemRect = new Rectangle(Pad, top, Width - Pad * 2, ItemHeight);
 
                 if (i == _hoveredIndex)
                 {
-                    using var hoverBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
+                    using var hoverBrush = new SolidBrush(_owner.HoverColor);
                     using var hoverPath = AcrGraphics.CreateRoundedRectPath(itemRect, 4);
                     e.Graphics.FillPath(hoverBrush, hoverPath);
                 }
 
+                var color = _owner.DisabledIndexes.Contains(i) ? AcrColors.TextDisabled : AcrColors.Text;
                 var textRect = new Rectangle(itemRect.X + 10, itemRect.Y, itemRect.Width - 20, itemRect.Height);
-                TextRenderer.DrawText(e.Graphics, _items[i], Font, textRect, AcrColors.Text, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+                TextRenderer.DrawText(e.Graphics, _items[i], Font, textRect, color, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+            }
+
+            e.Graphics.ResetClip();
+
+            if (_contentHeight > ViewHeight)
+            {
+                int thumbHeight = Math.Max(20, ViewHeight * ViewHeight / _contentHeight);
+                int thumbY = Pad + (ViewHeight - thumbHeight) * _scroll / Math.Max(1, _contentHeight - ViewHeight);
+                using var thumbBrush = new SolidBrush(Color.FromArgb(200, 200, 200));
+                using var thumbPath = AcrGraphics.CreateRoundedRectPath(new Rectangle(Width - 6, thumbY, 3, thumbHeight), 1);
+                e.Graphics.FillPath(thumbBrush, thumbPath);
             }
         }
     }

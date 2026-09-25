@@ -1,4 +1,4 @@
-﻿using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Interfaces;
 using System.ComponentModel;
@@ -33,12 +33,18 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseContr
         set => _selectAllTextOnEnter = value;
     }    
 
+    public AcrTextBox()
+    {
+        // Definidos no construtor (e não em OnCreateControl) para não sobrescrever
+        // a fonte/cor configuradas pelo usuário no Designer.
+        BorderStyle = BorderStyle.FixedSingle;
+        ForeColor = AcrColors.Text;
+        Font = new Font("Segoe UI", 9F);
+    }
+
     protected override void OnCreateControl()
     {
         base.OnCreateControl();
-        BorderStyle = BorderStyle.FixedSingle;
-        ForeColor = Color.FromArgb(50, 50, 50);
-        Font = new Font("Segoe UI", 9F);
         UpdateTitleLabel();
     }
 
@@ -62,12 +68,16 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseContr
         if (_validateAsDate)
         {
             LabelHelper.RemoveLabel(this, MessageType.Error);
+            HasError = false;
             string[] parts = Text.Split('/');
 
-            if (parts.Length >= 1 && int.TryParse(parts[0], out int day) && day > 31)
+            bool invalidDay = parts.Length >= 1 && int.TryParse(parts[0], out int day) && day > 31;
+            bool invalidMonth = parts.Length >= 2 && int.TryParse(parts[1], out int month) && month > 12;
+            if (invalidDay || invalidMonth)
+            {
                 LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
-            else if (parts.Length >= 2 && int.TryParse(parts[1], out int month) && month > 12)
-                LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
+                HasError = true;
+            }
         }
 
         AutoInsertMaskLiterals();

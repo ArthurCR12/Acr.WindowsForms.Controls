@@ -1,4 +1,4 @@
-﻿using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Helpers;
 using Acr.WindowsForms.Controls.Interfaces;
@@ -54,6 +54,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
             {
                 e.Cancel = true;
                 LabelHelper.CreateLabel(this, _warningMessageDate, MessageType.Error);
+                HasError = true;
             }
         }
 
