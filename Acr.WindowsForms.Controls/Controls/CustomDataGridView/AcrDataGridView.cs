@@ -114,7 +114,10 @@ public class AcrDataGridView : DataGridView, IAcrBaseControl
     {
         base.OnPaint(e);
 
-        if (Rows.Count - (AllowUserToAddRows ? 1 : 0) <= 0 && !string.IsNullOrEmpty(_emptyText))
+        int dataRows = Rows.Count;
+        if (dataRows > 0 && Rows[dataRows - 1].IsNewRow) dataRows--;
+
+        if (dataRows == 0 && !string.IsNullOrEmpty(_emptyText))
         {
             int top = ColumnHeadersVisible ? ColumnHeadersHeight : 0;
             var rect = new Rectangle(0, top, Width, Math.Max(0, Height - top));

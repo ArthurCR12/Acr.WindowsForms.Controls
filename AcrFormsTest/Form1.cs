@@ -52,6 +52,8 @@ namespace AcrFormsTest
                 new("Clientes", "👤"),
                 new("Configurações", "⚙"));
             sidebar1.SelectedIndex = 0;
+
+            BuildNovidadesTab();
         }
 
         private static List<Produto> GetSampleProdutos() =>
@@ -205,7 +207,7 @@ namespace AcrFormsTest
                 ("Cancelar", DialogResult.Cancel, false),
                 ("Salvar", DialogResult.OK, true));
 
-            var result = modal.ShowDialog(this);
+            var result = modal.ShowModal(this);
             lblModalResult.Text = result == DialogResult.OK
                 ? $"Categoria salva: {combo.SelectedItem}"
                 : "Cancelado.";
