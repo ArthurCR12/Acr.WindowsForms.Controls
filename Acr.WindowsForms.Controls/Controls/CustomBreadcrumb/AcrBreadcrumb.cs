@@ -62,7 +62,7 @@ public class AcrBreadcrumb : Control
                 : (i == _hoveredIndex ? AcrColors.Primary : AcrColors.Neutral);
 
             var flags = TextFormatFlags.VerticalCenter | TextFormatFlags.Left;
-            if (!isLast) flags |= TextFormatFlags.Underline;
+            if (!isLast) flags |= TextFormatFlags.Default;
 
             TextRenderer.DrawText(e.Graphics, Items[i], Font, rect, color, isLast ? (TextFormatFlags.VerticalCenter | TextFormatFlags.Left) : flags);
 
