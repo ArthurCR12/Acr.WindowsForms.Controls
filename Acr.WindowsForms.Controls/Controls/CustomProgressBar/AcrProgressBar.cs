@@ -22,7 +22,7 @@ public class AcrProgressBar : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 8F);
+        Font = AcrFonts.Get(8F);
         Size = new Size(200, 18);
         ForeColor = Color.White;
     }
@@ -106,7 +106,7 @@ public class AcrProgressBar : Control
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
         var backColor = Parent?.BackColor ?? BackColor;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -118,7 +118,7 @@ public class AcrProgressBar : Control
 
         using (var trackPath = AcrGraphics.CreateRoundedRectPath(trackRect, radius))
         {
-            using var trackBrush = new SolidBrush(Color.FromArgb(235, 235, 235));
+            using var trackBrush = new SolidBrush(AcrColors.Track);
             e.Graphics.FillPath(trackBrush, trackPath);
         }
 
@@ -131,7 +131,7 @@ public class AcrProgressBar : Control
             e.Graphics.FillPath(fillBrush, fillPath);
         }
 
-        using (var borderPen = new Pen(Color.FromArgb(220, 220, 220), 1))
+        using (var borderPen = new Pen(AcrColors.BorderSubtle, 1))
             e.Graphics.DrawPath(borderPen, AcrGraphics.CreateRoundedRectPath(trackRect, radius));
 
         if (_showPercentageText)

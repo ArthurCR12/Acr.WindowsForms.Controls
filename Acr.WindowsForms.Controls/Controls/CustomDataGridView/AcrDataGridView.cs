@@ -5,12 +5,12 @@ using System.ComponentModel;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomDataGridView;
 
-public class AcrDataGridView : DataGridView, IAcrBaseControl
+public class AcrDataGridView : DataGridView, IAcrBaseControl, IAcrThemeable
 {
     private EControlState _controlState = EControlState.Normal;
     private int _hoveredRow = -1;
     private bool _highlightHoverRow = true;
-    private Color _hoverRowColor = Color.FromArgb(242, 247, 253);
+    private Color _hoverRowColor = AcrColors.GridHoverRow;
     private string _emptyText = "Nenhum registro encontrado";
 
     public AcrDataGridView()
@@ -18,14 +18,14 @@ public class AcrDataGridView : DataGridView, IAcrBaseControl
         BorderStyle = BorderStyle.None;
         CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
         GridColor = AcrColors.GridGridLines;
-        BackgroundColor = Color.White;
+        BackgroundColor = AcrColors.Surface;
 
         EnableHeadersVisualStyles = false;
         ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
         ColumnHeadersDefaultCellStyle.BackColor = AcrColors.GridHeaderBack;
         ColumnHeadersDefaultCellStyle.ForeColor = AcrColors.GridHeaderFore;
-        ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+        ColumnHeadersDefaultCellStyle.Font = AcrFonts.Get(9F, FontStyle.Bold);
         ColumnHeadersDefaultCellStyle.SelectionBackColor = AcrColors.GridHeaderBack;
         ColumnHeadersDefaultCellStyle.SelectionForeColor = AcrColors.GridHeaderFore;
         ColumnHeadersDefaultCellStyle.Padding = new Padding(4);
@@ -33,7 +33,7 @@ public class AcrDataGridView : DataGridView, IAcrBaseControl
         RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
         RowHeadersVisible = false;
 
-        DefaultCellStyle.Font = new Font("Segoe UI", 9F);
+        DefaultCellStyle.Font = AcrFonts.Get(9F);
         DefaultCellStyle.ForeColor = AcrColors.Text;
         DefaultCellStyle.SelectionBackColor = AcrColors.GridSelectionBack;
         DefaultCellStyle.SelectionForeColor = AcrColors.GridSelectionFore;
@@ -176,5 +176,27 @@ public class AcrDataGridView : DataGridView, IAcrBaseControl
             e.Graphics!.DrawLine(bottomBorder, e.CellBounds.Left, e.CellBounds.Bottom - 1, e.CellBounds.Right, e.CellBounds.Bottom - 1);
             e.Handled = true;
         }
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        BackgroundColor = AcrTheme.Swap(BackgroundColor, o.Surface, n.Surface);
+        GridColor = AcrTheme.Swap(GridColor, o.GridLines, n.GridLines);
+        _hoverRowColor = AcrTheme.Swap(_hoverRowColor, o.GridHoverRow, n.GridHoverRow);
+
+        var header = ColumnHeadersDefaultCellStyle;
+        header.BackColor = AcrTheme.Swap(header.BackColor, o.GridHeaderBack, n.GridHeaderBack);
+        header.ForeColor = AcrTheme.Swap(header.ForeColor, o.GridHeaderFore, n.GridHeaderFore);
+        header.SelectionBackColor = AcrTheme.Swap(header.SelectionBackColor, o.GridHeaderBack, n.GridHeaderBack);
+        header.SelectionForeColor = AcrTheme.Swap(header.SelectionForeColor, o.GridHeaderFore, n.GridHeaderFore);
+
+        var cell = DefaultCellStyle;
+        cell.BackColor = AcrTheme.Swap(cell.BackColor, o.Surface, n.Surface, SystemColors.Window);
+        cell.ForeColor = AcrTheme.Swap(cell.ForeColor, o.Text, n.Text, SystemColors.ControlText);
+        cell.SelectionBackColor = AcrTheme.Swap(cell.SelectionBackColor, o.GridSelectionBack, n.GridSelectionBack);
+        cell.SelectionForeColor = AcrTheme.Swap(cell.SelectionForeColor, o.GridSelectionFore, n.GridSelectionFore);
+
+        AlternatingRowsDefaultCellStyle.BackColor = AcrTheme.Swap(AlternatingRowsDefaultCellStyle.BackColor, o.GridAltRow, n.GridAltRow);
+        Invalidate();
     }
 }

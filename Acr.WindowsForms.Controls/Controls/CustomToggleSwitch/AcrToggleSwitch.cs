@@ -31,7 +31,7 @@ public class AcrToggleSwitch : CheckBox, IAcrBaseControl
             true);
 
         Cursor = Cursors.Hand;
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         AutoSize = true;
 
         _animationTimer = new System.Windows.Forms.Timer { Interval = 12 };
@@ -132,7 +132,7 @@ public class AcrToggleSwitch : CheckBox, IAcrBaseControl
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
         var backColor = Parent?.BackColor ?? BackColor;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -141,7 +141,7 @@ public class AcrToggleSwitch : CheckBox, IAcrBaseControl
 
         var trackRect = new Rectangle(0, (Height - TrackHeight) / 2, TrackWidth, TrackHeight);
 
-        var trackOffColor = !Enabled ? AcrColors.DisabledBack : Color.FromArgb(210, 210, 210);
+        var trackOffColor = !Enabled ? AcrColors.DisabledBack : AcrColors.Track;
         var trackOnColor = !Enabled ? AcrColors.DisabledFore : _onColor;
         var trackColor = Blend(trackOffColor, trackOnColor, _thumbPosition);
 

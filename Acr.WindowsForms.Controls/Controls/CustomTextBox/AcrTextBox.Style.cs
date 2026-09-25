@@ -12,7 +12,7 @@ namespace Acr.WindowsForms.Controls.Controls.CustomTextBox;
 /// espaçamento interno, então a área não-cliente (WM_NCCALCSIZE) é aumentada para criar
 /// o espaçamento, e a moldura é desenhada nela (WM_NCPAINT).
 /// </summary>
-public partial class AcrTextBox : TextBox, IAcrValidatableControl
+public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrThemeable
 {
     private const int WM_NCHITTEST = 0x0084;
     private const int HTCLIENT = 1;
@@ -235,8 +235,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
             g.ExcludeClip(inner);
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            var parentBack = Parent?.BackColor ?? Color.White;
-            if (parentBack.A < 255) parentBack = Color.White;
+            var parentBack = AcrColors.ParentBack(this);
             var fill = Enabled ? BackColor : AcrColors.DisabledBack;
             var accent = _hasError ? _borderErrorColor : _borderFocusColor;
             bool focused = Focused && Enabled;
@@ -290,5 +289,27 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         {
             ReleaseDC(Handle, hdc);
         }
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        _onEnterBackColor = AcrTheme.Swap(_onEnterBackColor, o.Surface, n.Surface, Color.White);
+        _onLeaveBackColor = AcrTheme.Swap(_onLeaveBackColor, o.Surface, n.Surface, Color.White);
+        _borderColor = AcrTheme.Swap(_borderColor, o.Border, n.Border);
+        _borderHoverColor = AcrTheme.Swap(_borderHoverColor, o.BorderHover, n.BorderHover);
+        _borderFocusColor = AcrTheme.Swap(_borderFocusColor, o.Primary, n.Primary);
+        _borderErrorColor = AcrTheme.Swap(_borderErrorColor, o.Error, n.Error);
+
+        if (Enabled)
+        {
+            BackColor = Focused ? _onEnterBackColor : _onLeaveBackColor;
+            ForeColor = AcrTheme.Swap(ForeColor, o.Text, n.Text);
+        }
+        else
+        {
+            BackColor = n.DisabledBack;
+            ForeColor = n.DisabledFore;
+        }
+        RedrawBorder();
     }
 }

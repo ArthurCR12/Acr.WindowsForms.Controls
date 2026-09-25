@@ -26,7 +26,7 @@ public class AcrRadioButton : RadioButton, IAcrBaseControl
             true);
 
         Cursor = Cursors.Hand;
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         AutoSize = true;
     }
 
@@ -111,7 +111,7 @@ public class AcrRadioButton : RadioButton, IAcrBaseControl
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
         var backColor = Parent?.BackColor ?? BackColor;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -128,7 +128,7 @@ public class AcrRadioButton : RadioButton, IAcrBaseControl
                     ? AcrColors.BorderHover
                     : AcrColors.Border;
 
-        var fillColor = !Enabled ? AcrColors.DisabledBack : Color.White;
+        var fillColor = !Enabled ? AcrColors.DisabledBack : AcrColors.Surface;
 
         using (var backBrush = new SolidBrush(fillColor))
             e.Graphics.FillEllipse(backBrush, circleRect);

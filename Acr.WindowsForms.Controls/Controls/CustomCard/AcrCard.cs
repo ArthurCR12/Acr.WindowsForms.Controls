@@ -4,10 +4,10 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomCard;
 
-public class AcrCard : Panel
+public class AcrCard : Panel, IAcrThemeable
 {
     private int _cornerRadius = 10;
-    private Color _borderColor = Color.FromArgb(225, 225, 225);
+    private Color _borderColor = AcrColors.BorderSubtle;
     private string _title = string.Empty;
     private int _titleHeight = 0;
     private int _contentTopPadding = 16;
@@ -23,9 +23,9 @@ public class AcrCard : Panel
     public AcrCard()
     {
         SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-        BackColor = Color.White;
+        BackColor = AcrColors.Surface;
         Padding = new Padding(16);
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         DoubleBuffered = true;
     }
 
@@ -172,8 +172,8 @@ public class AcrCard : Panel
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var parentBack = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(parentBack.A == 0 ? Color.White : parentBack);
+        var parentBack = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(parentBack.A < 255 ? AcrColors.Surface : parentBack);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -210,7 +210,7 @@ public class AcrCard : Panel
             var titleRect = new Rectangle(16, 0, Width - 32, _titleHeight);
             TextRenderer.DrawText(e.Graphics, _title, titleFont, titleRect, _titleColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
 
-            using var separatorPen = new Pen(Color.FromArgb(235, 235, 235), 1);
+            using var separatorPen = new Pen(AcrColors.Separator, 1);
             e.Graphics.DrawLine(separatorPen, 16, _titleHeight - 1, Width - 16, _titleHeight - 1);
         }
     }
@@ -240,5 +240,22 @@ public class AcrCard : Panel
         var old = Region;
         Region = new Region(path);
         old?.Dispose();
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        BackColor = AcrTheme.Swap(BackColor, o.Surface, n.Surface);
+        _borderColor = AcrTheme.Swap(_borderColor, o.BorderSubtle, n.BorderSubtle);
+        _titleColor = AcrTheme.Swap(_titleColor, o.Text, n.Text);
+        _accentColor = AcrTheme.Swap(_accentColor, o.Primary, n.Primary);
+        ForeColor = AcrTheme.Swap(ForeColor, o.Text, n.Text, SystemColors.ControlText);
+        foreach (Control child in Controls)
+        {
+            if (child is IAcrThemeable) continue;
+            child.ForeColor = AcrTheme.Swap(child.ForeColor, o.Text, n.Text, SystemColors.ControlText);
+            if (child.BackColor != Color.Transparent)
+                child.BackColor = AcrTheme.Swap(child.BackColor, o.Surface, n.Surface);
+        }
+        Invalidate();
     }
 }

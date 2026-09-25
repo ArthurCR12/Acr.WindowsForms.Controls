@@ -131,7 +131,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
             Cursor = Cursors.Hand,
             BackColor = BackColor,
             ForeColor = AcrColors.IconGlyph,
-            Font = new Font("Segoe UI Symbol", 8f)
+            Font = AcrFonts.Get("Segoe UI Symbol", 8F)
         };
         icon.MouseEnter += (_, _) => icon.ForeColor = AcrColors.IconGlyphHover;
         icon.MouseLeave += (_, _) => icon.ForeColor = AcrColors.IconGlyph;

@@ -26,7 +26,7 @@ public class AcrCheckBox : CheckBox, IAcrBaseControl
             true);
 
         Cursor = Cursors.Hand;
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         AutoSize = true;
     }
 
@@ -111,7 +111,7 @@ public class AcrCheckBox : CheckBox, IAcrBaseControl
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
         var backColor = Parent?.BackColor ?? BackColor;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -132,7 +132,7 @@ public class AcrCheckBox : CheckBox, IAcrBaseControl
             ? AcrColors.DisabledBack
             : Checked
                 ? _accentColor
-                : Color.White;
+                : AcrColors.Surface;
 
         using (var path = AcrGraphics.CreateRoundedRectPath(boxRect, 4))
         {

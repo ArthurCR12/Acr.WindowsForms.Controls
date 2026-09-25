@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomAccordion;
 
-public class AcrAccordion : Control
+public class AcrAccordion : Control, IAcrThemeable
 {
     private const int HeaderHeight = 36;
     private const int CornerRadius = 6;
@@ -16,8 +16,8 @@ public class AcrAccordion : Control
     private bool _hoveringHeader = false;
     private bool _animate = true;
     private bool _collapseSiblings;
-    private Color _headerBackColor = Color.White;
-    private Color _headerHoverColor = Color.FromArgb(248, 248, 248);
+    private Color _headerBackColor = AcrColors.Surface;
+    private Color _headerHoverColor = AcrColors.SurfaceHover;
     private Color _headerForeColor = AcrColors.Text;
     private Color _expandedAccentColor = AcrColors.Primary;
     private readonly System.Windows.Forms.Timer _animationTimer = new() { Interval = 15 };
@@ -35,7 +35,7 @@ public class AcrAccordion : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+        Font = AcrFonts.Get(9.5F, FontStyle.Bold);
         Cursor = Cursors.Hand;
         TabStop = true;
         SetStyle(ControlStyles.Selectable, true);
@@ -45,7 +45,7 @@ public class AcrAccordion : Control
         {
             Location = new Point(1, HeaderHeight),
             BorderStyle = BorderStyle.None,
-            BackColor = Color.White,
+            BackColor = AcrColors.Surface,
             Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
             Padding = new Padding(12, 8, 12, 12),
         };
@@ -266,8 +266,8 @@ public class AcrAccordion : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -277,7 +277,7 @@ public class AcrAccordion : Control
         var bounds = new Rectangle(0, 0, Width - 1, Height - 1);
         using (var outerPath = AcrGraphics.CreateRoundedRectPath(bounds, CornerRadius))
         {
-            using var borderPen = new Pen(Color.FromArgb(225, 225, 225), 1);
+            using var borderPen = new Pen(AcrColors.BorderSubtle, 1);
             e.Graphics.DrawPath(borderPen, outerPath);
         }
 
@@ -304,7 +304,7 @@ public class AcrAccordion : Control
 
         if (_expanded)
         {
-            using var separatorPen = new Pen(Color.FromArgb(230, 230, 230), 1);
+            using var separatorPen = new Pen(AcrColors.Separator, 1);
             e.Graphics.DrawLine(separatorPen, 1, HeaderHeight, Width - 2, HeaderHeight);
         }
     }
@@ -329,5 +329,20 @@ public class AcrAccordion : Control
             g.DrawLine(pen, cx - size / 2, cy - size, cx + size / 2, cy);
             g.DrawLine(pen, cx + size / 2, cy, cx - size / 2, cy + size);
         }
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        _headerBackColor = AcrTheme.Swap(_headerBackColor, o.Surface, n.Surface);
+        _headerHoverColor = AcrTheme.Swap(_headerHoverColor, o.SurfaceHover, n.SurfaceHover);
+        _headerForeColor = AcrTheme.Swap(_headerForeColor, o.Text, n.Text);
+        _expandedAccentColor = AcrTheme.Swap(_expandedAccentColor, o.Primary, n.Primary);
+        _contentPanel.BackColor = AcrTheme.Swap(_contentPanel.BackColor, o.Surface, n.Surface);
+        foreach (Control child in _contentPanel.Controls)
+        {
+            if (child is IAcrThemeable themeable) { themeable.ApplyTheme(o, n); continue; }
+            child.ForeColor = AcrTheme.Swap(child.ForeColor, o.Text, n.Text, SystemColors.ControlText);
+        }
+        Invalidate(true);
     }
 }

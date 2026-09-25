@@ -29,7 +29,7 @@ public class AcrSlider : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 8F);
+        Font = AcrFonts.Get(8F);
         Size = new Size(220, 32);
     }
 
@@ -158,8 +158,8 @@ public class AcrSlider : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -170,7 +170,7 @@ public class AcrSlider : Control
         var trackRect = new Rectangle(ThumbDiameter / 2, trackY - TrackHeight / 2, Math.Max(0, Width - ThumbDiameter), TrackHeight);
 
         using (var trackPath = AcrGraphics.CreateRoundedRectPath(trackRect, TrackHeight / 2))
-        using (var trackBrush = new SolidBrush(Color.FromArgb(225, 225, 225)))
+        using (var trackBrush = new SolidBrush(AcrColors.Track))
             e.Graphics.FillPath(trackBrush, trackPath);
 
         var fillRect = new Rectangle(trackRect.X, trackRect.Y, ThumbX - trackRect.X, TrackHeight);

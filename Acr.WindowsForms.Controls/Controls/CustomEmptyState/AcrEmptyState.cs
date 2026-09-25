@@ -26,7 +26,7 @@ public class AcrEmptyState : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
 
         _actionButton = new AcrButton
         {
@@ -113,8 +113,8 @@ public class AcrEmptyState : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -142,7 +142,7 @@ public class AcrEmptyState : Control
 
     private static void DrawPlaceholderIcon(Graphics g, Rectangle rect)
     {
-        using var backBrush = new SolidBrush(Color.FromArgb(240, 240, 242));
+        using var backBrush = new SolidBrush(AcrColors.SurfaceSunken);
         g.FillEllipse(backBrush, rect);
 
         using var pen = new Pen(AcrColors.Neutral, 2f) { StartCap = LineCap.Round, EndCap = LineCap.Round };

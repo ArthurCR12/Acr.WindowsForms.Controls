@@ -1,4 +1,4 @@
-using Acr.WindowsForms.Controls.Class;
+﻿using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Helpers;
 using Acr.WindowsForms.Controls.Interfaces;
@@ -9,8 +9,8 @@ namespace Acr.WindowsForms.Controls.Controls.CustomTextBox;
 
 public partial class AcrTextBox : TextBox, IAcrValidatableControl
 {
-    private Color _onEnterBackColor = Color.White;
-    private Color _onLeaveBackColor = Color.White;
+    private Color _onEnterBackColor = AcrColors.Surface;
+    private Color _onLeaveBackColor = AcrColors.Surface;
 
     private Label? _titleLabel;
 
@@ -283,21 +283,16 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
 
         if (_labelTitle)
         {
-            if (_titleLabel == null) _titleLabel = LabelHelper.CreateLabel(this, _labelTitleText, MessageType.Title, location: "top");
+            if (_titleLabel == null || _titleLabel.IsDisposed)
+                _titleLabel = LabelHelper.CreateLabel(this, _labelTitleText, MessageType.Title, location: "top");
             else
-            {
                 _titleLabel.Text = _labelTitleText;
-                _titleLabel.Visible = true;
-            }
         }
-        else
+        else if (_titleLabel != null)
         {
-            if (_titleLabel != null)
-            {
-                _titleLabel.Visible = false;
-            }
+            LabelHelper.RemoveLabel(this, MessageType.Title);
+            _titleLabel = null;
         }
-
     }
 
     public void ApplyState()

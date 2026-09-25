@@ -4,13 +4,13 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomSkeleton;
 
-public class AcrSkeleton : Control
+public class AcrSkeleton : Control, IAcrThemeable
 {
     private readonly System.Windows.Forms.Timer _timer;
     private float _shimmerOffset = -0.5f;
     private int _cornerRadius = 6;
-    private Color _baseColor = Color.FromArgb(230, 230, 230);
-    private Color _shimmerColor = Color.FromArgb(245, 245, 245);
+    private Color _baseColor = AcrColors.SurfaceSunken;
+    private Color _shimmerColor = AcrColors.SurfaceHover;
 
     public AcrSkeleton()
     {
@@ -99,8 +99,8 @@ public class AcrSkeleton : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -143,5 +143,12 @@ public class AcrSkeleton : Control
     {
         if (disposing) _timer.Dispose();
         base.Dispose(disposing);
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        _baseColor = AcrTheme.Swap(_baseColor, o.SurfaceSunken, n.SurfaceSunken);
+        _shimmerColor = AcrTheme.Swap(_shimmerColor, o.SurfaceHover, n.SurfaceHover);
+        Invalidate();
     }
 }

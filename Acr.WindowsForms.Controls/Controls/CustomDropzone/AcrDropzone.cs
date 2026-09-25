@@ -26,7 +26,7 @@ public class AcrDropzone : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 9.5F);
+        Font = AcrFonts.Get(9.5F);
         Size = new Size(360, 140);
         Cursor = Cursors.Hand;
         AllowDrop = true;
@@ -144,8 +144,8 @@ public class AcrDropzone : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -157,11 +157,11 @@ public class AcrDropzone : Control
 
         using (var path = AcrGraphics.CreateRoundedRectPath(bounds, CornerRadius))
         {
-            var backFill = _dragOver ? Color.FromArgb(24, accent.R, accent.G, accent.B) : Color.FromArgb(250, 250, 251);
+            var backFill = _dragOver ? Color.FromArgb(24, accent.R, accent.G, accent.B) : AcrColors.SurfaceAlt;
             using (var backBrush = new SolidBrush(backFill))
                 e.Graphics.FillPath(backBrush, path);
 
-            using var dashedPen = new Pen(_dragOver ? accent : Color.FromArgb(200, 200, 200), 1.5f)
+            using var dashedPen = new Pen(_dragOver ? accent : AcrColors.Border, 1.5f)
             {
                 DashStyle = DashStyle.Dash,
             };

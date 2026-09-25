@@ -30,7 +30,7 @@ public class AcrPagination : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         Size = new Size(320, ButtonSize);
         Cursor = Cursors.Hand;
     }
@@ -74,7 +74,7 @@ public class AcrPagination : Control
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
         var backColor = Parent?.BackColor ?? BackColor;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -114,8 +114,8 @@ public class AcrPagination : Control
         var backColor = isCurrent
             ? AcrColors.Primary
             : isHovered
-                ? Color.FromArgb(240, 240, 240)
-                : Color.White;
+                ? AcrColors.SurfaceHover
+                : AcrColors.Surface;
 
         var borderColor = isCurrent ? AcrColors.Primary : AcrColors.Border;
         var textColor = !enabled

@@ -104,8 +104,8 @@ public class AcrLoader : Control
 
     protected override void OnPaint(PaintEventArgs e)
     {
-        var parentBack = Parent?.BackColor ?? Color.White;
-        e.Graphics.Clear(parentBack.A == 0 ? Color.White : parentBack);
+        var parentBack = Parent?.BackColor ?? AcrColors.Surface;
+        e.Graphics.Clear(parentBack.A < 255 ? AcrColors.Surface : parentBack);
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
         int diameter = Math.Min(Width, Height) - _lineWeight;

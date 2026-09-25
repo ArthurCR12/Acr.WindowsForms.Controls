@@ -1,4 +1,4 @@
-using Acr.WindowsForms.Controls.Class;
+﻿using Acr.WindowsForms.Controls.Class;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
@@ -25,7 +25,7 @@ public class AcrStepper : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 8.5F);
+        Font = AcrFonts.Get(8.5F);
         Size = new Size(500, 60);
     }
 
@@ -66,8 +66,8 @@ public class AcrStepper : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -88,15 +88,15 @@ public class AcrStepper : Control
             if (i < Steps.Count - 1)
             {
                 int nextCx = segmentWidth * (i + 1) + segmentWidth / 2;
-                var lineColor = isDone ? AcrColors.Primary : Color.FromArgb(220, 220, 220);
+                var lineColor = isDone ? AcrColors.Primary : AcrColors.Track;
                 using var linePen = new Pen(lineColor, 2);
                 e.Graphics.DrawLine(linePen, cx + CircleSize / 2, cy, nextCx - CircleSize / 2, cy);
             }
 
             var circleRect = new Rectangle(cx - CircleSize / 2, cy - CircleSize / 2, CircleSize, CircleSize);
 
-            var fillColor = isDone || isCurrent ? AcrColors.Primary : Color.White;
-            var borderColor = isDone || isCurrent ? AcrColors.Primary : Color.FromArgb(200, 200, 200);
+            var fillColor = isDone || isCurrent ? AcrColors.Primary : AcrColors.Surface;
+            var borderColor = isDone || isCurrent ? AcrColors.Primary : AcrColors.Border;
 
             using (var fillBrush = new SolidBrush(fillColor))
                 e.Graphics.FillEllipse(fillBrush, circleRect);
@@ -124,9 +124,8 @@ public class AcrStepper : Control
 
             var labelRect = new Rectangle(cx - segmentWidth / 2, CircleSize + LabelGap, segmentWidth, Height - CircleSize - LabelGap);
             var labelColor = isCurrent ? AcrColors.Text : AcrColors.Neutral;
-            var labelFont = isCurrent ? new Font(Font, FontStyle.Bold) : Font;
+            var labelFont = isCurrent ? AcrFonts.WithStyle(Font, FontStyle.Bold) : Font;
             TextRenderer.DrawText(e.Graphics, Steps[i], labelFont, labelRect, labelColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.Top | TextFormatFlags.WordBreak);
-            if (isCurrent) labelFont.Dispose();
         }
     }
 }

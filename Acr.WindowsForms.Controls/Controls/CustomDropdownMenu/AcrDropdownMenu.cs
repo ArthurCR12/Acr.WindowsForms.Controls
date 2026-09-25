@@ -20,15 +20,26 @@ public class AcrDropdownMenu : Component
     /// <summary>Disparado quando o menu é fechado (com ou sem seleção).</summary>
     public event EventHandler? Closed;
 
-    public Font MenuFont { get; set; } = new Font("Segoe UI", 9F);
+    /// <summary>Fonte do menu. A fonte padrão é compartilhada (AcrFonts) e não é descartada pelo menu.</summary>
+    [Category("Acr Custom")]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Font MenuFont { get; set; } = AcrFonts.Get(9F);
 
-    /// <summary>Cor de destaque do item sob o mouse / selecionado pelo teclado.</summary>
-    public Color HoverColor { get; set; } = Color.FromArgb(240, 240, 240);
+    /// <summary>Cor de destaque do item sob o mouse / selecionado pelo teclado. Vazia = cor do tema.</summary>
+    [Category("Acr Custom")]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public Color HoverColor { get; set; } = Color.Empty;
 
     /// <summary>Se true, o menu tem pelo menos a largura do controle âncora em <see cref="ShowFor"/>.</summary>
+    [Category("Acr Custom")]
+    [DefaultValue(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public bool MatchAnchorWidth { get; set; } = true;
 
     /// <summary>Quantidade máxima de itens visíveis antes de rolar.</summary>
+    [Category("Acr Custom")]
+    [DefaultValue(12)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MaxVisibleItems { get; set; } = 12;
 
     public bool IsOpen => _popup is { IsDisposed: false, Visible: true };
@@ -40,7 +51,6 @@ public class AcrDropdownMenu : Component
         if (disposing)
         {
             _popup?.Close();
-            MenuFont.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -98,7 +108,7 @@ public class AcrDropdownMenu : Component
             ShowInTaskbar = false;
             TopMost = true;
             KeyPreview = true;
-            BackColor = Color.White;
+            BackColor = AcrColors.Surface;
             Font = owner.MenuFont;
 
             _tops = new int[_items.Count];
@@ -234,10 +244,10 @@ public class AcrDropdownMenu : Component
             var bounds = new Rectangle(0, 0, Width - 1, Height - 1);
             using (var path = AcrGraphics.CreateRoundedRectPath(bounds, 6))
             {
-                using var backBrush = new SolidBrush(Color.White);
+                using var backBrush = new SolidBrush(AcrColors.Surface);
                 e.Graphics.FillPath(backBrush, path);
 
-                using var borderPen = new Pen(Color.FromArgb(220, 220, 220), 1);
+                using var borderPen = new Pen(AcrColors.BorderSubtle, 1);
                 e.Graphics.DrawPath(borderPen, path);
             }
 
@@ -249,7 +259,7 @@ public class AcrDropdownMenu : Component
 
                 if (IsSeparator(i))
                 {
-                    using var sepPen = new Pen(Color.FromArgb(232, 232, 232), 1);
+                    using var sepPen = new Pen(AcrColors.Separator, 1);
                     int sy = top + SeparatorHeight / 2;
                     e.Graphics.DrawLine(sepPen, Pad + 4, sy, Width - Pad - 4, sy);
                     continue;
@@ -259,7 +269,7 @@ public class AcrDropdownMenu : Component
 
                 if (i == _hoveredIndex)
                 {
-                    using var hoverBrush = new SolidBrush(_owner.HoverColor);
+                    using var hoverBrush = new SolidBrush(_owner.HoverColor.IsEmpty ? AcrColors.SurfaceHover : _owner.HoverColor);
                     using var hoverPath = AcrGraphics.CreateRoundedRectPath(itemRect, 4);
                     e.Graphics.FillPath(hoverBrush, hoverPath);
                 }
@@ -275,7 +285,7 @@ public class AcrDropdownMenu : Component
             {
                 int thumbHeight = Math.Max(20, ViewHeight * ViewHeight / _contentHeight);
                 int thumbY = Pad + (ViewHeight - thumbHeight) * _scroll / Math.Max(1, _contentHeight - ViewHeight);
-                using var thumbBrush = new SolidBrush(Color.FromArgb(200, 200, 200));
+                using var thumbBrush = new SolidBrush(AcrColors.Border);
                 using var thumbPath = AcrGraphics.CreateRoundedRectPath(new Rectangle(Width - 6, thumbY, 3, thumbHeight), 1);
                 e.Graphics.FillPath(thumbBrush, thumbPath);
             }

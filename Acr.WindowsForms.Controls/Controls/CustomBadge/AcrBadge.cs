@@ -22,7 +22,7 @@ public class AcrBadge : Control
             true);
 
         BackColor = Color.Transparent;
-        Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+        Font = AcrFonts.Get(8F, FontStyle.Bold);
         Text = "Badge";
         UpdateSize();
     }

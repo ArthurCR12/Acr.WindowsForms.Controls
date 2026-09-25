@@ -27,7 +27,7 @@ public class AcrSegmentedControl : Control
             true);
 
         Cursor = Cursors.Hand;
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         Size = new Size(300, 32);
     }
 
@@ -109,8 +109,8 @@ public class AcrSegmentedControl : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -122,10 +122,10 @@ public class AcrSegmentedControl : Control
 
         using (var outerPath = AcrGraphics.CreateRoundedRectPath(outerRect, radius))
         {
-            using var backBrush = new SolidBrush(Color.FromArgb(240, 241, 243));
+            using var backBrush = new SolidBrush(AcrColors.SurfaceSunken);
             e.Graphics.FillPath(backBrush, outerPath);
 
-            using var borderPen = new Pen(Color.FromArgb(225, 225, 225), 1);
+            using var borderPen = new Pen(AcrColors.BorderSubtle, 1);
             e.Graphics.DrawPath(borderPen, outerPath);
         }
 
@@ -135,7 +135,7 @@ public class AcrSegmentedControl : Control
 
         var selectedRect = new Rectangle(Padding + _selectedIndex * segmentWidth, Padding, segmentWidth, Height - Padding * 2);
         using (var selectedPath = AcrGraphics.CreateRoundedRectPath(selectedRect, Math.Max(1, radius - 2)))
-        using (var selectedBrush = new SolidBrush(Color.White))
+        using (var selectedBrush = new SolidBrush(AcrColors.Surface))
         {
             e.Graphics.FillPath(selectedBrush, selectedPath);
             using var selectedBorder = new Pen(_accentColor, 1);
@@ -148,7 +148,7 @@ public class AcrSegmentedControl : Control
 
             if (i == _hoveredIndex && i != _selectedIndex)
             {
-                using var hoverBrush = new SolidBrush(Color.FromArgb(15, 0, 0, 0));
+                using var hoverBrush = new SolidBrush(Color.FromArgb(18, AcrColors.Text));
                 using var hoverPath = AcrGraphics.CreateRoundedRectPath(new Rectangle(rect.X, Padding, rect.Width, Height - Padding * 2), Math.Max(1, radius - 2));
                 e.Graphics.FillPath(hoverBrush, hoverPath);
             }

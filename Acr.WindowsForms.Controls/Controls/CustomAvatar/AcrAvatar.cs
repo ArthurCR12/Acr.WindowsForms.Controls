@@ -23,7 +23,7 @@ public class AcrAvatar : Control
             true);
 
         Size = new Size(40, 40);
-        Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+        Font = AcrFonts.Get(12F, FontStyle.Bold);
     }
 
     [Category("Acr Custom")]
@@ -85,8 +85,8 @@ public class AcrAvatar : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -131,7 +131,7 @@ public class AcrAvatar : Control
                 _ => AcrColors.Neutral,
             };
 
-            using var ringBrush = new SolidBrush(Parent?.BackColor ?? Color.White);
+            using var ringBrush = new SolidBrush(Parent?.BackColor ?? AcrColors.Surface);
             var ringRect = Rectangle.Inflate(dotRect, 2, 2);
             e.Graphics.FillEllipse(ringBrush, ringRect);
 

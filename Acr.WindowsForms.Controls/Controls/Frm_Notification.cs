@@ -30,10 +30,10 @@ namespace Acr.WindowsForms.Controls.Controls
         {
             InitializeComponent();
             FormBorderStyle = FormBorderStyle.None;
-            BackColor = Color.White;
-            lbl_Message.Font = new Font("Segoe UI", 9.5F);
+            BackColor = AcrColors.Surface;
+            lbl_Message.Font = AcrFonts.Get(9.5F);
             lbl_Message.ForeColor = AcrColors.Text;
-            btn_Close.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
+            btn_Close.FlatAppearance.MouseOverBackColor = AcrColors.SurfaceHover;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             // Pausa o tempo de exibição enquanto o mouse estiver sobre a notificação.
@@ -248,7 +248,7 @@ namespace Acr.WindowsForms.Controls.Controls
                 e.Graphics.FillRectangle(accentBrush, AccentBarWidth, Height - ProgressBarHeight, (Width - AccentBarWidth) * remaining, ProgressBarHeight);
             }
 
-            using var borderPen = new Pen(Color.FromArgb(225, 225, 225), 1);
+            using var borderPen = new Pen(AcrColors.BorderSubtle, 1);
             using var borderPath = AcrGraphics.CreateRoundedRectPath(new Rectangle(0, 0, Width - 1, Height - 1), CornerRadius);
             e.Graphics.DrawPath(borderPen, borderPath);
         }

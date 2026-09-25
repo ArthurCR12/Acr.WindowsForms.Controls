@@ -32,7 +32,7 @@ public class AcrChip : Control
             true);
 
         Cursor = Cursors.Hand;
-        Font = new Font("Segoe UI", 8.5F);
+        Font = AcrFonts.Get(8.5F);
         Text = "Chip";
         UpdateSize();
     }
@@ -120,8 +120,8 @@ public class AcrChip : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)

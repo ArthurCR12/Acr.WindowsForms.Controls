@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomRating;
 
-public class AcrRating : Control
+public class AcrRating : Control, IAcrThemeable
 {
     private const int Gap = 4;
 
@@ -14,7 +14,7 @@ public class AcrRating : Control
     private int _hoverValue = -1;
     private bool _readOnly = false;
     private Color _filledColor = Color.FromArgb(255, 180, 0);
-    private Color _emptyColor = Color.FromArgb(220, 220, 220);
+    private Color _emptyColor = AcrColors.Track;
 
     public event EventHandler<int>? ValueChanged;
 
@@ -154,8 +154,8 @@ public class AcrRating : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -192,5 +192,11 @@ public class AcrRating : Control
 
         path.AddPolygon(points);
         return path;
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        _emptyColor = AcrTheme.Swap(_emptyColor, o.Track, n.Track);
+        Invalidate();
     }
 }

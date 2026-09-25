@@ -27,7 +27,7 @@ public class AcrAlert : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         Size = new Size(400, 48);
         Text = "Mensagem de alerta";
     }
@@ -80,8 +80,8 @@ public class AcrAlert : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
-        var backColor = Parent?.BackColor ?? Color.White;
-        pevent.Graphics.Clear(backColor.A == 0 ? Color.White : backColor);
+        var backColor = Parent?.BackColor ?? AcrColors.Surface;
+        pevent.Graphics.Clear(backColor.A < 255 ? AcrColors.Surface : backColor);
     }
 
     protected override void OnPaint(PaintEventArgs e)

@@ -18,7 +18,7 @@ public class AcrSidebarItem
     }
 }
 
-public class AcrSidebar : Control
+public class AcrSidebar : Control, IAcrThemeable
 {
     private const int ItemHeight = 42;
     private const int ToggleHeight = 44;
@@ -48,9 +48,9 @@ public class AcrSidebar : Control
             ControlStyles.SupportsTransparentBackColor,
             true);
 
-        Font = new Font("Segoe UI", 9.5F);
+        Font = AcrFonts.Get(9.5F);
         Dock = DockStyle.Left;
-        BackColor = Color.FromArgb(250, 250, 251);
+        BackColor = AcrColors.SurfaceAlt;
         Cursor = Cursors.Hand;
 
         Width = ExpandedWidth;
@@ -176,7 +176,7 @@ public class AcrSidebar : Control
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         _itemRects.Clear();
 
-        using (var borderPen = new Pen(Color.FromArgb(230, 230, 230), 1))
+        using (var borderPen = new Pen(AcrColors.Separator, 1))
             e.Graphics.DrawLine(borderPen, Width - 1, 0, Width - 1, Height);
 
         DrawToggle(e.Graphics);
@@ -200,7 +200,7 @@ public class AcrSidebar : Control
 
             if (isSelected || isHovered)
             {
-                var fill = isSelected ? Color.FromArgb(28, AcrColors.Primary.R, AcrColors.Primary.G, AcrColors.Primary.B) : Color.FromArgb(235, 235, 236);
+                var fill = isSelected ? Color.FromArgb(28, AcrColors.Primary.R, AcrColors.Primary.G, AcrColors.Primary.B) : AcrColors.SurfaceHover;
                 using var itemPath = AcrGraphics.CreateRoundedRectPath(itemRect, 8);
                 using var itemBrush = new SolidBrush(fill);
                 e.Graphics.FillPath(itemBrush, itemPath);
@@ -232,7 +232,7 @@ public class AcrSidebar : Control
 
         if (_hoveringToggle)
         {
-            using var hoverBrush = new SolidBrush(Color.FromArgb(235, 235, 236));
+            using var hoverBrush = new SolidBrush(AcrColors.SurfaceHover);
             g.FillRectangle(hoverBrush, rect);
         }
 
@@ -242,5 +242,11 @@ public class AcrSidebar : Control
 
         for (int i = -1; i <= 1; i++)
             g.DrawLine(pen, cx - 8, cy + i * 6, cx + 8, cy + i * 6);
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        BackColor = AcrTheme.Swap(BackColor, o.SurfaceAlt, n.SurfaceAlt);
+        Invalidate();
     }
 }

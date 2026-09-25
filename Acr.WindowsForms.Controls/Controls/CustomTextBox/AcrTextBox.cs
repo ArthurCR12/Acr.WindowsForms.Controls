@@ -41,7 +41,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseContr
         // A altura é controlada pelo estilo (ver AcrTextBox.Style.cs), não pelo AutoSize nativo.
         AutoSize = false;
         ForeColor = AcrColors.Text;
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         ApplyModernHeight();
     }
 

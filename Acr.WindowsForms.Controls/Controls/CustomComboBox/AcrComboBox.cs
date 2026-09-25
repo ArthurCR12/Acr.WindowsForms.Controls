@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomComboBox;
 
-public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl
+public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl, IAcrThemeable
 {
     private bool _requiredField = false;
     private bool _blockLeave = false;
@@ -14,9 +14,9 @@ public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl
     public AcrComboBox()
     {
         FlatStyle = FlatStyle.Flat;
-        BackColor = Color.White;
+        BackColor = AcrColors.Surface;
         ForeColor = AcrColors.Text;
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
 
         DrawMode = DrawMode.OwnerDrawFixed;
         ItemHeight = 22;
@@ -26,7 +26,7 @@ public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl
     protected override void OnEnabledChanged(EventArgs e)
     {
         base.OnEnabledChanged(e);
-        BackColor = Enabled ? Color.White : AcrColors.DisabledBack;
+        BackColor = Enabled ? AcrColors.Surface : AcrColors.DisabledBack;
         ForeColor = Enabled ? AcrColors.Text : AcrColors.DisabledFore;
     }
 
@@ -38,7 +38,7 @@ public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl
 
         bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 
-        using var backBrush = new SolidBrush(selected ? AcrColors.GridSelectionBack : Color.White);
+        using var backBrush = new SolidBrush(selected ? AcrColors.GridSelectionBack : AcrColors.Surface);
         e.Graphics.FillRectangle(backBrush, e.Bounds);
 
         var text = GetItemText(Items[e.Index]);
@@ -120,5 +120,12 @@ public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl
     public void ShowRequiredFieldError()
     {
         LabelHelper.CreateLabel(this, WarningMessageRequiredField, MessageType.Error);
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        BackColor = Enabled ? AcrTheme.Swap(BackColor, o.Surface, n.Surface) : n.DisabledBack;
+        ForeColor = Enabled ? AcrTheme.Swap(ForeColor, o.Text, n.Text) : n.DisabledFore;
+        Invalidate();
     }
 }

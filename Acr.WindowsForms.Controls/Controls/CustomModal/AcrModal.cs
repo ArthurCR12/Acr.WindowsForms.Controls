@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Controls.CustomButton;
 using Acr.WindowsForms.Controls.Enums;
@@ -33,15 +34,19 @@ public class AcrModal : Form
     /// Se true, escurece o restante da tela (a janela dona) enquanto o modal estiver aberto.
     /// Use <see cref="ShowModal"/> para exibir o modal com o overlay.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool DimBackground { get; set; } = DefaultDimBackground;
 
     /// <summary>Opacidade do overlay escuro (0.0 a 1.0).</summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public double OverlayOpacity { get; set; } = 0.45;
 
     /// <summary>Cor do overlay.</summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Color OverlayColor { get; set; } = Color.Black;
 
     /// <summary>Se true, a tecla Esc fecha o modal com DialogResult.Cancel.</summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool CloseOnEscape { get; set; } = true;
 
     public AcrModal(string title, string message, AcrBadgeVariant variant = AcrBadgeVariant.Info)
@@ -49,8 +54,8 @@ public class AcrModal : Form
         FormBorderStyle = FormBorderStyle.None;
         StartPosition = FormStartPosition.CenterParent;
         ShowInTaskbar = false;
-        BackColor = Color.White;
-        Font = new Font("Segoe UI", 9F);
+        BackColor = AcrColors.Surface;
+        Font = AcrFonts.Get(9F);
         Size = new Size(420, 220);
         MinimumSize = new Size(320, 150);
 
@@ -58,7 +63,7 @@ public class AcrModal : Form
         _titleLabel = new Label
         {
             Text = title,
-            Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+            Font = AcrFonts.Get(10.5F, FontStyle.Bold),
             ForeColor = AcrColors.Text,
             AutoSize = false,
             TextAlign = ContentAlignment.MiddleLeft,
@@ -68,7 +73,7 @@ public class AcrModal : Form
         _closeButton = new Label
         {
             Text = "✕",
-            Font = new Font("Segoe UI", 10F),
+            Font = AcrFonts.Get(10F),
             ForeColor = AcrColors.IconGlyph,
             AutoSize = false,
             TextAlign = ContentAlignment.MiddleCenter,
@@ -271,11 +276,11 @@ public class AcrModal : Form
         base.OnPaint(e);
 
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-        using var borderPen = new Pen(Color.FromArgb(225, 225, 225), 1);
+        using var borderPen = new Pen(AcrColors.BorderSubtle, 1);
         using var borderPath = AcrGraphics.CreateRoundedRectPath(new Rectangle(0, 0, Width - 1, Height - 1), CornerRadius);
         e.Graphics.DrawPath(borderPen, borderPath);
 
-        using var separatorPen = new Pen(Color.FromArgb(235, 235, 235), 1);
+        using var separatorPen = new Pen(AcrColors.Separator, 1);
         e.Graphics.DrawLine(separatorPen, SidePadding, HeaderHeight, Width - SidePadding, HeaderHeight);
         e.Graphics.DrawLine(separatorPen, SidePadding, Height - FooterHeight, Width - SidePadding, Height - FooterHeight);
     }

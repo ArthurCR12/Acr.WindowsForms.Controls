@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomButton;
 
-public class AcrButton : Button, IAcrBaseControl
+public class AcrButton : Button, IAcrBaseControl, IAcrThemeable
 {
     private EControlState _controlState = EControlState.Normal;
     private int _cornerRadius = 6;
@@ -35,7 +35,7 @@ public class AcrButton : Button, IAcrBaseControl
         BackColor = AcrColors.Primary;
         ForeColor = Color.White;
         Cursor = Cursors.Hand;
-        Font = new Font("Segoe UI", 9F);
+        Font = AcrFonts.Get(9F);
         Padding = new Padding(6, 2, 6, 2);
 
         _spinnerTimer = new System.Windows.Forms.Timer { Interval = 30 };
@@ -195,9 +195,9 @@ public class AcrButton : Button, IAcrBaseControl
         return _variant switch
         {
             AcrButtonVariant.Secondary => (
-                _pressed ? Color.FromArgb(222, 222, 222) : _hovering ? Color.FromArgb(232, 232, 232) : Color.FromArgb(242, 242, 242),
+                _pressed ? AcrColors.Blend(AcrColors.SurfaceSunken, AcrColors.Text, 0.12f) : _hovering ? AcrColors.Blend(AcrColors.SurfaceSunken, AcrColors.Text, 0.06f) : AcrColors.SurfaceSunken,
                 AcrColors.Text,
-                Color.FromArgb(225, 225, 225)),
+                AcrColors.BorderSubtle),
             AcrButtonVariant.Outline => (
                 _pressed ? Tint(0.18f) : _hovering ? Tint(0.08f) : Color.Transparent,
                 accent,
@@ -215,8 +215,8 @@ public class AcrButton : Button, IAcrBaseControl
         var g = pevent.Graphics;
         g.SmoothingMode = SmoothingMode.AntiAlias;
 
-        var parentBack = Parent?.BackColor ?? SystemColors.Control;
-        g.Clear(parentBack.A == 0 ? Color.White : parentBack);
+        var parentBack = Parent?.BackColor ?? AcrColors.Surface;
+        g.Clear(parentBack.A < 255 ? AcrColors.Surface : parentBack);
 
         var (back, fore, border) = ResolveColors();
         var rect = new Rectangle(0, 0, Width - 1, Height - 1);
@@ -282,5 +282,14 @@ public class AcrButton : Button, IAcrBaseControl
     {
         if (disposing) _spinnerTimer.Dispose();
         base.Dispose(disposing);
+    }
+
+    public void ApplyTheme(AcrTheme o, AcrTheme n)
+    {
+        _accentColor = AcrTheme.Swap(_accentColor, o.Primary, n.Primary);
+        _accentColor = AcrTheme.Swap(_accentColor, o.Error, n.Error);
+        _accentColor = AcrTheme.Swap(_accentColor, o.Success, n.Success);
+        _accentColor = AcrTheme.Swap(_accentColor, o.Warning, n.Warning);
+        Invalidate();
     }
 }
