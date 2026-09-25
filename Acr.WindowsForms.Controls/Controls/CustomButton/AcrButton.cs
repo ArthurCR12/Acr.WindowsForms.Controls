@@ -88,6 +88,24 @@ public class AcrButton : Button, IAcrBaseControl
         }
     }
 
+    protected override void OnEnabledChanged(EventArgs e)
+    {
+        base.OnEnabledChanged(e);
+
+        if (Enabled)
+        {
+            BackColor = _accentColor;
+            ForeColor = Color.White;
+            Cursor = Cursors.Hand;
+        }
+        else
+        {
+            BackColor = AcrColors.DisabledBack;
+            ForeColor = AcrColors.DisabledFore;
+            Cursor = Cursors.Default;
+        }
+    }
+
     protected override void OnResize(EventArgs e)
     {
         base.OnResize(e);

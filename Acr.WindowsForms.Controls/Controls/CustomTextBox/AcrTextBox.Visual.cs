@@ -156,6 +156,18 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
     protected override void OnEnabledChanged(EventArgs e)
     {
         base.OnEnabledChanged(e);
+
+        if (Enabled)
+        {
+            BackColor = _onLeaveBackColor;
+            ForeColor = AcrColors.Text;
+        }
+        else
+        {
+            BackColor = AcrColors.DisabledBack;
+            ForeColor = AcrColors.DisabledFore;
+        }
+
         RedrawBorder();
     }
 

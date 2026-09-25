@@ -28,5 +28,10 @@ namespace Acr.WindowsForms.Controls.Class
 
         public static readonly Color IconGlyph = Color.FromArgb(140, 140, 140);
         public static readonly Color IconGlyphHover = Color.FromArgb(70, 70, 70);
+
+        public static readonly Color DisabledBack = Color.FromArgb(235, 235, 235);
+        public static readonly Color DisabledFore = Color.FromArgb(170, 170, 170);
+
+        public static readonly Color Neutral = Color.FromArgb(108, 117, 125);
     }
 }

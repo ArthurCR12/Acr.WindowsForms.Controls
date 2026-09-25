@@ -17,6 +17,36 @@ public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl
         BackColor = Color.White;
         ForeColor = AcrColors.Text;
         Font = new Font("Segoe UI", 9F);
+
+        DrawMode = DrawMode.OwnerDrawFixed;
+        ItemHeight = 22;
+        DrawItem += OnDrawItem;
+    }
+
+    protected override void OnEnabledChanged(EventArgs e)
+    {
+        base.OnEnabledChanged(e);
+        BackColor = Enabled ? Color.White : AcrColors.DisabledBack;
+        ForeColor = Enabled ? AcrColors.Text : AcrColors.DisabledFore;
+    }
+
+    private void OnDrawItem(object? sender, DrawItemEventArgs e)
+    {
+        e.DrawBackground();
+
+        if (e.Index < 0 || e.Index >= Items.Count) return;
+
+        bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+
+        using var backBrush = new SolidBrush(selected ? AcrColors.GridSelectionBack : Color.White);
+        e.Graphics.FillRectangle(backBrush, e.Bounds);
+
+        var text = GetItemText(Items[e.Index]);
+        var textRect = new Rectangle(e.Bounds.X + 6, e.Bounds.Y, e.Bounds.Width - 6, e.Bounds.Height);
+        TextRenderer.DrawText(e.Graphics, text, e.Font ?? Font, textRect, selected ? AcrColors.GridSelectionFore : AcrColors.Text,
+            TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+
+        e.DrawFocusRectangle();
     }
 
     public bool IsControlEmpty => SelectedIndex == -1;
