@@ -1,4 +1,5 @@
 using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Controls.CustomDropdownMenu;
 using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Helpers;
 
@@ -7,6 +8,7 @@ namespace AcrFormsTest
     public partial class Form1 : Form
     {
         private bool _formLocked = false;
+        private readonly AcrDropdownMenu _dropdownMenu = new();
 
         public Form1()
         {
@@ -109,5 +111,29 @@ namespace AcrFormsTest
 
         private void acrPagination1_PageChanged(object? sender, int page) =>
             lblPaginationResult.Text = $"Página atual: {page} / {acrPagination1.PageCount}";
+
+        private void chip_Removed(object? sender, EventArgs e)
+        {
+            if (sender is Control chip)
+            {
+                lblChipResult.Text = $"Removido: {chip.Text}";
+                chip.Visible = false;
+            }
+        }
+
+        private void emptyState1_ActionClick(object? sender, EventArgs e) =>
+            MessageBox.Show("Filtros limpos!", "AcrEmptyState", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        private void btnDropdownTrigger_Click(object sender, EventArgs e)
+        {
+            _dropdownMenu.Items.Clear();
+            _dropdownMenu.Items.AddRange(new[] { "Editar", "Duplicar", "Arquivar", "Excluir" });
+            _dropdownMenu.ItemClicked -= DropdownMenu_ItemClicked;
+            _dropdownMenu.ItemClicked += DropdownMenu_ItemClicked;
+            _dropdownMenu.ShowFor(btnDropdownTrigger);
+        }
+
+        private void DropdownMenu_ItemClicked(object? sender, AcrDropdownMenuItemEventArgs e) =>
+            lblDropdownResult.Text = $"Selecionado: {e.Text}";
     }
 }

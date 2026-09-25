@@ -160,6 +160,40 @@ namespace AcrFormsTest
             alertWarning = new Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert();
             alertError = new Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert();
 
+            tabPageSkeleton = new TabPage();
+            lblSkeletonHeader = new Label();
+            skeletonAvatar = new Acr.WindowsForms.Controls.Controls.CustomSkeleton.AcrSkeleton();
+            skeletonLine1 = new Acr.WindowsForms.Controls.Controls.CustomSkeleton.AcrSkeleton();
+            skeletonLine2 = new Acr.WindowsForms.Controls.Controls.CustomSkeleton.AcrSkeleton();
+            skeletonLine3 = new Acr.WindowsForms.Controls.Controls.CustomSkeleton.AcrSkeleton();
+
+            tabPageChip = new TabPage();
+            lblChipHeader = new Label();
+            chipDefault = new Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip();
+            chipSelected = new Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip();
+            chipSuccess = new Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip();
+            chipNotRemovable = new Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip();
+            lblChipResult = new Label();
+
+            tabPageAvatar = new TabPage();
+            lblAvatarHeader = new Label();
+            avatarOnline = new Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatar();
+            lblAvatarOnline = new Label();
+            avatarAway = new Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatar();
+            lblAvatarAway = new Label();
+            avatarBusy = new Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatar();
+            lblAvatarBusy = new Label();
+            avatarPlain = new Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatar();
+            lblAvatarPlain = new Label();
+
+            tabPageEmptyState = new TabPage();
+            emptyState1 = new Acr.WindowsForms.Controls.Controls.CustomEmptyState.AcrEmptyState();
+
+            tabPageDropdownMenu = new TabPage();
+            lblDropdownHeader = new Label();
+            btnDropdownTrigger = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
+            lblDropdownResult = new Label();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -176,6 +210,11 @@ namespace AcrFormsTest
             tabPageToggle.SuspendLayout();
             tabPageProgressBar.SuspendLayout();
             tabPageAlert.SuspendLayout();
+            tabPageSkeleton.SuspendLayout();
+            tabPageChip.SuspendLayout();
+            tabPageAvatar.SuspendLayout();
+            tabPageEmptyState.SuspendLayout();
+            tabPageDropdownMenu.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -194,6 +233,11 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageToggle);
             tabControl1.Controls.Add(tabPageProgressBar);
             tabControl1.Controls.Add(tabPageAlert);
+            tabControl1.Controls.Add(tabPageSkeleton);
+            tabControl1.Controls.Add(tabPageChip);
+            tabControl1.Controls.Add(tabPageAvatar);
+            tabControl1.Controls.Add(tabPageEmptyState);
+            tabControl1.Controls.Add(tabPageDropdownMenu);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -1470,6 +1514,292 @@ namespace AcrFormsTest
             alertError.Text = "Erro: não foi possível concluir a operação.";
             alertError.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Error;
             //
+            // tabPageSkeleton
+            //
+            tabPageSkeleton.Controls.Add(lblSkeletonHeader);
+            tabPageSkeleton.Controls.Add(skeletonAvatar);
+            tabPageSkeleton.Controls.Add(skeletonLine1);
+            tabPageSkeleton.Controls.Add(skeletonLine2);
+            tabPageSkeleton.Controls.Add(skeletonLine3);
+            tabPageSkeleton.Location = new Point(4, 24);
+            tabPageSkeleton.Name = "tabPageSkeleton";
+            tabPageSkeleton.Padding = new Padding(3);
+            tabPageSkeleton.Size = new Size(792, 622);
+            tabPageSkeleton.TabIndex = 14;
+            tabPageSkeleton.Text = "AcrSkeleton";
+            tabPageSkeleton.UseVisualStyleBackColor = true;
+            //
+            // lblSkeletonHeader
+            //
+            lblSkeletonHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSkeletonHeader.Location = new Point(24, 15);
+            lblSkeletonHeader.Name = "lblSkeletonHeader";
+            lblSkeletonHeader.Size = new Size(700, 20);
+            lblSkeletonHeader.TabIndex = 0;
+            lblSkeletonHeader.Text = "AcrSkeleton — placeholder animado (efeito shimmer) enquanto carrega";
+            //
+            // skeletonAvatar
+            //
+            skeletonAvatar.CornerRadius = 24;
+            skeletonAvatar.Location = new Point(30, 60);
+            skeletonAvatar.Name = "skeletonAvatar";
+            skeletonAvatar.Size = new Size(48, 48);
+            skeletonAvatar.TabIndex = 1;
+            //
+            // skeletonLine1
+            //
+            skeletonLine1.Location = new Point(95, 62);
+            skeletonLine1.Name = "skeletonLine1";
+            skeletonLine1.Size = new Size(220, 14);
+            skeletonLine1.TabIndex = 2;
+            //
+            // skeletonLine2
+            //
+            skeletonLine2.Location = new Point(95, 84);
+            skeletonLine2.Name = "skeletonLine2";
+            skeletonLine2.Size = new Size(150, 14);
+            skeletonLine2.TabIndex = 3;
+            //
+            // skeletonLine3
+            //
+            skeletonLine3.Location = new Point(30, 130);
+            skeletonLine3.Name = "skeletonLine3";
+            skeletonLine3.Size = new Size(500, 14);
+            skeletonLine3.TabIndex = 4;
+            //
+            // tabPageChip
+            //
+            tabPageChip.Controls.Add(lblChipHeader);
+            tabPageChip.Controls.Add(chipDefault);
+            tabPageChip.Controls.Add(chipSelected);
+            tabPageChip.Controls.Add(chipSuccess);
+            tabPageChip.Controls.Add(chipNotRemovable);
+            tabPageChip.Controls.Add(lblChipResult);
+            tabPageChip.Location = new Point(4, 24);
+            tabPageChip.Name = "tabPageChip";
+            tabPageChip.Padding = new Padding(3);
+            tabPageChip.Size = new Size(792, 622);
+            tabPageChip.TabIndex = 15;
+            tabPageChip.Text = "AcrChip";
+            tabPageChip.UseVisualStyleBackColor = true;
+            //
+            // lblChipHeader
+            //
+            lblChipHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblChipHeader.Location = new Point(24, 15);
+            lblChipHeader.Name = "lblChipHeader";
+            lblChipHeader.Size = new Size(700, 20);
+            lblChipHeader.TabIndex = 0;
+            lblChipHeader.Text = "AcrChip — clique no × para remover, clique no chip para selecionar";
+            //
+            // chipDefault
+            //
+            chipDefault.Location = new Point(30, 60);
+            chipDefault.Name = "chipDefault";
+            chipDefault.Text = "Periféricos";
+            chipDefault.TabIndex = 1;
+            chipDefault.Removed += chip_Removed;
+            //
+            // chipSelected
+            //
+            chipSelected.Location = new Point(140, 60);
+            chipSelected.Name = "chipSelected";
+            chipSelected.Selected = true;
+            chipSelected.Text = "Monitores (selecionado)";
+            chipSelected.TabIndex = 2;
+            chipSelected.Removed += chip_Removed;
+            //
+            // chipSuccess
+            //
+            chipSuccess.Location = new Point(320, 60);
+            chipSuccess.Name = "chipSuccess";
+            chipSuccess.Text = "Em estoque";
+            chipSuccess.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Success;
+            chipSuccess.TabIndex = 3;
+            chipSuccess.Removed += chip_Removed;
+            //
+            // chipNotRemovable
+            //
+            chipNotRemovable.Location = new Point(440, 60);
+            chipNotRemovable.Name = "chipNotRemovable";
+            chipNotRemovable.Removable = false;
+            chipNotRemovable.Text = "Somente leitura";
+            chipNotRemovable.Variant = Acr.WindowsForms.Controls.Enums.AcrBadgeVariant.Neutral;
+            chipNotRemovable.TabIndex = 4;
+            //
+            // lblChipResult
+            //
+            lblChipResult.AutoSize = true;
+            lblChipResult.Location = new Point(30, 105);
+            lblChipResult.Name = "lblChipResult";
+            lblChipResult.Size = new Size(300, 15);
+            lblChipResult.TabIndex = 5;
+            lblChipResult.Text = "";
+            //
+            // tabPageAvatar
+            //
+            tabPageAvatar.Controls.Add(lblAvatarHeader);
+            tabPageAvatar.Controls.Add(avatarOnline);
+            tabPageAvatar.Controls.Add(lblAvatarOnline);
+            tabPageAvatar.Controls.Add(avatarAway);
+            tabPageAvatar.Controls.Add(lblAvatarAway);
+            tabPageAvatar.Controls.Add(avatarBusy);
+            tabPageAvatar.Controls.Add(lblAvatarBusy);
+            tabPageAvatar.Controls.Add(avatarPlain);
+            tabPageAvatar.Controls.Add(lblAvatarPlain);
+            tabPageAvatar.Location = new Point(4, 24);
+            tabPageAvatar.Name = "tabPageAvatar";
+            tabPageAvatar.Padding = new Padding(3);
+            tabPageAvatar.Size = new Size(792, 622);
+            tabPageAvatar.TabIndex = 16;
+            tabPageAvatar.Text = "AcrAvatar";
+            tabPageAvatar.UseVisualStyleBackColor = true;
+            //
+            // lblAvatarHeader
+            //
+            lblAvatarHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblAvatarHeader.Location = new Point(24, 15);
+            lblAvatarHeader.Name = "lblAvatarHeader";
+            lblAvatarHeader.Size = new Size(700, 20);
+            lblAvatarHeader.TabIndex = 0;
+            lblAvatarHeader.Text = "AcrAvatar — iniciais e indicador de status";
+            //
+            // avatarOnline
+            //
+            avatarOnline.Initials = "AC";
+            avatarOnline.Location = new Point(30, 60);
+            avatarOnline.Name = "avatarOnline";
+            avatarOnline.Size = new Size(48, 48);
+            avatarOnline.Status = Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatarStatus.Online;
+            avatarOnline.TabIndex = 1;
+            //
+            // lblAvatarOnline
+            //
+            lblAvatarOnline.AutoSize = true;
+            lblAvatarOnline.Location = new Point(90, 78);
+            lblAvatarOnline.Name = "lblAvatarOnline";
+            lblAvatarOnline.Size = new Size(60, 15);
+            lblAvatarOnline.TabIndex = 2;
+            lblAvatarOnline.Text = "Online";
+            //
+            // avatarAway
+            //
+            avatarAway.AvatarColor = Color.FromArgb(212, 140, 15);
+            avatarAway.Initials = "MJ";
+            avatarAway.Location = new Point(30, 130);
+            avatarAway.Name = "avatarAway";
+            avatarAway.Size = new Size(48, 48);
+            avatarAway.Status = Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatarStatus.Away;
+            avatarAway.TabIndex = 3;
+            //
+            // lblAvatarAway
+            //
+            lblAvatarAway.AutoSize = true;
+            lblAvatarAway.Location = new Point(90, 148);
+            lblAvatarAway.Name = "lblAvatarAway";
+            lblAvatarAway.Size = new Size(60, 15);
+            lblAvatarAway.TabIndex = 4;
+            lblAvatarAway.Text = "Ausente";
+            //
+            // avatarBusy
+            //
+            avatarBusy.AvatarColor = Color.FromArgb(32, 148, 87);
+            avatarBusy.Initials = "RS";
+            avatarBusy.Location = new Point(30, 200);
+            avatarBusy.Name = "avatarBusy";
+            avatarBusy.Size = new Size(48, 48);
+            avatarBusy.Status = Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatarStatus.Busy;
+            avatarBusy.TabIndex = 5;
+            //
+            // lblAvatarBusy
+            //
+            lblAvatarBusy.AutoSize = true;
+            lblAvatarBusy.Location = new Point(90, 218);
+            lblAvatarBusy.Name = "lblAvatarBusy";
+            lblAvatarBusy.Size = new Size(60, 15);
+            lblAvatarBusy.TabIndex = 6;
+            lblAvatarBusy.Text = "Ocupado";
+            //
+            // avatarPlain
+            //
+            avatarPlain.Initials = "?";
+            avatarPlain.Location = new Point(30, 270);
+            avatarPlain.Name = "avatarPlain";
+            avatarPlain.Size = new Size(48, 48);
+            avatarPlain.TabIndex = 7;
+            //
+            // lblAvatarPlain
+            //
+            lblAvatarPlain.AutoSize = true;
+            lblAvatarPlain.Location = new Point(90, 288);
+            lblAvatarPlain.Name = "lblAvatarPlain";
+            lblAvatarPlain.Size = new Size(150, 15);
+            lblAvatarPlain.TabIndex = 8;
+            lblAvatarPlain.Text = "Sem status (Status = None)";
+            //
+            // tabPageEmptyState
+            //
+            tabPageEmptyState.Controls.Add(emptyState1);
+            tabPageEmptyState.Location = new Point(4, 24);
+            tabPageEmptyState.Name = "tabPageEmptyState";
+            tabPageEmptyState.Padding = new Padding(3);
+            tabPageEmptyState.Size = new Size(792, 622);
+            tabPageEmptyState.TabIndex = 17;
+            tabPageEmptyState.Text = "AcrEmptyState";
+            tabPageEmptyState.UseVisualStyleBackColor = true;
+            //
+            // emptyState1
+            //
+            emptyState1.ActionText = "Limpar filtros";
+            emptyState1.Description = "Tente ajustar os filtros de busca ou remover alguns critérios.";
+            emptyState1.Dock = DockStyle.Fill;
+            emptyState1.Location = new Point(3, 3);
+            emptyState1.Name = "emptyState1";
+            emptyState1.Size = new Size(786, 616);
+            emptyState1.TabIndex = 0;
+            emptyState1.Title = "Nenhum produto encontrado";
+            emptyState1.ActionClick += emptyState1_ActionClick;
+            //
+            // tabPageDropdownMenu
+            //
+            tabPageDropdownMenu.Controls.Add(lblDropdownHeader);
+            tabPageDropdownMenu.Controls.Add(btnDropdownTrigger);
+            tabPageDropdownMenu.Controls.Add(lblDropdownResult);
+            tabPageDropdownMenu.Location = new Point(4, 24);
+            tabPageDropdownMenu.Name = "tabPageDropdownMenu";
+            tabPageDropdownMenu.Padding = new Padding(3);
+            tabPageDropdownMenu.Size = new Size(792, 622);
+            tabPageDropdownMenu.TabIndex = 18;
+            tabPageDropdownMenu.Text = "AcrDropdownMenu";
+            tabPageDropdownMenu.UseVisualStyleBackColor = true;
+            //
+            // lblDropdownHeader
+            //
+            lblDropdownHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblDropdownHeader.Location = new Point(24, 15);
+            lblDropdownHeader.Name = "lblDropdownHeader";
+            lblDropdownHeader.Size = new Size(700, 20);
+            lblDropdownHeader.TabIndex = 0;
+            lblDropdownHeader.Text = "AcrDropdownMenu — menu popup flat, sem o visual nativo do Windows";
+            //
+            // btnDropdownTrigger
+            //
+            btnDropdownTrigger.Location = new Point(30, 60);
+            btnDropdownTrigger.Name = "btnDropdownTrigger";
+            btnDropdownTrigger.Size = new Size(180, 32);
+            btnDropdownTrigger.TabIndex = 1;
+            btnDropdownTrigger.Text = "Abrir menu ▾";
+            btnDropdownTrigger.Click += btnDropdownTrigger_Click;
+            //
+            // lblDropdownResult
+            //
+            lblDropdownResult.AutoSize = true;
+            lblDropdownResult.Location = new Point(30, 105);
+            lblDropdownResult.Name = "lblDropdownResult";
+            lblDropdownResult.Size = new Size(300, 15);
+            lblDropdownResult.TabIndex = 2;
+            lblDropdownResult.Text = "";
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1504,6 +1834,14 @@ namespace AcrFormsTest
             tabPageProgressBar.ResumeLayout(false);
             tabPageProgressBar.PerformLayout();
             tabPageAlert.ResumeLayout(false);
+            tabPageSkeleton.ResumeLayout(false);
+            tabPageChip.ResumeLayout(false);
+            tabPageChip.PerformLayout();
+            tabPageAvatar.ResumeLayout(false);
+            tabPageAvatar.PerformLayout();
+            tabPageEmptyState.ResumeLayout(false);
+            tabPageDropdownMenu.ResumeLayout(false);
+            tabPageDropdownMenu.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1638,5 +1976,39 @@ namespace AcrFormsTest
         private Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert alertSuccess;
         private Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert alertWarning;
         private Acr.WindowsForms.Controls.Controls.CustomAlert.AcrAlert alertError;
+
+        private TabPage tabPageSkeleton;
+        private Label lblSkeletonHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomSkeleton.AcrSkeleton skeletonAvatar;
+        private Acr.WindowsForms.Controls.Controls.CustomSkeleton.AcrSkeleton skeletonLine1;
+        private Acr.WindowsForms.Controls.Controls.CustomSkeleton.AcrSkeleton skeletonLine2;
+        private Acr.WindowsForms.Controls.Controls.CustomSkeleton.AcrSkeleton skeletonLine3;
+
+        private TabPage tabPageChip;
+        private Label lblChipHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip chipDefault;
+        private Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip chipSelected;
+        private Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip chipSuccess;
+        private Acr.WindowsForms.Controls.Controls.CustomChip.AcrChip chipNotRemovable;
+        private Label lblChipResult;
+
+        private TabPage tabPageAvatar;
+        private Label lblAvatarHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatar avatarOnline;
+        private Label lblAvatarOnline;
+        private Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatar avatarAway;
+        private Label lblAvatarAway;
+        private Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatar avatarBusy;
+        private Label lblAvatarBusy;
+        private Acr.WindowsForms.Controls.Controls.CustomAvatar.AcrAvatar avatarPlain;
+        private Label lblAvatarPlain;
+
+        private TabPage tabPageEmptyState;
+        private Acr.WindowsForms.Controls.Controls.CustomEmptyState.AcrEmptyState emptyState1;
+
+        private TabPage tabPageDropdownMenu;
+        private Label lblDropdownHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnDropdownTrigger;
+        private Label lblDropdownResult;
     }
 }
