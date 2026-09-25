@@ -1,4 +1,4 @@
-﻿using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Interfaces;
 using System.ComponentModel;
@@ -10,7 +10,14 @@ public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl
     private bool _requiredField = false;
     private bool _blockLeave = false;
     private string _warningMessageRequiredField = "This field is required!";
-    
+
+    public AcrComboBox()
+    {
+        FlatStyle = FlatStyle.Flat;
+        BackColor = Color.White;
+        ForeColor = AcrColors.Text;
+        Font = new Font("Segoe UI", 9F);
+    }
 
     public bool IsControlEmpty => SelectedIndex == -1;
 

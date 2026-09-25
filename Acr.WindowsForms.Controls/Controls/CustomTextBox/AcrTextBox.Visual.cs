@@ -1,8 +1,9 @@
-﻿using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Class;
 using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Helpers;
 using Acr.WindowsForms.Controls.Interfaces;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomTextBox;
 
@@ -18,6 +19,24 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
 
     private bool _labelTitle = false;
     private string _labelTitleText = string.Empty;
+
+    private bool _hovering = false;
+
+    private const int WM_NCPAINT = 0x0085;
+    private const int WM_NCCALCSIZE = 0x0083;
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetWindowDC(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+    [DllImport("user32.dll")]
+    private static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, uint flags);
+
+    private const uint RDW_INVALIDATE = 0x0001;
+    private const uint RDW_FRAME = 0x0400;
+    private const uint RDW_UPDATENOW = 0x0100;
 
     [Category("Acr Custom")]
     [Description("Background color when the control is focused.")]
@@ -77,20 +96,19 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         }
     }
 
-    [Category("Acr Custom")]    
+    [Category("Acr Custom")]
     [Browsable(true)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public EControlState ControlState
     {
         get => _controlState;
-        set 
-        { 
+        set
+        {
             if (_controlState == value) return;
             _controlState = value;
             ApplyState();
         }
     }
-
 
     protected override void OnEnter(EventArgs e)
     {
@@ -104,6 +122,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         }
 
         ClearError();
+        RedrawBorder();
     }
 
     protected override void OnLeave(EventArgs e)
@@ -112,6 +131,70 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         BackColor = _onLeaveBackColor;
         AcrValidationHelper.ValidateRequired(this, _blockLeave);
         if (_validateAsDate) ClearError();
+        RedrawBorder();
+    }
+
+    protected override void OnMouseEnter(EventArgs e)
+    {
+        base.OnMouseEnter(e);
+        _hovering = true;
+        RedrawBorder();
+    }
+
+    protected override void OnMouseLeave(EventArgs e)
+    {
+        base.OnMouseLeave(e);
+        _hovering = false;
+        RedrawBorder();
+    }
+
+    protected override void OnEnabledChanged(EventArgs e)
+    {
+        base.OnEnabledChanged(e);
+        RedrawBorder();
+    }
+
+    protected override void WndProc(ref Message m)
+    {
+        base.WndProc(ref m);
+
+        if (m.Msg == WM_NCPAINT || m.Msg == WM_NCCALCSIZE)
+        {
+            PaintCustomBorder();
+        }
+    }
+
+    private void RedrawBorder()
+    {
+        if (!IsHandleCreated) return;
+        RedrawWindow(Handle, IntPtr.Zero, IntPtr.Zero, RDW_INVALIDATE | RDW_FRAME | RDW_UPDATENOW);
+    }
+
+    private void PaintCustomBorder()
+    {
+        if (BorderStyle != BorderStyle.FixedSingle) return;
+
+        var color = !Enabled
+            ? AcrColors.BorderDisabled
+            : Focused
+                ? AcrColors.BorderFocused
+                : _hovering
+                    ? AcrColors.BorderHover
+                    : AcrColors.Border;
+
+        var hdc = GetWindowDC(Handle);
+        if (hdc == IntPtr.Zero) return;
+
+        try
+        {
+            using var g = Graphics.FromHdc(hdc);
+            using var pen = new Pen(color, 1);
+            g.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
+        }
+        finally
+        {
+            ReleaseDC(Handle, hdc);
+        }
     }
 
     private void UpdateTitleLabel()
@@ -154,5 +237,5 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
         }
     }
 
-    
+
 }

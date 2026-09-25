@@ -36,7 +36,9 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseContr
     protected override void OnCreateControl()
     {
         base.OnCreateControl();
+        BorderStyle = BorderStyle.FixedSingle;
         ForeColor = Color.FromArgb(50, 50, 50);
+        Font = new Font("Segoe UI", 9F);
         UpdateTitleLabel();
     }
 
