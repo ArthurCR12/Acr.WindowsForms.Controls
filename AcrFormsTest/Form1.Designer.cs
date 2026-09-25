@@ -245,6 +245,11 @@ namespace AcrFormsTest
             dropzone1 = new Acr.WindowsForms.Controls.Controls.CustomDropzone.AcrDropzone();
             lblDropzoneResult = new Label();
 
+            tabPageSidebar = new TabPage();
+            pnlSidebarContent = new Panel();
+            lblSidebarResult = new Label();
+            sidebar1 = new Acr.WindowsForms.Controls.Controls.CustomSidebar.AcrSidebar();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -274,6 +279,8 @@ namespace AcrFormsTest
             tabPageStepper.SuspendLayout();
             tabPageSegmented.SuspendLayout();
             tabPageDropzone.SuspendLayout();
+            tabPageSidebar.SuspendLayout();
+            pnlSidebarContent.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -305,6 +312,7 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageStepper);
             tabControl1.Controls.Add(tabPageSegmented);
             tabControl1.Controls.Add(tabPageDropzone);
+            tabControl1.Controls.Add(tabPageSidebar);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -2294,6 +2302,47 @@ namespace AcrFormsTest
             lblDropzoneResult.TabIndex = 2;
             lblDropzoneResult.Text = "";
             //
+            // tabPageSidebar
+            //
+            tabPageSidebar.Controls.Add(pnlSidebarContent);
+            tabPageSidebar.Controls.Add(sidebar1);
+            tabPageSidebar.Location = new Point(4, 24);
+            tabPageSidebar.Name = "tabPageSidebar";
+            tabPageSidebar.Padding = new Padding(3);
+            tabPageSidebar.Size = new Size(792, 622);
+            tabPageSidebar.TabIndex = 27;
+            tabPageSidebar.Text = "AcrSidebar";
+            tabPageSidebar.UseVisualStyleBackColor = true;
+            //
+            // pnlSidebarContent
+            //
+            pnlSidebarContent.Controls.Add(lblSidebarResult);
+            pnlSidebarContent.Dock = DockStyle.Fill;
+            pnlSidebarContent.Location = new Point(3, 3);
+            pnlSidebarContent.Name = "pnlSidebarContent";
+            pnlSidebarContent.Size = new Size(789, 616);
+            pnlSidebarContent.TabIndex = 0;
+            //
+            // lblSidebarResult
+            //
+            lblSidebarResult.AutoSize = true;
+            lblSidebarResult.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblSidebarResult.Location = new Point(30, 30);
+            lblSidebarResult.Name = "lblSidebarResult";
+            lblSidebarResult.Size = new Size(300, 19);
+            lblSidebarResult.TabIndex = 0;
+            lblSidebarResult.Text = "Selecione um item no menu à esquerda.";
+            //
+            // sidebar1
+            //
+            sidebar1.Dock = DockStyle.Left;
+            sidebar1.HeaderText = "AcrFormsTest";
+            sidebar1.Location = new Point(3, 3);
+            sidebar1.Name = "sidebar1";
+            sidebar1.Size = new Size(220, 616);
+            sidebar1.TabIndex = 1;
+            sidebar1.ItemClick += sidebar1_ItemClick;
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2351,6 +2400,9 @@ namespace AcrFormsTest
             tabPageSegmented.PerformLayout();
             tabPageDropzone.ResumeLayout(false);
             tabPageDropzone.PerformLayout();
+            tabPageSidebar.ResumeLayout(false);
+            pnlSidebarContent.ResumeLayout(false);
+            pnlSidebarContent.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -2570,5 +2622,10 @@ namespace AcrFormsTest
         private Label lblDropzoneHeader;
         private Acr.WindowsForms.Controls.Controls.CustomDropzone.AcrDropzone dropzone1;
         private Label lblDropzoneResult;
+
+        private TabPage tabPageSidebar;
+        private Panel pnlSidebarContent;
+        private Label lblSidebarResult;
+        private Acr.WindowsForms.Controls.Controls.CustomSidebar.AcrSidebar sidebar1;
     }
 }

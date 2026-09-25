@@ -44,6 +44,14 @@ namespace AcrFormsTest
 
             segmented1.SetItems("Dia", "Semana", "Mês");
             segmentedAccent.SetItems("Lista", "Grade");
+
+            sidebar1.SetItems(
+                new("Início", "🏠"),
+                new("Produtos", "📦"),
+                new("Pedidos", "🧾"),
+                new("Clientes", "👤"),
+                new("Configurações", "⚙"));
+            sidebar1.SelectedIndex = 0;
         }
 
         private static List<Produto> GetSampleProdutos() =>
@@ -209,5 +217,8 @@ namespace AcrFormsTest
 
         private void dropzone1_FilesDropped(object? sender, Acr.WindowsForms.Controls.Controls.CustomDropzone.AcrDropzoneFilesEventArgs e) =>
             lblDropzoneResult.Text = $"{e.Files.Length} arquivo(s): {string.Join(", ", e.Files.Select(Path.GetFileName))}";
+
+        private void sidebar1_ItemClick(object? sender, int index) =>
+            lblSidebarResult.Text = $"Página atual: {sidebar1.SelectedItem?.Text}";
     }
 }
