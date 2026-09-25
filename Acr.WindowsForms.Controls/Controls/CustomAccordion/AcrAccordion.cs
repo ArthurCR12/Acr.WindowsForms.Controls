@@ -4,10 +4,14 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomAccordion;
 
+[ToolboxBitmap(typeof(Panel))]
+[DefaultEvent(nameof(AcrAccordion.ExpandedChanged))]
 public class AcrAccordion : Control, IAcrThemeable
 {
-    private const int HeaderHeight = 36;
-    private const int CornerRadius = 6;
+    private const int HeaderHeightLogical = 36;
+    private int HeaderHeight => LogicalToDeviceUnits(HeaderHeightLogical);
+    private const int CornerRadiusLogical = 6;
+    private int CornerRadius => LogicalToDeviceUnits(CornerRadiusLogical);
 
     private readonly Panel _contentPanel;
     private bool _expanded = true;

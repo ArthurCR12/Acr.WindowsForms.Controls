@@ -6,12 +6,18 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomToggleSwitch;
 
+[ToolboxBitmap(typeof(CheckBox))]
+[DefaultEvent("CheckedChanged")]
 public class AcrToggleSwitch : CheckBox, IAcrBaseControl
 {
-    private const int TrackWidth = 40;
-    private const int TrackHeight = 20;
-    private const int ThumbInset = 2;
-    private const int TextGap = 8;
+    private const int TrackWidthLogical = 40;
+    private int TrackWidth => LogicalToDeviceUnits(TrackWidthLogical);
+    private const int TrackHeightLogical = 20;
+    private int TrackHeight => LogicalToDeviceUnits(TrackHeightLogical);
+    private const int ThumbInsetLogical = 2;
+    private int ThumbInset => LogicalToDeviceUnits(ThumbInsetLogical);
+    private const int TextGapLogical = 8;
+    private int TextGap => LogicalToDeviceUnits(TextGapLogical);
 
     private readonly System.Windows.Forms.Timer _animationTimer;
     private double _thumbPosition = 0; // 0 = off, 1 = on

@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomAvatar;
 
+[ToolboxBitmap(typeof(PictureBox))]
 public class AcrAvatar : Control
 {
     private string _initials = "AB";

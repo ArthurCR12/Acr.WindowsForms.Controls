@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
@@ -7,11 +7,12 @@
     <!-- Configurações do pacote NuGet -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>AcrControls</PackageId>
-    <Version>1.4.5</Version>
+    <Version>1.5.0</Version>
     <Authors>Arthur Cabral</Authors>
     <Company>ACR Software</Company>
     <Description>ACR Windows Forms Controls. Custom reusable controls for .NET WinForms applications.</Description>
-    <PackageTags>winforms;controls;custom;acr;ui;components</PackageTags>
+    <PackageTags>winforms;controls;custom;acr;ui;components;theme;dark-mode</PackageTags>
+    <PackageReleaseNotes>See CHANGELOG.md at https://github.com/ArthurCR12/Acr.WindowsForms.Controls</PackageReleaseNotes>
     <Title>Acr WinForms Controls</Title>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/ArthurCR12/Acr.WindowsForms.Controls</RepositoryUrl>
@@ -71,10 +72,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controls\NovaPasta\" />
   </ItemGroup>
 
 </Project>

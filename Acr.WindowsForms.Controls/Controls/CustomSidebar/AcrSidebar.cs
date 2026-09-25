@@ -18,13 +18,20 @@ public class AcrSidebarItem
     }
 }
 
+[ToolboxBitmap(typeof(ToolStrip))]
+[DefaultEvent(nameof(AcrSidebar.ItemClick))]
 public class AcrSidebar : Control, IAcrThemeable
 {
-    private const int ItemHeight = 42;
-    private const int ToggleHeight = 44;
-    private const int GlyphWidth = 40;
-    private const int ExpandedWidth = 220;
-    private const int CollapsedWidth = 60;
+    private const int ItemHeightLogical = 42;
+    private int ItemHeight => LogicalToDeviceUnits(ItemHeightLogical);
+    private const int ToggleHeightLogical = 44;
+    private int ToggleHeight => LogicalToDeviceUnits(ToggleHeightLogical);
+    private const int GlyphWidthLogical = 40;
+    private int GlyphWidth => LogicalToDeviceUnits(GlyphWidthLogical);
+    private const int ExpandedWidthLogical = 220;
+    private int ExpandedWidth => LogicalToDeviceUnits(ExpandedWidthLogical);
+    private const int CollapsedWidthLogical = 60;
+    private int CollapsedWidth => LogicalToDeviceUnits(CollapsedWidthLogical);
 
     public List<AcrSidebarItem> Items { get; } = new();
 

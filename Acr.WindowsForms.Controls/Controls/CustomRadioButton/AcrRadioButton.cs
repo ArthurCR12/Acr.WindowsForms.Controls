@@ -6,10 +6,14 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomRadioButton;
 
+[ToolboxBitmap(typeof(RadioButton))]
+[DefaultEvent("CheckedChanged")]
 public class AcrRadioButton : RadioButton, IAcrBaseControl
 {
-    private const int CircleSize = 16;
-    private const int TextGap = 8;
+    private const int CircleSizeLogical = 16;
+    private int CircleSize => LogicalToDeviceUnits(CircleSizeLogical);
+    private const int TextGapLogical = 8;
+    private int TextGap => LogicalToDeviceUnits(TextGapLogical);
 
     private EControlState _controlState = EControlState.Normal;
     private Color _accentColor = AcrColors.Primary;

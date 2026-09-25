@@ -4,6 +4,8 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomDropdownMenu;
 
+[ToolboxBitmap(typeof(ContextMenuStrip))]
+[DefaultEvent(nameof(AcrDropdownMenu.ItemClicked))]
 public class AcrDropdownMenu : Component
 {
     /// <summary>Texto usado em <see cref="Items"/> para desenhar uma linha separadora.</summary>
@@ -87,9 +89,12 @@ public class AcrDropdownMenu : Component
 
     private sealed class PopupForm : Form
     {
-        private const int ItemHeight = 28;
-        private const int SeparatorHeight = 9;
-        private const int Pad = 6;
+        private const int ItemHeightLogical = 28;
+        private int ItemHeight => LogicalToDeviceUnits(ItemHeightLogical);
+        private const int SeparatorHeightLogical = 9;
+        private int SeparatorHeight => LogicalToDeviceUnits(SeparatorHeightLogical);
+        private const int PadLogical = 6;
+        private int Pad => LogicalToDeviceUnits(PadLogical);
 
         private readonly AcrDropdownMenu _owner;
         private readonly List<string> _items;

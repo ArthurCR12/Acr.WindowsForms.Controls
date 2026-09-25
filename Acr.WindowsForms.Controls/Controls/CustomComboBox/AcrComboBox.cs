@@ -5,6 +5,8 @@ using System.ComponentModel;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomComboBox;
 
+[ToolboxBitmap(typeof(ComboBox))]
+[DefaultEvent("SelectedIndexChanged")]
 public class AcrComboBox : ComboBox, IAcrValidatableControl, IAcrBaseControl, IAcrThemeable
 {
     private bool _requiredField = false;

@@ -6,10 +6,14 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomCheckBox;
 
+[ToolboxBitmap(typeof(CheckBox))]
+[DefaultEvent("CheckedChanged")]
 public class AcrCheckBox : CheckBox, IAcrBaseControl
 {
-    private const int BoxSize = 16;
-    private const int TextGap = 8;
+    private const int BoxSizeLogical = 16;
+    private int BoxSize => LogicalToDeviceUnits(BoxSizeLogical);
+    private const int TextGapLogical = 8;
+    private int TextGap => LogicalToDeviceUnits(TextGapLogical);
 
     private EControlState _controlState = EControlState.Normal;
     private Color _accentColor = AcrColors.Primary;

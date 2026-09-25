@@ -4,6 +4,8 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomCard;
 
+[ToolboxBitmap(typeof(Panel))]
+[DefaultEvent(nameof(AcrCard.CardClick))]
 public class AcrCard : Panel, IAcrThemeable
 {
     private int _cornerRadius = 10;

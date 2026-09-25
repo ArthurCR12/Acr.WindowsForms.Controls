@@ -4,10 +4,14 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomPagination;
 
+[ToolboxBitmap(typeof(BindingNavigator))]
+[DefaultEvent(nameof(AcrPagination.PageChanged))]
 public class AcrPagination : Control
 {
-    private const int ButtonSize = 28;
-    private const int Gap = 6;
+    private const int ButtonSizeLogical = 28;
+    private int ButtonSize => LogicalToDeviceUnits(ButtonSizeLogical);
+    private const int GapLogical = 6;
+    private int Gap => LogicalToDeviceUnits(GapLogical);
     private const int PrevIndex = -1;
     private const int NextIndex = -2;
     private const int EllipsisIndex = -3;

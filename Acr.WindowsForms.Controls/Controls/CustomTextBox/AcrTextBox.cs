@@ -8,6 +8,8 @@ using System.Runtime.Versioning;
 namespace Acr.WindowsForms.Controls.Controls.CustomTextBox;
 
 [SupportedOSPlatform("windows")]
+[ToolboxBitmap(typeof(TextBox))]
+[DefaultEvent("TextChanged")]
 public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrBaseControl 
 {
     private bool _tabOnEnter = true;    

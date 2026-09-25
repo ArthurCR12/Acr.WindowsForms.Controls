@@ -5,12 +5,18 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomChip;
 
+[ToolboxBitmap(typeof(Button))]
+[DefaultEvent(nameof(AcrChip.ChipClick))]
 public class AcrChip : Control
 {
-    private const int CloseSize = 14;
-    private const int HorizontalPadding = 10;
-    private const int VerticalPadding = 4;
-    private const int CloseGap = 6;
+    private const int CloseSizeLogical = 14;
+    private int CloseSize => LogicalToDeviceUnits(CloseSizeLogical);
+    private const int HorizontalPaddingLogical = 10;
+    private int HorizontalPadding => LogicalToDeviceUnits(HorizontalPaddingLogical);
+    private const int VerticalPaddingLogical = 4;
+    private int VerticalPadding => LogicalToDeviceUnits(VerticalPaddingLogical);
+    private const int CloseGapLogical = 6;
+    private int CloseGap => LogicalToDeviceUnits(CloseGapLogical);
 
     private AcrBadgeVariant _variant = AcrBadgeVariant.Primary;
     private bool _removable = true;

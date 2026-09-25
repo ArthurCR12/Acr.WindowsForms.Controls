@@ -5,6 +5,8 @@ using System.ComponentModel;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomDataGridView;
 
+[ToolboxBitmap(typeof(DataGridView))]
+[DefaultEvent("CellContentClick")]
 public class AcrDataGridView : DataGridView, IAcrBaseControl, IAcrThemeable
 {
     private EControlState _controlState = EControlState.Normal;

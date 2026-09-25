@@ -4,9 +4,12 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomRating;
 
+[ToolboxBitmap(typeof(TrackBar))]
+[DefaultEvent(nameof(AcrRating.ValueChanged))]
 public class AcrRating : Control, IAcrThemeable
 {
-    private const int Gap = 4;
+    private const int GapLogical = 4;
+    private int Gap => LogicalToDeviceUnits(GapLogical);
 
     private int _starCount = 5;
     private int _starSize = 24;

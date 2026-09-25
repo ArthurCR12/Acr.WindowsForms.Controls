@@ -5,9 +5,12 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomEmptyState;
 
+[ToolboxBitmap(typeof(Label))]
+[DefaultEvent(nameof(AcrEmptyState.ActionClick))]
 public class AcrEmptyState : Control
 {
-    private const int IconSize = 48;
+    private const int IconSizeLogical = 48;
+    private int IconSize => LogicalToDeviceUnits(IconSizeLogical);
 
     private string _title = "Nenhum resultado encontrado";
     private string _description = "Tente ajustar os filtros ou a busca.";

@@ -8,10 +8,14 @@ namespace Acr.WindowsForms.Controls.Controls.CustomModal;
 
 public class AcrModal : Form
 {
-    private const int CornerRadius = 12;
-    private const int HeaderHeight = 44;
-    private const int FooterHeight = 56;
-    private const int SidePadding = 20;
+    private const int CornerRadiusLogical = 12;
+    private int CornerRadius => LogicalToDeviceUnits(CornerRadiusLogical);
+    private const int HeaderHeightLogical = 44;
+    private int HeaderHeight => LogicalToDeviceUnits(HeaderHeightLogical);
+    private const int FooterHeightLogical = 56;
+    private int FooterHeight => LogicalToDeviceUnits(FooterHeightLogical);
+    private const int SidePaddingLogical = 20;
+    private int SidePadding => LogicalToDeviceUnits(SidePaddingLogical);
 
     private readonly Label _titleLabel;
     private readonly Label _closeButton;

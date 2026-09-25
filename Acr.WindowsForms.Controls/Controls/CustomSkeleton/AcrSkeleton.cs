@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomSkeleton;
 
+[ToolboxBitmap(typeof(Panel))]
 public class AcrSkeleton : Control, IAcrThemeable
 {
     private readonly System.Windows.Forms.Timer _timer;

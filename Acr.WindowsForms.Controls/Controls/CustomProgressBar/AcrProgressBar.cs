@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomProgressBar;
 
+[ToolboxBitmap(typeof(ProgressBar))]
 public class AcrProgressBar : Control
 {
     private int _minimum = 0;

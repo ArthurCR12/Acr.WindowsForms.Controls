@@ -4,10 +4,14 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomStepper;
 
+[ToolboxBitmap(typeof(ProgressBar))]
+[DefaultEvent(nameof(AcrStepper.StepChanged))]
 public class AcrStepper : Control
 {
-    private const int CircleSize = 28;
-    private const int LabelGap = 6;
+    private const int CircleSizeLogical = 28;
+    private int CircleSize => LogicalToDeviceUnits(CircleSizeLogical);
+    private const int LabelGapLogical = 6;
+    private int LabelGap => LogicalToDeviceUnits(LabelGapLogical);
 
     public List<string> Steps { get; } = new();
 

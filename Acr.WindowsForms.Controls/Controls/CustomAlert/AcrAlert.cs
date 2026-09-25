@@ -5,11 +5,16 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomAlert;
 
+[ToolboxBitmap(typeof(Label))]
+[DefaultEvent(nameof(AcrAlert.Closed))]
 public class AcrAlert : Control
 {
-    private const int AccentBarWidth = 4;
-    private const int CornerRadius = 6;
-    private const int CloseButtonSize = 18;
+    private const int AccentBarWidthLogical = 4;
+    private int AccentBarWidth => LogicalToDeviceUnits(AccentBarWidthLogical);
+    private const int CornerRadiusLogical = 6;
+    private int CornerRadius => LogicalToDeviceUnits(CornerRadiusLogical);
+    private const int CloseButtonSizeLogical = 18;
+    private int CloseButtonSize => LogicalToDeviceUnits(CloseButtonSizeLogical);
 
     private AcrBadgeVariant _variant = AcrBadgeVariant.Info;
     private bool _showCloseButton = true;

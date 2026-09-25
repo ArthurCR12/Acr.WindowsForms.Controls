@@ -6,6 +6,8 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomButton;
 
+[ToolboxBitmap(typeof(Button))]
+[DefaultEvent("Click")]
 public class AcrButton : Button, IAcrBaseControl, IAcrThemeable
 {
     private EControlState _controlState = EControlState.Normal;

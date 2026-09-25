@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomBadge;
 
+[ToolboxBitmap(typeof(Label))]
 public class AcrBadge : Control
 {
     private AcrBadgeVariant _variant = AcrBadgeVariant.Primary;

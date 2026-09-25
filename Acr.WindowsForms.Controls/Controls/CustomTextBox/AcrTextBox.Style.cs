@@ -21,7 +21,9 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrThemeable
     private const int WS_BORDER = 0x00800000;
     private const int WS_EX_CLIENTEDGE = 0x00000200;
 
-    private const int RingWidth = 3;
+    private const int RingWidthLogical = 3;
+
+    private int RingWidth => LogicalToDeviceUnits(RingWidthLogical);
 
     private AcrTextBoxStyle _textBoxStyle = AcrTextBoxStyle.Outlined;
     private int _borderRadius = 8;
@@ -92,7 +94,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrThemeable
     private int TextLineHeight => FontHeight + 2;
 
     /// <summary>Altura de um campo de uma linha no estilo moderno.</summary>
-    private int ModernHeight => TextLineHeight + _verticalPadding * 2;
+    private int ModernHeight => TextLineHeight + LogicalToDeviceUnits(_verticalPadding) * 2;
 
     protected override CreateParams CreateParams
     {
@@ -160,12 +162,12 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrThemeable
     /// <summary>Espaçamento (em pixels) entre a borda da janela e a área de texto, para uma altura de janela.</summary>
     private Padding GetFramePadding(int windowHeight)
     {
-        int left = _horizontalPadding + (_textBoxStyle == AcrTextBoxStyle.Outlined ? RingWidth : 0);
+        int left = LogicalToDeviceUnits(_horizontalPadding) + (_textBoxStyle == AcrTextBoxStyle.Outlined ? RingWidth : 0);
         int top, bottom;
 
         if (Multiline)
         {
-            top = _verticalPadding + (_textBoxStyle == AcrTextBoxStyle.Outlined ? RingWidth : 0);
+            top = LogicalToDeviceUnits(_verticalPadding) + (_textBoxStyle == AcrTextBoxStyle.Outlined ? RingWidth : 0);
             bottom = top;
         }
         else
@@ -265,7 +267,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl, IAcrThemeable
 
             // Outlined
             var box = new Rectangle(RingWidth, RingWidth, Width - RingWidth * 2 - 1, Height - RingWidth * 2 - 1);
-            int radius = Math.Min(_borderRadius, box.Height / 2);
+            int radius = Math.Min(LogicalToDeviceUnits(_borderRadius), box.Height / 2);
 
             if (focused || _hasError)
             {

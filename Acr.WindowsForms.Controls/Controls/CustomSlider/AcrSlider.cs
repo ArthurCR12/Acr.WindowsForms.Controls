@@ -4,10 +4,14 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomSlider;
 
+[ToolboxBitmap(typeof(TrackBar))]
+[DefaultEvent(nameof(AcrSlider.ValueChanged))]
 public class AcrSlider : Control
 {
-    private const int TrackHeight = 4;
-    private const int ThumbDiameter = 16;
+    private const int TrackHeightLogical = 4;
+    private int TrackHeight => LogicalToDeviceUnits(TrackHeightLogical);
+    private const int ThumbDiameterLogical = 16;
+    private int ThumbDiameter => LogicalToDeviceUnits(ThumbDiameterLogical);
 
     private int _minimum = 0;
     private int _maximum = 100;

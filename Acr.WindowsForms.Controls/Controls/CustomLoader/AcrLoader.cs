@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomLoader;
 
+[ToolboxBitmap(typeof(ProgressBar))]
 public class AcrLoader : Control
 {
     private readonly System.Windows.Forms.Timer _timer;

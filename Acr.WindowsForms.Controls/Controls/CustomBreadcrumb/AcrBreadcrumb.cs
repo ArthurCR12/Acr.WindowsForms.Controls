@@ -4,10 +4,14 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomBreadcrumb;
 
+[ToolboxBitmap(typeof(ToolStrip))]
+[DefaultEvent(nameof(AcrBreadcrumb.ItemClicked))]
 public class AcrBreadcrumb : Control
 {
-    private const int Gap = 6;
-    private const int SeparatorWidth = 14;
+    private const int GapLogical = 6;
+    private int Gap => LogicalToDeviceUnits(GapLogical);
+    private const int SeparatorWidthLogical = 14;
+    private int SeparatorWidth => LogicalToDeviceUnits(SeparatorWidthLogical);
 
     public List<string> Items { get; } = new();
 

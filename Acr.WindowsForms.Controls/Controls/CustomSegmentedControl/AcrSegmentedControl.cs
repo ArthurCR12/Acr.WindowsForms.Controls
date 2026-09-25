@@ -4,9 +4,12 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomSegmentedControl;
 
+[ToolboxBitmap(typeof(TabControl))]
+[DefaultEvent(nameof(AcrSegmentedControl.SelectedIndexChanged))]
 public class AcrSegmentedControl : Control
 {
-    private const int Padding = 3;
+    private const int InnerPaddingLogical = 3;
+    private int InnerPadding => LogicalToDeviceUnits(InnerPaddingLogical);
 
     public List<string> Items { get; } = new();
 
@@ -73,12 +76,12 @@ public class AcrSegmentedControl : Control
 
     public string? SelectedItem => _selectedIndex >= 0 && _selectedIndex < Items.Count ? Items[_selectedIndex] : null;
 
-    private int SegmentWidth => Items.Count == 0 ? 0 : (Width - Padding * 2) / Items.Count;
+    private int SegmentWidth => Items.Count == 0 ? 0 : (Width - InnerPadding * 2) / Items.Count;
 
     private int IndexAt(Point p)
     {
         if (Items.Count == 0 || SegmentWidth <= 0) return -1;
-        int index = (p.X - Padding) / SegmentWidth;
+        int index = (p.X - InnerPadding) / SegmentWidth;
         return index >= 0 && index < Items.Count ? index : -1;
     }
 
@@ -133,7 +136,7 @@ public class AcrSegmentedControl : Control
 
         int segmentWidth = SegmentWidth;
 
-        var selectedRect = new Rectangle(Padding + _selectedIndex * segmentWidth, Padding, segmentWidth, Height - Padding * 2);
+        var selectedRect = new Rectangle(InnerPadding + _selectedIndex * segmentWidth, InnerPadding, segmentWidth, Height - InnerPadding * 2);
         using (var selectedPath = AcrGraphics.CreateRoundedRectPath(selectedRect, Math.Max(1, radius - 2)))
         using (var selectedBrush = new SolidBrush(AcrColors.Surface))
         {
@@ -144,12 +147,12 @@ public class AcrSegmentedControl : Control
 
         for (int i = 0; i < Items.Count; i++)
         {
-            var rect = new Rectangle(Padding + i * segmentWidth, 0, segmentWidth, Height);
+            var rect = new Rectangle(InnerPadding + i * segmentWidth, 0, segmentWidth, Height);
 
             if (i == _hoveredIndex && i != _selectedIndex)
             {
                 using var hoverBrush = new SolidBrush(Color.FromArgb(18, AcrColors.Text));
-                using var hoverPath = AcrGraphics.CreateRoundedRectPath(new Rectangle(rect.X, Padding, rect.Width, Height - Padding * 2), Math.Max(1, radius - 2));
+                using var hoverPath = AcrGraphics.CreateRoundedRectPath(new Rectangle(rect.X, InnerPadding, rect.Width, Height - InnerPadding * 2), Math.Max(1, radius - 2));
                 e.Graphics.FillPath(hoverBrush, hoverPath);
             }
 

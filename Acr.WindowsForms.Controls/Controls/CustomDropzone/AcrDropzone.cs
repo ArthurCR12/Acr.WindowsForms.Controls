@@ -4,10 +4,14 @@ using System.Drawing.Drawing2D;
 
 namespace Acr.WindowsForms.Controls.Controls.CustomDropzone;
 
+[ToolboxBitmap(typeof(Panel))]
+[DefaultEvent(nameof(AcrDropzone.FilesDropped))]
 public class AcrDropzone : Control
 {
-    private const int CornerRadius = 10;
-    private const int IconSize = 40;
+    private const int CornerRadiusLogical = 10;
+    private int CornerRadius => LogicalToDeviceUnits(CornerRadiusLogical);
+    private const int IconSizeLogical = 40;
+    private int IconSize => LogicalToDeviceUnits(IconSizeLogical);
 
     private bool _dragOver = false;
     private string _title = "Arraste arquivos aqui";

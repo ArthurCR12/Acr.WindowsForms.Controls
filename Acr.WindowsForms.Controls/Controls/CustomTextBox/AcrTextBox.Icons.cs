@@ -8,8 +8,10 @@ namespace Acr.WindowsForms.Controls.Controls.CustomTextBox;
 
 public partial class AcrTextBox : TextBox, IAcrValidatableControl
 {
-    private const int IconSize = 16;
-    private const int IconGap = 2;
+    private const int IconSizeLogical = 16;
+    private int IconSize => LogicalToDeviceUnits(IconSizeLogical);
+    private const int IconGapLogical = 2;
+    private int IconGap => LogicalToDeviceUnits(IconGapLogical);
 
     private bool _showClearButton = false;
     private bool _isPasswordField = false;
@@ -147,7 +149,7 @@ public partial class AcrTextBox : TextBox, IAcrValidatableControl
 
         int framePadding = !IsModernStyle
             ? IconGap
-            : _horizontalPadding + (_textBoxStyle == AcrTextBoxStyle.Outlined ? RingWidth : 0);
+            : LogicalToDeviceUnits(_horizontalPadding) + (_textBoxStyle == AcrTextBoxStyle.Outlined ? RingWidth : 0);
         int rightOffset = Right - framePadding - IconSize;
         int centerY = Top + (Height - IconSize) / 2;
 
