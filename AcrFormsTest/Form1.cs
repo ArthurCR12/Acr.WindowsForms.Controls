@@ -1,5 +1,7 @@
 using Acr.WindowsForms.Controls.Class;
+using Acr.WindowsForms.Controls.Controls.CustomComboBox;
 using Acr.WindowsForms.Controls.Controls.CustomDropdownMenu;
+using Acr.WindowsForms.Controls.Controls.CustomModal;
 using Acr.WindowsForms.Controls.Enums;
 using Acr.WindowsForms.Controls.Helpers;
 
@@ -135,5 +137,54 @@ namespace AcrFormsTest
 
         private void DropdownMenu_ItemClicked(object? sender, AcrDropdownMenuItemEventArgs e) =>
             lblDropdownResult.Text = $"Selecionado: {e.Text}";
+
+        private void btnModalInfo_Click(object sender, EventArgs e)
+        {
+            AcrModal.ShowInfo(this, "Esta é uma mensagem informativa exibida em um AcrModal.");
+            lblModalResult.Text = "Modal de informação fechado.";
+        }
+
+        private void btnModalSuccess_Click(object sender, EventArgs e)
+        {
+            AcrModal.ShowSuccess(this, "A operação foi concluída com sucesso!");
+            lblModalResult.Text = "Modal de sucesso fechado.";
+        }
+
+        private void btnModalError_Click(object sender, EventArgs e)
+        {
+            AcrModal.ShowError(this, "Não foi possível concluir a operação. Tente novamente.");
+            lblModalResult.Text = "Modal de erro fechado.";
+        }
+
+        private void btnModalConfirm_Click(object sender, EventArgs e)
+        {
+            bool confirmed = AcrModal.ShowConfirm(this, "Tem certeza que deseja excluir este item?");
+            lblModalResult.Text = confirmed ? "Usuário confirmou." : "Usuário cancelou.";
+        }
+
+        private void btnModalCustom_Click(object sender, EventArgs e)
+        {
+            using var modal = new AcrModal("Selecionar categoria", string.Empty);
+            modal.Size = new Size(420, 260);
+
+            var combo = new AcrComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Location = new Point(20, 10),
+                Size = new Size(340, 23),
+            };
+            combo.Items.AddRange(new object[] { "Periféricos", "Monitores", "Móveis", "Áudio" });
+            combo.SelectedIndex = 0;
+            modal.ContentPanel.Controls.Add(combo);
+
+            modal.SetButtons(
+                ("Cancelar", DialogResult.Cancel, false),
+                ("Salvar", DialogResult.OK, true));
+
+            var result = modal.ShowDialog(this);
+            lblModalResult.Text = result == DialogResult.OK
+                ? $"Categoria salva: {combo.SelectedItem}"
+                : "Cancelado.";
+        }
     }
 }

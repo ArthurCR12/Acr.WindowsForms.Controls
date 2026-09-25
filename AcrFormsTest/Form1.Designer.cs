@@ -194,6 +194,15 @@ namespace AcrFormsTest
             btnDropdownTrigger = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
             lblDropdownResult = new Label();
 
+            tabPageModal = new TabPage();
+            lblModalHeader = new Label();
+            btnModalInfo = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
+            btnModalSuccess = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
+            btnModalError = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
+            btnModalConfirm = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
+            btnModalCustom = new Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton();
+            lblModalResult = new Label();
+
             tabControl1.SuspendLayout();
             tabPageTextBox.SuspendLayout();
             tabPageComboButton.SuspendLayout();
@@ -215,6 +224,7 @@ namespace AcrFormsTest
             tabPageAvatar.SuspendLayout();
             tabPageEmptyState.SuspendLayout();
             tabPageDropdownMenu.SuspendLayout();
+            tabPageModal.SuspendLayout();
             SuspendLayout();
             //
             // tabControl1
@@ -238,6 +248,7 @@ namespace AcrFormsTest
             tabControl1.Controls.Add(tabPageAvatar);
             tabControl1.Controls.Add(tabPageEmptyState);
             tabControl1.Controls.Add(tabPageDropdownMenu);
+            tabControl1.Controls.Add(tabPageModal);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -1800,6 +1811,90 @@ namespace AcrFormsTest
             lblDropdownResult.TabIndex = 2;
             lblDropdownResult.Text = "";
             //
+            // tabPageModal
+            //
+            tabPageModal.Controls.Add(lblModalHeader);
+            tabPageModal.Controls.Add(btnModalInfo);
+            tabPageModal.Controls.Add(btnModalSuccess);
+            tabPageModal.Controls.Add(btnModalError);
+            tabPageModal.Controls.Add(btnModalConfirm);
+            tabPageModal.Controls.Add(btnModalCustom);
+            tabPageModal.Controls.Add(lblModalResult);
+            tabPageModal.Location = new Point(4, 24);
+            tabPageModal.Name = "tabPageModal";
+            tabPageModal.Padding = new Padding(3);
+            tabPageModal.Size = new Size(792, 622);
+            tabPageModal.TabIndex = 19;
+            tabPageModal.Text = "AcrModal";
+            tabPageModal.UseVisualStyleBackColor = true;
+            //
+            // lblModalHeader
+            //
+            lblModalHeader.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblModalHeader.Location = new Point(24, 15);
+            lblModalHeader.Name = "lblModalHeader";
+            lblModalHeader.Size = new Size(700, 20);
+            lblModalHeader.TabIndex = 0;
+            lblModalHeader.Text = "AcrModal — diálogo customizado, arraste pelo título para mover";
+            //
+            // btnModalInfo
+            //
+            btnModalInfo.Location = new Point(30, 60);
+            btnModalInfo.Name = "btnModalInfo";
+            btnModalInfo.Size = new Size(150, 32);
+            btnModalInfo.TabIndex = 1;
+            btnModalInfo.Text = "Info";
+            btnModalInfo.Click += btnModalInfo_Click;
+            //
+            // btnModalSuccess
+            //
+            btnModalSuccess.AccentColor = Color.FromArgb(32, 148, 87);
+            btnModalSuccess.Location = new Point(190, 60);
+            btnModalSuccess.Name = "btnModalSuccess";
+            btnModalSuccess.Size = new Size(150, 32);
+            btnModalSuccess.TabIndex = 2;
+            btnModalSuccess.Text = "Sucesso";
+            btnModalSuccess.Click += btnModalSuccess_Click;
+            //
+            // btnModalError
+            //
+            btnModalError.AccentColor = Color.FromArgb(197, 48, 48);
+            btnModalError.Location = new Point(350, 60);
+            btnModalError.Name = "btnModalError";
+            btnModalError.Size = new Size(150, 32);
+            btnModalError.TabIndex = 3;
+            btnModalError.Text = "Erro";
+            btnModalError.Click += btnModalError_Click;
+            //
+            // btnModalConfirm
+            //
+            btnModalConfirm.AccentColor = Color.FromArgb(212, 140, 15);
+            btnModalConfirm.Location = new Point(30, 105);
+            btnModalConfirm.Name = "btnModalConfirm";
+            btnModalConfirm.Size = new Size(150, 32);
+            btnModalConfirm.TabIndex = 4;
+            btnModalConfirm.Text = "Confirmação";
+            btnModalConfirm.Click += btnModalConfirm_Click;
+            //
+            // btnModalCustom
+            //
+            btnModalCustom.Location = new Point(190, 105);
+            btnModalCustom.Name = "btnModalCustom";
+            btnModalCustom.Size = new Size(150, 32);
+            btnModalCustom.TabIndex = 5;
+            btnModalCustom.Text = "Conteúdo customizado";
+            btnModalCustom.Click += btnModalCustom_Click;
+            //
+            // lblModalResult
+            //
+            lblModalResult.AutoSize = true;
+            lblModalResult.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblModalResult.Location = new Point(30, 150);
+            lblModalResult.Name = "lblModalResult";
+            lblModalResult.Size = new Size(300, 15);
+            lblModalResult.TabIndex = 6;
+            lblModalResult.Text = "";
+            //
             // Form1
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1842,6 +1937,8 @@ namespace AcrFormsTest
             tabPageEmptyState.ResumeLayout(false);
             tabPageDropdownMenu.ResumeLayout(false);
             tabPageDropdownMenu.PerformLayout();
+            tabPageModal.ResumeLayout(false);
+            tabPageModal.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -2010,5 +2107,14 @@ namespace AcrFormsTest
         private Label lblDropdownHeader;
         private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnDropdownTrigger;
         private Label lblDropdownResult;
+
+        private TabPage tabPageModal;
+        private Label lblModalHeader;
+        private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnModalInfo;
+        private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnModalSuccess;
+        private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnModalError;
+        private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnModalConfirm;
+        private Acr.WindowsForms.Controls.Controls.CustomButton.AcrButton btnModalCustom;
+        private Label lblModalResult;
     }
 }
